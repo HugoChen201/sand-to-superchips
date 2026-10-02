@@ -828,13 +828,13 @@
             <script>
             (function(){
               var stages=[
-                {g:["wj-g-wafer"],t:"Stage 1 · The blank canvas",c:"A polished, blank 300mm wafer arrives from the wafer maker — sliced from the ingot, polished to atomic flatness, nothing on it but perfect crystal and a whisper of boron.",s:"Shin-Etsu / SUMCO · Japan"},
+                {g:["wj-g-wafer"],t:"Stage 1 · The blank canvas",c:"A polished, blank 300mm wafer arrives from the wafer maker — sliced from the ingot, polished to atomic flatness, nothing on it but perfect crystal and a whisper of boron (doped in by the wafer maker during crystal growth — the fab doesn’t do this part).",s:"Shin-Etsu / SUMCO · Japan"},
                 {g:["wj-g-wafer","wj-g-coat"],t:"Stage 2 · Coat",c:"The TEL track spins the wafer at thousands of RPM while dripping on liquid photoresist, then bakes it hard — a record player painting itself.",s:"Tokyo Electron track · Japan"},
                 {g:["wj-g-wafer","wj-g-coat","wj-g-printfaint"],t:"Stage 3 · Print",c:"Inside the ASML scanner, the wafer stage glides under the lens while the reticle scans overhead, flashing the pattern die by die.",s:"ASML · Netherlands"},
                 {g:["wj-g-wafer","wj-g-carve"],t:"Stage 4 · Carve",c:"Inside the Lam etcher’s vacuum chamber, plasma — superheated ionized gas — bombards the exposed film and carves the pattern in; leftover resist is stripped away.",s:"Lam Research · USA"},
                 {g:["wj-g-wafer","wj-g-carve","wj-g-dope"],t:"Stage 5 · Dope",c:"The Axcelis implanter fires a beam of dopant ions through the stencil’s openings into the silicon — the blast step you already know.",s:"Axcelis · USA"},
                 {g:["wj-g-wafer","wj-g-carve","wj-g-dope","wj-g-metal"],t:"Stage 6 · Build up",c:"In AMAT’s chambers, gases react on the hot wafer to grow new films atom by atom; copper is inlaid, then the wafer is pressed face-down on a spinning pad and polished dead flat (CMP).",s:"Applied Materials · USA"},
-                {g:["wj-g-wafer","wj-g-carve","wj-g-dope","wj-g-metal","wj-g-repeat"],t:"Stage 7 · Repeat ≈100×",c:"The loop runs once per layer — around 1,400 steps over ~3 months — with inspection between passes.",s:"KLA inspects · USA"},
+                {g:["wj-g-wafer","wj-g-carve","wj-g-dope","wj-g-metal","wj-g-repeat"],t:"Stage 7 · Repeat ≈100×",c:"The loop runs once per layer — coat, ASML print, Lam carve, dope, build up, polish — around 1,400 steps over ~3 months, with inspection between passes.",s:"KLA inspects · USA"},
                 {g:["wj-g-wafer","wj-g-test"],t:"Stage 8 · Test",c:"The finished wafer is probed: good dies pass, bad ones are mapped out. Then it’s diced and each die is packaged.",s:"then: dice → package (ch. 4)"}
               ];
               var ids=["wj-g-wafer","wj-g-coat","wj-g-printfaint","wj-g-carve","wj-g-dope","wj-g-metal","wj-g-repeat","wj-g-test"];

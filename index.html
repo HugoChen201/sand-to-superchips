@@ -430,12 +430,13 @@
       <button class="tab" id="tab-interconnect" role="tab" aria-selected="false" aria-controls="panel-interconnect" data-target="interconnect">6 · Interconnect</button>
       <button class="tab" id="tab-systems" role="tab" aria-selected="false" aria-controls="panel-systems" data-target="systems">7 · Systems</button>
       <button class="tab" id="tab-money" role="tab" aria-selected="false" aria-controls="panel-money" data-target="money">8 · Money &amp; Map</button>
+      <button class="tab" id="tab-beyond" role="tab" aria-selected="false" aria-controls="panel-beyond" data-target="beyond">Beyond</button>
       <button class="tab" id="tab-glossary" role="tab" aria-selected="false" aria-controls="panel-glossary" data-target="glossary">Glossary</button>
     </div>
     <div class="wrap mobile-tabs">
       <label for="chapter-select">Chapter</label>
       <select id="chapter-select" aria-label="Choose a chapter">
-        <option value="map">Map</option><option value="silicon">1 · Silicon</option><option value="fab">2 · The Fab</option><option value="design">3 · Chip Design</option><option value="packaging">4 · Packaging</option><option value="memory">5 · Memory</option><option value="interconnect">6 · Interconnect</option><option value="systems">7 · Systems</option><option value="money">8 · Money &amp; Map</option><option value="glossary">Glossary</option>
+        <option value="map">Map</option><option value="silicon">1 · Silicon</option><option value="fab">2 · The Fab</option><option value="design">3 · Chip Design</option><option value="packaging">4 · Packaging</option><option value="memory">5 · Memory</option><option value="interconnect">6 · Interconnect</option><option value="systems">7 · Systems</option><option value="money">8 · Money &amp; Map</option><option value="beyond">Beyond</option><option value="glossary">Glossary</option>
       </select>
     </div>
   </nav>
@@ -446,12 +447,21 @@
       <div class="map-grid">
         <article class="map-card complete-card"><div class="map-top"><span class="map-num">01</span><span class="map-state complete">Complete</span></div><h3>Sand → Silicon</h3><p>Quartz to electronic-grade silicon and atomically flat wafers.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">02</span><span class="map-state complete">Complete</span></div><h3>The Fab</h3><p>Lithography, process nodes, yields; TSMC vs Samsung vs Intel.</p></article>
-        <article class="map-card"><div class="map-top"><span class="map-num">03</span><span class="map-state">Coming soon</span></div><h3>Chip design</h3><p>Fabless vs foundry vs IDM; NVIDIA's CUDA moat.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">03</span><span class="map-state">Coming soon</span></div><h3>Chip Design</h3><p>Fabless vs foundry vs IDM; NVIDIA's CUDA moat.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">04</span><span class="map-state">Coming soon</span></div><h3>Advanced packaging</h3><p>Chiplets, CoWoS — the new bottleneck.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">05</span><span class="map-state">Coming soon</span></div><h3>Memory</h3><p>DRAM/NAND → HBM3E/HBM4; SK hynix, Samsung, Micron.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">06</span><span class="map-state">Coming soon</span></div><h3>Interconnect</h3><p>NVLink vs InfiniBand and Ethernet.</p></article>
-        <article class="map-card"><div class="map-top"><span class="map-num">07</span><span class="map-state">Coming soon</span></div><h3>The system</h3><p>Grace Blackwell → Vera Rubin, NVL72 racks.</p></article>
-        <article class="map-card"><div class="map-top"><span class="map-num">08</span><span class="map-state">Coming soon</span></div><h3>The money &amp; the map</h3><p>Margins, capex cycles, geopolitics.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">07</span><span class="map-state">Coming soon</span></div><h3>The System</h3><p>Grace Blackwell → Vera Rubin, NVL72 racks.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">08</span><span class="map-state">Coming soon</span></div><h3>The Money &amp; the Map</h3><p>Margins, capex cycles, geopolitics.</p></article>
+      </div>
+      <p class="figure-label" style="margin:36px 0 14px">BEYOND THE CHIP — NEW RESEARCH TRACKS</p>
+      <div class="map-grid">
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>Photonics</h3><p>Light replacing copper for data movement; co-packaged optics.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>Power Semis</h3><p>SiC &amp; GaN for EVs, chargers, grid — crystal pulling, harder.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>Data Centers</h3><p>Where every AI chip goes to work; hyperscalers vs neoclouds.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>Energy</h3><p>The power wall — GW-scale AI needs power plants next door.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>EDA &amp; IP</h3><p>The software moats: Synopsys, Cadence, ARM.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">✦</span><span class="map-state">Coming soon</span></div><h3>OSAT</h3><p>Assembly &amp; test — the back end moving up the value chain.</p></article>
       </div>
     </section>
 
@@ -805,7 +815,18 @@
     <section class="panel" id="panel-systems" role="tabpanel" aria-labelledby="tab-systems" data-panel="systems" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 7</p><h2>The System</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Rack-scale AI factories</h3><p>This chapter will assemble the silicon, memory, networking, power, and cooling into a complete machine.</p><ul class="roadmap-list"><li>DGX and HGX boards → NVL72 racks</li><li>72 GPUs + 36 Grace CPUs, liquid-cooled</li><li>Grace CPU + Blackwell GPU anatomy</li><li>Vera Rubin next: Rubin GPU + Vera CPU + HBM4</li></ul></article></section>
     <section class="panel" id="panel-money" role="tabpanel" aria-labelledby="tab-money" data-panel="money" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 8</p><h2>The Money &amp; the Map</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Where power and profits pool</h3><p>This chapter will connect the technical stack to the industry's financial cycles and geopolitical fault lines.</p><ul class="roadmap-list"><li>Where margins pool in the value chain</li><li>Capex cycles — and why memory is brutally cyclical</li><li>Taiwan concentration</li><li>CHIPS Act and export controls on China</li></ul></article></section>
 
-    <section class="panel" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" data-panel="glossary" hidden>
+<section class="panel" id="panel-beyond" role="tabpanel" aria-labelledby="tab-beyond" data-panel="beyond" hidden><div class="panel-head"><div><p class="chapter-label">Research tracks</p><h2>Beyond the Chip</h2><p class="panel-intro">The moats around the moats — photonics, power semis, data centers, energy, and the software underneath it all.</p></div></div>
+      <div class="details-stack">
+        <details><summary>Photonics — light instead of copper</summary><div class="detail-body"><p><strong>Why it matters:</strong> as AI clusters scale, moving bits with photons (silicon photonics, co-packaged optics) beats copper on power and distance. The interconnect bottleneck is becoming an optics problem.</p><p><strong>The moat question:</strong> who owns the optical interconnect — transceiver incumbents (Coherent, Lumentum), networking giants (Broadcom, Marvell), or startups (Ayar Labs, Lightmatter, Celestial AI)?</p><p><strong>Names to know:</strong> Broadcom, Marvell, Coherent, Lumentum, Ayar Labs, Lightmatter.</p></div></details>
+        <details><summary>Power semis — SiC &amp; GaN</summary><div class="detail-body"><p><strong>Why it matters:</strong> silicon carbide and gallium nitride run EVs, fast chargers, solar inverters, and grid gear — anywhere power is converted. SiC boules are grown like Czochralski crystals: same crystal-pulling religion, much harder material.</p><p><strong>The moat question:</strong> substrate quality and scale — who can grow big, defect-free SiC cheapest?</p><p><strong>Names to know:</strong> Wolfspeed, Infineon, STMicroelectronics, ROHM, Onsemi.</p></div></details>
+        <details><summary>Data centers — where the chips go to work</summary><div class="detail-body"><p><strong>Why it matters:</strong> every AI accelerator ends up here. Hyperscalers (AWS, Azure, GCP) plus neoclouds (CoreWeave, Nebius) are racing to deploy GPUs faster than anyone can build power for them.</p><p><strong>The moat question:</strong> is the moat scale, power contracts, or software orchestration — and do the neoclouds survive the build-out?</p><p><strong>Names to know:</strong> Amazon/AWS, Microsoft/Azure, Alphabet/GCP, CoreWeave, Nebius.</p></div></details>
+        <details><summary>Energy — the power wall</summary><div class="detail-body"><p><strong>Why it matters:</strong> a gigawatt-scale AI data center needs a power plant next door, and grid interconnection queues stretch for years. Power — not chips — may be the binding constraint on AI scaling.</p><p><strong>The moat question:</strong> who controls firm power: utilities, SMR developers, gas turbine makers — or the hyperscalers signing it all up?</p><p><strong>Names to know:</strong> Vertiv (power &amp; cooling), utilities, SMR developers, turbine makers.</p></div></details>
+        <details><summary>EDA &amp; IP — the software moats</summary><div class="detail-body"><p><strong>Why it matters:</strong> nothing tapes out without Synopsys and Cadence (the EDA duopoly), and ARM's ISA sits inside nearly every mobile chip on Earth. Highest margins in semis, near-zero marginal cost.</p><p><strong>The moat question:</strong> can anyone dislodge a duopoly the entire industry is trained on?</p><p><strong>Names to know:</strong> Synopsys, Cadence, ARM.</p></div></details>
+        <details><summary>OSAT — assembly &amp; test</summary><div class="detail-body"><p><strong>Why it matters:</strong> the back end — dicing, bonding, packaging, testing. Less glamorous, heavily consolidated — and advanced packaging is pulling OSAT up the value chain toward the front end.</p><p><strong>The moat question:</strong> scale plus proximity to fabs; who captures the advanced-packaging overflow?</p><p><strong>Names to know:</strong> ASE, Amkor.</p></div></details>
+      </div>
+    </section>
+
+        <section class="panel" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" data-panel="glossary" hidden>
       <div class="panel-head"><div><p class="chapter-label">Reference</p><h2>Glossary</h2><p class="panel-intro">The terms that make the semiconductor chain legible.</p></div></div>
       <div class="glossary">
         <article class="term"><h3>Metallurgical-grade silicon (MG-Si)</h3><p>Silicon that's 98–99% pure, made by melting quartz with carbon in a giant electric arc furnace. “Metallurgical” just means it's good enough for metal-making — it's mostly mixed into aluminum alloys. But for chips it's still far too dirty. Think of it as crude oil before refining.</p></article>

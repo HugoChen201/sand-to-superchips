@@ -1247,7 +1247,195 @@
         <details><summary>The economics in one line</summary><div class="detail-body"><p>Fab economics = wafers × dies per wafer × yield × price, set against $20B of capex depreciating over ~5 years. Only massive scale plus elite yields survive — which is why just three companies remain at the leading edge.</p></div></details>
       </div>
 </section>
-    <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip Design</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Architecture becomes silicon</h3><p>This chapter will trace the stack from business model and EDA software to the engines inside an AI accelerator.</p><ul class="roadmap-list"><li>Fabless (NVIDIA, AMD) vs foundry (TSMC) vs IDM (Intel, Samsung, TI)</li><li>EDA tools from Synopsys and Cadence</li><li>CUDA cores and Tensor cores</li><li>NVIDIA's software moat</li></ul></article></section>
+    <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip Design</h2><p class="panel-intro">Design happens before the fab prints a single transistor — Follow an idea as it becomes code, gates, geometry, and finally the mask data the fab prints. The fab only manufactures what design delivers; tapeout is the handoff.</p></div><span class="status">Complete</span></div><p>Everything in Chapter 2 — the scanners, the etchers, the hundred-layer loop — prints a pattern that already exists. Somebody had to invent that pattern first. This chapter follows one chip from a whiteboard idea to <strong>tapeout</strong>, the moment the finished design is handed to the fab. It takes years, costs hundreds of millions of dollars, and runs almost entirely on software from three companies.</p>
+      <div class="stats" aria-label="Key numbers">
+        <div class="stat"><strong>50B+</strong><span>transistors on a flagship chip</span></div>
+        <div class="stat"><strong>25,000+</strong><span>design rules checked at 3nm</span></div>
+        <div class="stat"><strong>$50–100M</strong><span>cost of a single respin</span></div>
+        <div class="stat"><strong>~80%</strong><span>of EDA software in three hands</span></div>
+        <div class="stat"><strong>2–3 yrs</strong><span>typical spec-to-tapeout journey</span></div>
+      </div>
+      <div style="height:26px"></div>
+      <details class="step-card">
+        <summary><span class="step-badge">1</span><span class="step-heading"><span class="step-kicker">The idea</span><span class="step-name">Architecture: deciding what the chip should be</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Every chip starts as a document, not a drawing: the <strong>spec</strong>. What should it compute, how fast, on how much power, at what cost? A phone chip lives on milliwatts; a data-center GPU can drink 1,000 watts. The spec fixes those tradeoffs before anyone touches a transistor.</p>
+          <p>Then comes <strong>architecture</strong> — the block diagram. Architects carve the chip into neighborhoods: CPU cores here, GPU shaders there, memory controllers along the edges, I/O around the perimeter. They choose the <strong>ISA</strong> (instruction set architecture) — the contract between hardware and software that says which instructions the chip understands. x86 (Intel, AMD), Arm, and the open-source RISC-V are the three that matter.</p>
+          <p class="plain-note"><strong>In plain English:</strong> architecture is the floor plan of a city drawn before a single brick is ordered — which districts exist, how they connect, what language they speak.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>Who designs chips — three business models</h4>
+          <p><strong>Fabless</strong> (design only, no factories): <strong>NVIDIA</strong> (USA), <strong>AMD</strong> (USA), <strong>Broadcom</strong> (USA), <strong>Qualcomm</strong> (USA), <strong>Marvell</strong> (USA), <strong>Apple</strong> (USA), <strong>MediaTek</strong> (Taiwan). They dream up chips and pay TSMC to build them — no $20B fab required, but total dependence on someone else's factory. <strong>IDM</strong> (integrated device manufacturer — designs <em>and</em> builds): <strong>Intel</strong> (USA), <strong>Samsung</strong> (South Korea), <strong>Texas Instruments</strong> (USA). They own the whole stack and its whole cost. <strong>Pure-play foundry</strong> (builds only, designs nothing): <strong>TSMC</strong> (Taiwan) — the factory the fabless world shares.</p>
+        </aside></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">2</span><span class="step-heading"><span class="step-kicker">Code becomes circuits</span><span class="step-name">RTL: writing hardware in text</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Here is the strangest idea in the chapter: engineers <strong>write the chip as code</strong>. In languages called <strong>Verilog</strong> and <strong>VHDL</strong> — collectively <strong>RTL</strong>, register-transfer level — they describe what the hardware <em>does</em>, not software that runs on it. This line doesn't execute; it <em>becomes a wire</em>:</p>
+          <figure class="inline-figure">
+            <figcaption class="figure-label">SAME CIRCUIT, TWO VIEWS — A 2-TO-1 MULTIPLEXER</figcaption>
+            <style>
+              #rtl-demo .rd-ctrl{display:flex;gap:8px;margin:12px 2px 0}
+              #rtl-demo .rd-btn{cursor:pointer;border:1px solid #f5a623;background:transparent;color:#f5a623;border-radius:6px;padding:6px 14px;font-size:13px;font-weight:700;font-family:inherit}
+              #rtl-demo .rd-btn.on{background:#f5a623;color:#10161e}
+              #rtl-demo pre{background:#0b1016;border:1px solid #2d3846;border-radius:8px;padding:14px 16px;color:#d7e3f4;font-size:13.5px;line-height:1.7;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+              #rtl-demo .cm{color:#6b7a8f} #rtl-demo .kw{color:#ff9e64} #rtl-demo .md{color:#7ee787}
+            </style>
+            <div class="rd-ctrl" role="group" aria-label="Toggle RTL or gates view">
+              <button class="rd-btn on" id="rd-btn-rtl">RTL — the code</button>
+              <button class="rd-btn" id="rd-btn-gates">Gates — what it becomes</button>
+            </div>
+            <div id="rd-view-rtl">
+              <pre><code><span class="cm">// a 2-to-1 multiplexer: picks a or b, by sel</span>
+<span class="kw">module</span> <span class="md">mux2</span>(
+  <span class="kw">input wire</span> a, b, sel,
+  <span class="kw">output wire</span> y
+);
+  <span class="kw">assign</span> y = sel ? b : a; <span class="cm">// &larr; this line becomes wires &amp; gates</span>
+<span class="kw">endmodule</span></code></pre>
+            </div>
+            <div id="rd-view-gates" hidden>
+              <svg viewBox="0 0 460 240" role="img" aria-label="Gate-level schematic of a 2-to-1 multiplexer: y equals (a AND NOT sel) OR (b AND sel)">
+                <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#aeb7c2">
+                  <g stroke="#8a94a6" stroke-width="2" fill="none">
+                    <line x1="20" y1="40" x2="180" y2="32"/><line x1="20" y1="110" x2="180" y2="122"/>
+                    <line x1="20" y1="180" x2="88" y2="190"/><line x1="132" y1="190" x2="150" y2="190"/><line x1="150" y1="190" x2="150" y2="142"/><line x1="150" y1="142" x2="180" y2="142"/>
+                    <line x1="20" y1="180" x2="60" y2="180"/><line x1="60" y1="180" x2="60" y2="196"/><line x1="60" y1="196" x2="88" y2="196"/>
+                    <line x1="212" y1="40" x2="300" y2="70"/><line x1="212" y1="132" x2="300" y2="102"/><line x1="336" y1="86" x2="440" y2="86"/>
+                  </g>
+                  <circle cx="60" cy="180" r="3.5" fill="#f5a623" stroke="none"/><circle cx="150" cy="190" r="3.5" fill="#f5a623" stroke="none"/>
+                  <g stroke="#f5a623" stroke-width="2" fill="#10161e">
+                    <path d="M88 178 L118 190 L88 202 Z"/><circle cx="126" cy="190" r="6" fill="#10161e"/>
+                    <path d="M180 20 H200 A20 20 0 0 1 200 60 H180 Z"/><path d="M180 110 H200 A20 20 0 0 1 200 150 H180 Z"/>
+                    <path d="M300 58 Q322 66 330 86 Q322 106 300 114 Q312 86 300 58 Z"/>
+                  </g>
+                  <g fill="#edf1f5" font-size="13">
+                    <text x="8" y="44">a</text><text x="8" y="114">b</text><text x="2" y="184">sel</text><text x="444" y="90">y</text>
+                  </g>
+                  <g fill="#7d8ea3" font-size="10">
+                    <text x="92" y="172">NOT</text><text x="184" y="14">AND</text><text x="184" y="104">AND</text><text x="304" y="52">OR</text>
+                  </g>
+                  <text x="230" y="220" text-anchor="middle" fill="#ffc35c" font-size="12">y = (a AND NOT sel) OR (b AND sel) — the same multiplexer, as gates</text>
+                </g>
+              </svg>
+            </div>
+            <script>
+              (function(){
+                var bR=document.getElementById('rd-btn-rtl'),bG=document.getElementById('rd-btn-gates');
+                var vR=document.getElementById('rd-view-rtl'),vG=document.getElementById('rd-view-gates');
+                bR.addEventListener('click',function(){bR.classList.add('on');bG.classList.remove('on');vR.hidden=false;vG.hidden=true;});
+                bG.addEventListener('click',function(){bG.classList.add('on');bR.classList.remove('on');vG.hidden=false;vR.hidden=true;});
+              }());
+            </script>
+          </figure>
+          <p>The critical difference from software: <strong>everything happens at once</strong>. A CPU runs your code line by line; a chip <em>is</em> all its lines simultaneously — billions of gates evaluating in parallel, every clock tick. Writing RTL means thinking in parallel from the first line.</p>
+          <p class="plain-note"><strong>In plain English:</strong> RTL is a recipe that doesn't get cooked — it gets <em>built into a kitchen</em> that cooks forever.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">Trust, then build</span><span class="step-name">Verification: proving it works before it exists</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Before a single transistor is committed, the RTL is <strong>simulated</strong> — run through trillions of test scenarios in software, checking that the virtual chip behaves exactly as the architects intended. Testbenches throw random and directed stimulus at the design; formal tools <em>prove</em> properties mathematically. This is where most chip engineers actually work: <strong>verification engineers typically outnumber designers</strong>, and verification is widely the single biggest cost in a chip program.</p>
+          <p>When simulation gets too slow, designs move to <strong>emulation</strong> — giant racks of FPGAs or custom processors that run the RTL orders of magnitude faster, so real software (an operating system, a game, a neural network) can boot on the chip months before silicon exists.</p>
+          <p>Why the obsession? A bug caught in simulation costs nearly nothing. A bug in shipped silicon means a <strong>respin</strong> — new masks, new wafers, <strong>$50–100M and 6–12 lost months</strong> at the leading edge. Verification is expensive because silicon mistakes are ruinous.</p>
+          <p class="plain-note"><strong>In plain English:</strong> you can't patch a transistor — so you test the chip to death while it's still just text.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>Companies behind this step</h4>
+          <p>Emulation hardware is a duopoly inside the triopoly: <strong>Cadence Palladium</strong> (USA) and <strong>Synopsys ZeBu</strong> (USA) — million-dollar racks that every serious chip program rents time on. The simulation and formal-verification tools around them come from the same two vendors.</p>
+        </aside></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">Code to gates</span><span class="step-name">Logic synthesis: the compiler for hardware</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p><strong>Synthesis</strong> is the compiler of chip design: it translates RTL into a <strong>netlist</strong> — a complete list of logic gates and the wires between them, drawn from the foundry's <strong>standard-cell library</strong> (pre-designed ANDs, ORs, flip-flops, tuned for that exact process node). Your elegant Verilog becomes millions of unglamorous gates.</p>
+          <p>Synthesis is where the eternal triangle — <strong>PPA: performance, power, area</strong> — gets negotiated. Faster usually means bigger and hotter; smaller usually means slower. The tool tries thousands of tradeoffs automatically, and architects spend careers learning which corners to cut. A 5% smaller chip is 5% more chips per wafer — pure margin.</p>
+          <p class="plain-note"><strong>In plain English:</strong> synthesis turns "what the chip does" into "which millions of tiny switches do it" — optimizing for speed, battery, and size all at once.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>Companies behind this step</h4>
+          <p><strong>Synopsys</strong> (USA) invented this market — its Design Compiler has been the industry's synthesis workhorse since the 1990s, now evolved into Fusion Compiler. <strong>Cadence</strong> (USA) fields the rival Genus line. Between them, nearly every digital chip ever taped out passed through one of these two tools.</p>
+        </aside></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">5</span><span class="step-heading"><span class="step-kicker">Gates to geometry</span><span class="step-name">Physical design: the chip becomes polygons</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>A netlist is still abstract — gates with no addresses. <strong>Physical design</strong> gives every gate a physical home on the die: <strong>floorplan</strong> (which blocks go where), <strong>placement</strong> (millions of cells arranged so wires stay short), <strong>clock-tree synthesis</strong> (a balanced wiring tree delivering the tick to every flip-flop simultaneously — at 5&nbsp;GHz, skew of picoseconds matters), and <strong>routing</strong> (drawing the actual copper paths through a dozen metal layers).</p>
+          <p>This is also where physics pushes back. Wires have resistance and capacitance; long wires are slow wires. A block placed carelessly can miss timing by nanoseconds and send the whole design back to step 4. Physical design is architecture meeting the real world — and the real world usually wins the first few rounds.</p>
+          <p class="plain-note"><strong>In plain English:</strong> if synthesis picks the furniture, physical design is moving day — every couch gets coordinates, and the hallways have to fit.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">6</span><span class="step-heading"><span class="step-kicker">Beat the clock</span><span class="step-name">Timing closure: will it run on time?</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>A 5&nbsp;GHz chip gives every signal <strong>0.2 nanoseconds</strong> to cross the chip, through gates and wires, and arrive before the next clock tick. <strong>Static timing analysis (STA)</strong> checks <em>every</em> path — billions of them — against two rules: <strong>setup</strong> (data must arrive before the clock) and <strong>hold</strong> (data must not arrive <em>too early</em> either).</p>
+          <p><strong>Timing closure</strong> is the grinding loop of fixing violations: resize a gate, reroute a wire, move a block, re-synthesize — then re-check everything, because each fix can break something else. Whole teams spend months here. It is the least glamorous and most schedule-eating phase of chip design.</p>
+          <p class="plain-note"><strong>In plain English:</strong> billions of runners, one starting gun, and every single one must cross its finish line inside 0.2 billionths of a second — not early, not late.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">7</span><span class="step-heading"><span class="step-kicker">Will the fab print it?</span><span class="step-name">Physical verification and signoff</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>The finished layout now faces the fab's rulebook. <strong>DRC</strong> (design rule check) verifies the geometry against the foundry's manufacturing rules — at 3nm there are <strong>25,000+</strong> of them, covering minimum widths, spacings, and shapes the lithography can actually resolve. <strong>LVS</strong> (layout vs. schematic) proves the drawn polygons still implement the intended netlist — that no wire got crossed in the million-step journey from code to geometry.</p>
+          <p>The rulebook arrives as the <strong>PDK</strong> (process design kit): the foundry's sacred text, containing the design rules, the standard-cell libraries, and transistor models tuned to that fab's actual silicon. TSMC's PDK is the real interface between design and manufacturing — guarded like a trade secret, updated as the process matures, and the reason designers speak of "the TSMC 3nm PDK" the way chefs speak of an ingredient.</p>
+          <p>Pass everything and the design is <strong>signed off</strong> — formally declared ready for manufacturing. Signoff is a legal-grade promise: from here, mistakes belong to whoever signed.</p>
+          <p class="plain-note"><strong>In plain English:</strong> the fab hands designers a 25,000-rule spellbook; signoff is swearing the spell is cast correctly.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">8</span><span class="step-heading"><span class="step-kicker">The handoff</span><span class="step-name">Tapeout: design ends, manufacturing begins</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p><strong>Tapeout</strong> is the moment the finished database — <strong>GDSII</strong> (or its modern successor <strong>OASIS</strong>), a file describing every polygon on every layer — is sent to the mask shop, which writes the ~100 reticles Chapter 2 prints with. The name is a relic: designs once shipped to fabs on magnetic tape. The romance is gone; the terror remains.</p>
+          <p>Then comes the most nervous phase: <strong>first silicon</strong>. Months later the first wafers return, the chip is powered on, and <strong>bring-up</strong> begins — does it boot, does it hit its frequency, where did the models lie? A clean bring-up is celebrated like a launch; a broken one starts the $50–100M respin conversation. Developing a leading-edge chip from scratch can run into the <strong>hundreds of millions of dollars</strong> all-in — which is why steps 3 and 7 exist.</p>
+          <p class="plain-note"><strong>In plain English:</strong> tapeout is emailing the blueprints to the factory — after which fixing a typo costs eight figures.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">9</span><span class="step-heading"><span class="step-kicker">Standing on shoulders</span><span class="step-name">IP cores and Arm: nobody starts from zero</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>No team designs every block from scratch. Standard functions — memory compilers, USB and PCIe controllers, SerDes (the ultra-fast serial links), PHYs — are bought as <strong>IP cores</strong>: pre-designed, pre-verified blocks licensed like software libraries. Buying IP compresses years of work into a purchase order.</p>
+          <p>The purest IP company is <strong>Arm</strong> (UK). Arm designs CPU cores and licenses the <strong>Arm ISA</strong> to Apple, Qualcomm, MediaTek, NVIDIA, and hundreds of others — then collects a royalty on every chip shipped. It never manufactures anything; it taxes the industry's output. Born from Acorn Computers in 1990, bought by <strong>SoftBank</strong> (Japan) for $32B in 2016, re-listed on Nasdaq in 2023 — nearly every smartphone on Earth runs Arm.</p>
+          <p>The open-source challenger is <strong>RISC-V</strong>: a free ISA anyone can implement without royalties, gaining ground in embedded and increasingly AI-adjacent designs — the industry's hedge against any single gatekeeper.</p>
+          <p class="plain-note"><strong>In plain English:</strong> IP cores are prefab rooms; Arm sells the floor plans and takes a cut of every house built from them.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>Companies behind this step</h4>
+          <p><strong>Arm</strong> (UK) — the CPU IP standard. <strong>Synopsys</strong> (USA) and <strong>Cadence</strong> (USA) are also giant IP vendors (interface and foundation IP is a multi-billion-dollar business for both). <strong>Rambus</strong> (USA) — memory-interface IP. <strong>Alphawave Semi</strong> (UK) — high-speed connectivity IP for AI chips. <strong>Imagination Technologies</strong> (UK) — GPU IP.</p>
+        </aside></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">10</span><span class="step-heading"><span class="step-kicker">The pencil monopoly</span><span class="step-name">EDA: three companies own chip design</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Nearly every tool in steps 2–8 comes from three vendors: <strong>Synopsys</strong> (USA), <strong>Cadence</strong> (USA), and <strong>Siemens EDA</strong> (Germany — the former Mentor Graphics). Together they hold roughly <strong>80%</strong> of the EDA market — a triopoly as tight as the equipment oligopoly in the fab.</p>
+          <p>Why only three? Chip-design flows are validated over <em>decades</em>: a tool is trusted because it has taped out a thousand chips without a fatal bug. Switching vendors means re-validating everything — foundry-certified PDKs, signoff flows, institutional muscle memory. The switching cost is measured in engineering-decades, so incumbents compound like royalties: EDA is only ~3% of chip-industry revenue, yet it gates 100% of chip design.</p>
+          <p>The triopoly just got bigger: <strong>Synopsys closed its $35B acquisition of Ansys</strong> (USA) in July 2025 — EDA merging with multiphysics simulation, so heat, stress, and electromagnetics get designed alongside the transistors. And EDA has become geopolitical leverage: US export controls now restrict advanced EDA sales to China — because without these tools, you cannot even <em>design</em> a modern chip, let alone build one.</p>
+          <p class="plain-note"><strong>In plain English:</strong> three companies sell the pencils, and the pencils are export-controlled.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>The EDA scoreboard</h4>
+          <p><strong>Synopsys</strong> (USA, ~30% share) — synthesis, digital design, and the largest IP catalog; now plus Ansys simulation. <strong>Cadence</strong> (USA, ~30%) — analog/custom design, emulation (Palladium), digital full-flow. <strong>Siemens EDA</strong> (Germany, ~13%) — Calibre, the industry-standard physical-verification tool that signs off nearly every chip on Earth. The only meaningful fourth player is China's <strong>Empyrean</strong> — and its existence is a geopolitical project as much as a commercial one.</p>
+        </aside></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">11</span><span class="step-heading"><span class="step-kicker">Design goes modular</span><span class="step-name">Chiplets: stop building one giant die</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>For fifty years the goal was one ever-bigger die. That era is ending: giant dies hit the <strong>reticle limit</strong> (Chapter 2's scanners can only print so large a field) and yield collapses as dies grow — one defect kills a $1,000 die instead of a $50 one. The answer: <strong>chiplets</strong> — split the design into small dies, manufacture each on its best process, and stitch them together in packaging.</p>
+          <p><strong>AMD</strong> (USA) proved it with EPYC and Ryzen: CPU chiplets plus an I/O die, beating Intel's monoliths on cost and yield. Now the industry is standardizing the stitching with <strong>UCIe</strong> (Universal Chiplet Interconnect Express) — USB for chiplets. Design changes with it: architects now <em>partition for disaggregation</em>, deciding which blocks become chiplets and how they talk — which makes packaging (Chapter 4) a first-class design problem, not an afterthought.</p>
+          <p class="plain-note"><strong>In plain English:</strong> instead of building one mansion, build cottages and connect them with covered walkways — cheaper, and one bad cottage doesn't condemn the estate.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">12</span><span class="step-heading"><span class="step-kicker">The AI engine</span><span class="step-name">CUDA cores, Tensor cores, and NVIDIA's software moat</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>All of this machinery exists to serve architectures like <strong>NVIDIA's</strong> (USA) GPUs. A GPU is thousands of small <strong>CUDA cores</strong> doing simple math in parallel — the opposite of a CPU's few brilliant cores. Bolted alongside are <strong>Tensor cores</strong>: specialized units that devour the matrix multiplications AI training is made of, hundreds of teraflops per chip.</p>
+          <p>But NVIDIA's deepest moat isn't silicon — it's <strong>CUDA</strong>, the software platform. Fifteen-plus years of libraries, tools, and a generation of researchers trained on it mean every AI lab's code <em>already runs</em> on NVIDIA. A rival chip must be not just faster but worth rewriting the world's AI software for. Hardware gets benchmarked; software moats get inherited.</p>
+          <p class="plain-note"><strong>In plain English:</strong> NVIDIA sells the engine, but CUDA is the world's roads — everyone already drives on them.</p>
+        </div>
+        <aside class="company-panel">
+          <h4>The AI-chip design crowd</h4>
+          <p><strong>NVIDIA</strong> (USA) — the standard. <strong>AMD</strong> (USA) — Instinct accelerators, chiplets-first. <strong>Broadcom</strong> (USA) and <strong>Marvell</strong> (USA) — custom AI silicon for the hyperscalers (Google's TPUs are Broadcom-designed). <strong>MediaTek</strong> (Taiwan) — mobile and increasingly AI-adjacent. Every one of them is fabless: designed in California or Hsinchu, printed in Taiwan.</p>
+        </aside></div>
+      </details></section>
     <section class="panel" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>The package becomes the product</h3><p>This chapter will show why connecting dies is now as strategically important as printing them.</p><ul class="roadmap-list"><li>Chiplets and multi-die design</li><li>TSMC CoWoS and silicon interposers</li><li>How packaging went from afterthought to bottleneck</li><li>Why CoWoS constrained AI GPU supply in 2023–24</li></ul></article><article class="roadmap-card"><span class="coming">Spotted early</span><h3>Two companies Hugo found before the chapter</h3><p>Filed here because they belong to packaging — the full story lands when we cover this chapter.</p><div class="details-stack"><details><summary>Kyocera — Japan · the ceramics giant</summary><div class="detail-body"><p>Founded in 1959 as Kyoto Ceramic by Kazuo Inamori. Makes ceramic packages and ceramic substrates for chips — the rugged housings and interconnect bases that protect dies and wire them to the outside world, especially where reliability matters: automotive, industrial, aerospace.</p></div></details><details><summary>Ajinomoto — Japan · the MSG company inside every GPU</summary><div class="detail-body"><p>Yes, the umami-seasoning company. Ajinomoto's ABF (Ajinomoto Build-up Film) — derived from food-packaging film technology — is the ultra-thin insulating layer laminated into the organic substrates that CPUs, GPUs, and AI accelerators sit on. It carries the microscopic wiring from the die out to the circuit board. Nearly every advanced chip rides on ABF, and its shortage helped constrain chip supply in 2021–22.</p></div></details></div></article></section>
     <section class="panel" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" data-panel="memory" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 5</p><h2>Memory</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Keeping the accelerator fed</h3><p>This chapter will explain why compute without bandwidth is stranded silicon.</p><ul class="roadmap-list"><li>DRAM and NAND basics</li><li>HBM3E → HBM4</li><li>SK hynix, Samsung, and Micron</li><li>Why HBM is the other half of every AI accelerator</li></ul></article></section>
     <section class="panel" id="panel-interconnect" role="tabpanel" aria-labelledby="tab-interconnect" data-panel="interconnect" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 6</p><h2>Interconnect</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Turning chips into one computer</h3><p>This chapter will separate the two networking problems inside an AI cluster.</p><ul class="roadmap-list"><li>NVLink for scale-up inside the rack</li><li>InfiniBand for scale-out between racks</li><li>Ethernet's competing path</li><li>Bandwidth, latency, topology, and congestion</li></ul></article></section>
@@ -1321,11 +1509,28 @@
         <article class="term"><h3>Foundry</h3><p>A company that manufactures chips designed by others. TSMC invented the pure-play model.</p></article>
         <article class="term"><h3>IDM</h3><p>Integrated device manufacturer — designs <em>and</em> builds its own chips (Intel, Samsung, TI).</p></article>
         <article class="term"><h3>WFE</h3><p>Wafer fab equipment — the tool industry itself: Applied Materials, Lam Research, Tokyo Electron, ASML, KLA.</p></article>
+        <article class="term"><h3>EDA</h3><p>Electronic design automation — the software that designs chips: synthesis, simulation, layout, verification. A ~$20B industry in the hands of three vendors (Synopsys, Cadence, Siemens EDA) that gates the entire $800B chip industry.</p></article>
+        <article class="term"><h3>RTL</h3><p>Register-transfer level — the code (Verilog/VHDL) that describes what hardware does. It doesn&rsquo;t execute; it gets compiled into circuits.</p></article>
+        <article class="term"><h3>Netlist</h3><p>The complete list of gates and their connections produced by synthesis — the chip as a wiring diagram, before anything has a physical location.</p></article>
+        <article class="term"><h3>Synthesis</h3><p>Compiling RTL code into a netlist of standard-cell gates, optimizing the performance–power–area tradeoff.</p></article>
+        <article class="term"><h3>Standard cell</h3><p>A pre-designed, pre-characterized logic gate (AND, OR, flip-flop) from the foundry&rsquo;s library — the Lego bricks synthesis builds with.</p></article>
+        <article class="term"><h3>PDK</h3><p>Process design kit — the foundry&rsquo;s rulebook: design rules, cell libraries, and transistor models for one specific process. The real interface between design and fab.</p></article>
+        <article class="term"><h3>DRC / LVS</h3><p>Design rule check (does the geometry obey the fab&rsquo;s 25,000+ rules?) and layout-vs-schematic (does the layout still match the intended circuit?). The two great signoff gates.</p></article>
+        <article class="term"><h3>STA</h3><p>Static timing analysis — verifying every signal path meets setup/hold timing at the target clock speed, without simulating anything.</p></article>
+        <article class="term"><h3>GDSII / OASIS</h3><p>The file formats carrying the finished chip layout to the mask shop — every polygon on every layer. Tapeout&rsquo;s payload.</p></article>
+        <article class="term"><h3>IP core</h3><p>A pre-designed, pre-verified functional block (USB controller, memory compiler, SerDes) licensed like software instead of designed from scratch.</p></article>
+        <article class="term"><h3>ISA</h3><p>Instruction set architecture — the contract between hardware and software defining which instructions a processor understands (x86, Arm, RISC-V).</p></article>
+        <article class="term"><h3>Fabless</h3><p>A chip company with no factories — designs chips, pays a foundry to build them (NVIDIA, AMD, Apple, Qualcomm, MediaTek).</p></article>
+        <article class="term"><h3>Emulation</h3><p>Running the chip design on giant FPGA/processor racks (Cadence Palladium, Synopsys ZeBu) so real software boots months before silicon exists.</p></article>
+        <article class="term"><h3>Chiplet</h3><p>A small die designed to be packaged with others into one product — the modular alternative to one giant die.</p></article>
+        <article class="term"><h3>PPA</h3><p>Performance, power, area — the eternal three-way tradeoff every design decision negotiates.</p></article>
+        <article class="term"><h3>Respin</h3><p>A second (or third) manufacturing pass to fix a bug found in silicon — $50–100M and months lost at the leading edge.</p></article>
+        <article class="term"><h3>Signoff</h3><p>The formal declaration that a design is ready for manufacturing — verification, timing, and physical checks all passed and owned.</p></article>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap">Last updated October 2, 2026 · Chapters 1–2 of 8 complete.</div></footer>
+  <footer><div class="wrap">Last updated October 2, 2026 · Chapters 1–3 of 8 complete.</div></footer>
 
   <script>
     (function () {

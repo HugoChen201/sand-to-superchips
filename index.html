@@ -407,22 +407,52 @@
       .company-detail summary::before { content: none; }
       .company-detail .detail-body { padding-left: 2px; }
     }
+    .sector-shell { border-bottom: 1px solid var(--line); background: var(--bg); }
+    .sector-tabs { display: flex; gap: 8px; padding: 16px 0 0; overflow-x: auto; scrollbar-width: thin; }
+    .sector-tab {
+      appearance: none; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0;
+      background: var(--surface); color: var(--muted);
+      padding: 13px 24px; cursor: pointer; font-size: 15px; font-weight: 800; white-space: nowrap;
+    }
+    .sector-tab:hover { color: var(--ink); }
+    .sector-tab[aria-selected="true"] { color: var(--accent); border-bottom: 3px solid var(--accent); background: color-mix(in srgb, var(--surface) 55%, var(--bg)); }
+    .soon-badge { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border: 1px solid var(--line); border-radius: 20px; padding: 2px 8px; margin-left: 8px; vertical-align: 2px; }
+    .sector-tab[aria-selected="true"] .soon-badge { color: var(--accent); border-color: var(--accent); }
+    .mobile-sectors { display: none; padding: 10px 0; }
+    .mobile-sectors label { font-size: 12px; font-weight: 700; color: var(--muted); margin-right: 9px; }
+    .mobile-sectors select { width: calc(100% - 60px); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); color: var(--ink); font-weight: 700; }
+    @media (max-width: 900px) { .sector-tabs { display: none; } .mobile-sectors { display: block; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
-      <h1>From Sand to Superchips</h1>
-      <p class="subtitle">Hugo's semiconductor research notes — the full stack, from sand to silicon to rack-scale AI systems.</p>
+      <h1>Sector Notes</h1>
+      <p class="subtitle">Hugo's deep-dive research notes — one sector at a time, from raw material to finished system.</p>
       <div class="progress-row" aria-label="Course progress">
-        <span>2 of 8 chapters complete</span>
-        <div class="progress-track" aria-hidden="true"><i class="progress-fill"></i></div>
+        <span>Sector 01 · Semiconductors — 3 of 8 chapters complete</span>
+        <div class="progress-track" aria-hidden="true"><i class="progress-fill" style="width:37.5%"></i></div>
       </div>
     </div>
   </header>
 
-  <nav class="tab-shell" aria-label="Research chapters">
+  <nav class="sector-shell" aria-label="Sectors">
+    <div class="wrap sector-tabs">
+      <button class="sector-tab" data-sector-tab="semiconductors" aria-selected="true">Semiconductors</button>
+      <button class="sector-tab" data-sector-tab="energy" aria-selected="false">Energy <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="healthcare" aria-selected="false">Healthcare <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="ai" aria-selected="false">AI <span class="soon-badge">soon</span></button>
+    </div>
+    <div class="wrap mobile-sectors">
+      <label for="sector-select">Sector</label>
+      <select id="sector-select" aria-label="Choose a sector">
+        <option value="semiconductors">Semiconductors</option><option value="energy">Energy</option><option value="healthcare">Healthcare</option><option value="ai">AI</option>
+      </select>
+    </div>
+  </nav>
+
+  <nav class="tab-shell" id="chapter-nav" aria-label="Semiconductor chapters">
     <div class="wrap tabs" role="tablist">
       <button class="tab" id="tab-map" role="tab" aria-selected="true" aria-controls="panel-map" data-target="map">Map</button>
       <button class="tab" id="tab-silicon" role="tab" aria-selected="false" aria-controls="panel-silicon" data-target="silicon">1 · Silicon</button>
@@ -445,7 +475,7 @@
   </nav>
 
   <main class="wrap">
-    <section class="panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map" data-panel="map">
+    <section class="panel" data-sector="semiconductors" id="panel-map" role="tabpanel" aria-labelledby="tab-map" data-panel="map">
       <div class="panel-head"><div><p class="chapter-label">The learning map</p><h2>Eight layers, one machine</h2><p class="panel-intro">Follow the chain from raw material to the rack-scale computers training frontier AI models.</p></div></div>
       <div class="map-grid">
         <article class="map-card complete-card"><div class="map-top"><span class="map-num">01</span><span class="map-state complete">Complete</span></div><h3>Sand → Silicon</h3><p>Quartz to electronic-grade silicon and atomically flat wafers.</p></article>
@@ -468,7 +498,7 @@
       </div>
     </section>
 
-    <section class="panel" id="panel-silicon" role="tabpanel" aria-labelledby="tab-silicon" data-panel="silicon" hidden>
+    <section class="panel" data-sector="semiconductors" id="panel-silicon" role="tabpanel" aria-labelledby="tab-silicon" data-panel="silicon" hidden>
       <div class="panel-head"><div><p class="chapter-label">Chapter 1</p><h2>Sand → Silicon</h2><p class="panel-intro">From beach to blank canvas — how sand becomes the most perfect manufactured object on Earth.</p></div><span class="status">Complete</span></div>
       <figure class="process-flow" aria-labelledby="flow-caption">
         <figcaption class="figure-label" id="flow-caption">THE MATERIAL JOURNEY</figcaption>
@@ -631,7 +661,7 @@
       </div>
     </section>
 
-    <section class="panel" id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" data-panel="fab" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 2</p><h2>The Fab</h2><p class="panel-intro">Inside the most expensive factories on Earth — Follow a single wafer from blank disc to finished chips — transistors first, wiring floor by floor, ≈100 layers of light and chemistry.</p></div><span class="status">Complete</span></div><p>Inside the most expensive factories on Earth — where machines print with light that air itself absorbs, a speck of dust is a catastrophe, and three companies decide what "advanced" means.</p>
+    <section class="panel" data-sector="semiconductors" id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" data-panel="fab" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 2</p><h2>The Fab</h2><p class="panel-intro">Inside the most expensive factories on Earth — Follow a single wafer from blank disc to finished chips — transistors first, wiring floor by floor, ≈100 layers of light and chemistry.</p></div><span class="status">Complete</span></div><p>Inside the most expensive factories on Earth — where machines print with light that air itself absorbs, a speck of dust is a catastrophe, and three companies decide what "advanced" means.</p>
       <div class="stats" aria-label="Key numbers">
         <div class="stat"><strong>$20B+</strong><span>cost of a leading-edge fab</span></div>
         <div class="stat"><strong>13.5nm</strong><span>wavelength of EUV light</span></div>
@@ -1247,7 +1277,7 @@
         <details><summary>The economics in one line</summary><div class="detail-body"><p>Fab economics = wafers × dies per wafer × yield × price, set against $20B of capex depreciating over ~5 years. Only massive scale plus elite yields survive — which is why just three companies remain at the leading edge.</p></div></details>
       </div>
 </section>
-    <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip Design</h2><p class="panel-intro">Design happens before the fab prints a single transistor — Follow an idea as it becomes code, gates, geometry, and finally the mask data the fab prints. The fab only manufactures what design delivers; tapeout is the handoff.</p></div><span class="status">Complete</span></div><p>Everything in Chapter 2 — the scanners, the etchers, the hundred-layer loop — prints a pattern that already exists. Somebody had to invent that pattern first. This chapter follows one chip from a whiteboard idea to <strong>tapeout</strong>, the moment the finished design is handed to the fab. It takes years, costs hundreds of millions of dollars, and runs almost entirely on software from three companies.</p>
+    <section class="panel" data-sector="semiconductors" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip Design</h2><p class="panel-intro">Design happens before the fab prints a single transistor — Follow an idea as it becomes code, gates, geometry, and finally the mask data the fab prints. The fab only manufactures what design delivers; tapeout is the handoff.</p></div><span class="status">Complete</span></div><p>Everything in Chapter 2 — the scanners, the etchers, the hundred-layer loop — prints a pattern that already exists. Somebody had to invent that pattern first. This chapter follows one chip from a whiteboard idea to <strong>tapeout</strong>, the moment the finished design is handed to the fab. It takes years, costs hundreds of millions of dollars, and runs almost entirely on software from three companies.</p>
       <div class="stats" aria-label="Key numbers">
         <div class="stat"><strong>50B+</strong><span>transistors on a flagship chip</span></div>
         <div class="stat"><strong>25,000+</strong><span>design rules checked at 3nm</span></div>
@@ -1436,13 +1466,13 @@
           <p><strong>NVIDIA</strong> (USA) — the standard. <strong>AMD</strong> (USA) — Instinct accelerators, chiplets-first. <strong>Broadcom</strong> (USA) and <strong>Marvell</strong> (USA) — custom AI silicon for the hyperscalers (Google's TPUs are Broadcom-designed). <strong>MediaTek</strong> (Taiwan) — mobile and increasingly AI-adjacent. Every one of them is fabless: designed in California or Hsinchu, printed in Taiwan.</p>
         </aside></div>
       </details></section>
-    <section class="panel" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>The package becomes the product</h3><p>This chapter will show why connecting dies is now as strategically important as printing them.</p><ul class="roadmap-list"><li>Chiplets and multi-die design</li><li>TSMC CoWoS and silicon interposers</li><li>How packaging went from afterthought to bottleneck</li><li>Why CoWoS constrained AI GPU supply in 2023–24</li></ul></article><article class="roadmap-card"><span class="coming">Spotted early</span><h3>Two companies Hugo found before the chapter</h3><p>Filed here because they belong to packaging — the full story lands when we cover this chapter.</p><div class="details-stack"><details><summary>Kyocera — Japan · the ceramics giant</summary><div class="detail-body"><p>Founded in 1959 as Kyoto Ceramic by Kazuo Inamori. Makes ceramic packages and ceramic substrates for chips — the rugged housings and interconnect bases that protect dies and wire them to the outside world, especially where reliability matters: automotive, industrial, aerospace.</p></div></details><details><summary>Ajinomoto — Japan · the MSG company inside every GPU</summary><div class="detail-body"><p>Yes, the umami-seasoning company. Ajinomoto's ABF (Ajinomoto Build-up Film) — derived from food-packaging film technology — is the ultra-thin insulating layer laminated into the organic substrates that CPUs, GPUs, and AI accelerators sit on. It carries the microscopic wiring from the die out to the circuit board. Nearly every advanced chip rides on ABF, and its shortage helped constrain chip supply in 2021–22.</p></div></details></div></article></section>
-    <section class="panel" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" data-panel="memory" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 5</p><h2>Memory</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Keeping the accelerator fed</h3><p>This chapter will explain why compute without bandwidth is stranded silicon.</p><ul class="roadmap-list"><li>DRAM and NAND basics</li><li>HBM3E → HBM4</li><li>SK hynix, Samsung, and Micron</li><li>Why HBM is the other half of every AI accelerator</li></ul></article></section>
-    <section class="panel" id="panel-interconnect" role="tabpanel" aria-labelledby="tab-interconnect" data-panel="interconnect" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 6</p><h2>Interconnect</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Turning chips into one computer</h3><p>This chapter will separate the two networking problems inside an AI cluster.</p><ul class="roadmap-list"><li>NVLink for scale-up inside the rack</li><li>InfiniBand for scale-out between racks</li><li>Ethernet's competing path</li><li>Bandwidth, latency, topology, and congestion</li></ul></article></section>
-    <section class="panel" id="panel-systems" role="tabpanel" aria-labelledby="tab-systems" data-panel="systems" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 7</p><h2>The System</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Rack-scale AI factories</h3><p>This chapter will assemble the silicon, memory, networking, power, and cooling into a complete machine.</p><ul class="roadmap-list"><li>DGX and HGX boards → NVL72 racks</li><li>72 GPUs + 36 Grace CPUs, liquid-cooled</li><li>Grace CPU + Blackwell GPU anatomy</li><li>Vera Rubin next: Rubin GPU + Vera CPU + HBM4</li></ul></article></section>
-    <section class="panel" id="panel-money" role="tabpanel" aria-labelledby="tab-money" data-panel="money" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 8</p><h2>The Money &amp; the Map</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Where power and profits pool</h3><p>This chapter will connect the technical stack to the industry's financial cycles and geopolitical fault lines.</p><ul class="roadmap-list"><li>Where margins pool in the value chain</li><li>Capex cycles — and why memory is brutally cyclical</li><li>Taiwan concentration</li><li>CHIPS Act and export controls on China</li></ul></article></section>
+    <section class="panel" data-sector="semiconductors" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>The package becomes the product</h3><p>This chapter will show why connecting dies is now as strategically important as printing them.</p><ul class="roadmap-list"><li>Chiplets and multi-die design</li><li>TSMC CoWoS and silicon interposers</li><li>How packaging went from afterthought to bottleneck</li><li>Why CoWoS constrained AI GPU supply in 2023–24</li></ul></article><article class="roadmap-card"><span class="coming">Spotted early</span><h3>Two companies Hugo found before the chapter</h3><p>Filed here because they belong to packaging — the full story lands when we cover this chapter.</p><div class="details-stack"><details><summary>Kyocera — Japan · the ceramics giant</summary><div class="detail-body"><p>Founded in 1959 as Kyoto Ceramic by Kazuo Inamori. Makes ceramic packages and ceramic substrates for chips — the rugged housings and interconnect bases that protect dies and wire them to the outside world, especially where reliability matters: automotive, industrial, aerospace.</p></div></details><details><summary>Ajinomoto — Japan · the MSG company inside every GPU</summary><div class="detail-body"><p>Yes, the umami-seasoning company. Ajinomoto's ABF (Ajinomoto Build-up Film) — derived from food-packaging film technology — is the ultra-thin insulating layer laminated into the organic substrates that CPUs, GPUs, and AI accelerators sit on. It carries the microscopic wiring from the die out to the circuit board. Nearly every advanced chip rides on ABF, and its shortage helped constrain chip supply in 2021–22.</p></div></details></div></article></section>
+    <section class="panel" data-sector="semiconductors" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" data-panel="memory" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 5</p><h2>Memory</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Keeping the accelerator fed</h3><p>This chapter will explain why compute without bandwidth is stranded silicon.</p><ul class="roadmap-list"><li>DRAM and NAND basics</li><li>HBM3E → HBM4</li><li>SK hynix, Samsung, and Micron</li><li>Why HBM is the other half of every AI accelerator</li></ul></article></section>
+    <section class="panel" data-sector="semiconductors" id="panel-interconnect" role="tabpanel" aria-labelledby="tab-interconnect" data-panel="interconnect" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 6</p><h2>Interconnect</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Turning chips into one computer</h3><p>This chapter will separate the two networking problems inside an AI cluster.</p><ul class="roadmap-list"><li>NVLink for scale-up inside the rack</li><li>InfiniBand for scale-out between racks</li><li>Ethernet's competing path</li><li>Bandwidth, latency, topology, and congestion</li></ul></article></section>
+    <section class="panel" data-sector="semiconductors" id="panel-systems" role="tabpanel" aria-labelledby="tab-systems" data-panel="systems" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 7</p><h2>The System</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Rack-scale AI factories</h3><p>This chapter will assemble the silicon, memory, networking, power, and cooling into a complete machine.</p><ul class="roadmap-list"><li>DGX and HGX boards → NVL72 racks</li><li>72 GPUs + 36 Grace CPUs, liquid-cooled</li><li>Grace CPU + Blackwell GPU anatomy</li><li>Vera Rubin next: Rubin GPU + Vera CPU + HBM4</li></ul></article></section>
+    <section class="panel" data-sector="semiconductors" id="panel-money" role="tabpanel" aria-labelledby="tab-money" data-panel="money" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 8</p><h2>The Money &amp; the Map</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Where power and profits pool</h3><p>This chapter will connect the technical stack to the industry's financial cycles and geopolitical fault lines.</p><ul class="roadmap-list"><li>Where margins pool in the value chain</li><li>Capex cycles — and why memory is brutally cyclical</li><li>Taiwan concentration</li><li>CHIPS Act and export controls on China</li></ul></article></section>
 
-<section class="panel" id="panel-beyond" role="tabpanel" aria-labelledby="tab-beyond" data-panel="beyond" hidden><div class="panel-head"><div><p class="chapter-label">Research tracks</p><h2>Beyond the Chip</h2><p class="panel-intro">The moats around the moats — photonics, power semis, data centers, energy, and the software underneath it all.</p></div></div>
+<section class="panel" data-sector="semiconductors" id="panel-beyond" role="tabpanel" aria-labelledby="tab-beyond" data-panel="beyond" hidden><div class="panel-head"><div><p class="chapter-label">Research tracks</p><h2>Beyond the Chip</h2><p class="panel-intro">The moats around the moats — photonics, power semis, data centers, energy, and the software underneath it all.</p></div></div>
       <div class="details-stack">
         <details><summary>Photonics — light instead of copper</summary><div class="detail-body"><p><strong>Why it matters:</strong> as AI clusters scale, moving bits with photons (silicon photonics, co-packaged optics) beats copper on power and distance. The interconnect bottleneck is becoming an optics problem.</p><p><strong>The moat question:</strong> who owns the optical interconnect — transceiver incumbents (Coherent, Lumentum), networking giants (Broadcom, Marvell), or startups (Ayar Labs, Lightmatter, Celestial AI)?</p><p><strong>Names to know:</strong> Broadcom, Marvell, Coherent, Lumentum, Ayar Labs, Lightmatter.</p></div></details>
         <details><summary>Power semis — SiC &amp; GaN</summary><div class="detail-body"><p><strong>Why it matters:</strong> silicon carbide and gallium nitride run EVs, fast chargers, solar inverters, and grid gear — anywhere power is converted. SiC boules are grown like Czochralski crystals: same crystal-pulling religion, much harder material.</p><p><strong>The moat question:</strong> substrate quality and scale — who can grow big, defect-free SiC cheapest?</p><p><strong>Names to know:</strong> Wolfspeed, Infineon, STMicroelectronics, ROHM, Onsemi.</p></div></details>
@@ -1453,7 +1483,7 @@
       </div>
     </section>
 
-        <section class="panel" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" data-panel="glossary" hidden>
+        <section class="panel" data-sector="semiconductors" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" data-panel="glossary" hidden>
       <div class="panel-head"><div><p class="chapter-label">Reference</p><h2>Glossary</h2><p class="panel-intro">The terms that make the semiconductor chain legible.</p></div></div>
       <div class="glossary">
         <article class="term"><h3>Metallurgical-grade silicon (MG-Si)</h3><p>Silicon that's 98–99% pure, made by melting quartz with carbon in a giant electric arc furnace. “Metallurgical” just means it's good enough for metal-making — it's mostly mixed into aluminum alloys. But for chips it's still far too dirty. Think of it as crude oil before refining.</p></article>
@@ -1528,9 +1558,27 @@
         <article class="term"><h3>Signoff</h3><p>The formal declaration that a design is ready for manufacturing — verification, timing, and physical checks all passed and owned.</p></article>
       </div>
     </section>
+    <div data-sector="energy" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 02</p><h2>Energy</h2><p class="panel-intro">The sector that powers every other sector — from hydrocarbons to electrons.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From wellhead to wall socket</h3><p>The full energy stack, mapped the same way: raw resource &rarr; conversion &rarr; delivery &rarr; the companies and countries that control each step.</p><ul class="roadmap-list"><li>Oil &amp; gas: upstream, midstream, downstream — the majors, the shales, OPEC+</li><li>Coal: still roughly a third of global electricity</li><li>Nuclear: fission fleets, SMRs, and the uranium supply chain</li><li>Solar: polysilicon to panels — a cousin of the chip industry</li><li>Wind, batteries &amp; storage, and the grid that ties it all together</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="healthcare" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 03</p><h2>Healthcare</h2><p class="panel-intro">From molecule to patient — the most regulated path from lab to market.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From molecule to patient</h3><p>How a drug or device travels from discovery through trials and regulators to the people who need it — and where the economics actually work.</p><ul class="roadmap-list"><li>Pharma &amp; biotech: discovery &rarr; clinical trials &rarr; FDA approval</li><li>Generics &amp; biosimilars: the patent-cliff business</li><li>Medtech &amp; devices: the picks-and-shovels of medicine</li><li>Payers &amp; providers: who actually pays for it all</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="ai" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 04</p><h2>AI</h2><p class="panel-intro">The full due-diligence treatment — the technology, the compute, and the money.</p></div><span class="status">Priority</span></div>
+        <article class="roadmap-card"><span class="coming">Up next</span><h3>From GPUs to agents</h3><p>Semiconductors were the warm-up: this sector traces what all that compute is actually for, and where the value accrues.</p><ul class="roadmap-list"><li>Model labs: OpenAI, Anthropic, Google DeepMind, xAI, Meta</li><li>The compute stack: chips &rarr; data centers &rarr; power — built on Sector 01</li><li>Enterprise adoption: who pays, and why</li><li>The economics: training costs, inference margins, and where profits pool</li></ul></article>
+      </section>
+    </div>
   </main>
 
-  <footer><div class="wrap">Last updated October 2, 2026 · Chapters 1–3 of 8 complete.</div></footer>
+  <footer><div class="wrap">Last updated October 2, 2026 · Sector 01 (Semiconductors): 3 of 8 chapters complete.</div></footer>
 
   <script>
     (function () {
@@ -1564,6 +1612,33 @@
         });
       });
       select.addEventListener('change', function () { activate(select.value, false); });
+    }());
+  </script>
+  <script>
+    (function () {
+      var sTabs = Array.prototype.slice.call(document.querySelectorAll('.sector-tab'));
+      var sSelect = document.getElementById('sector-select');
+      var chapterNav = document.getElementById('chapter-nav');
+      function activateSector(name) {
+        sTabs.forEach(function (t) {
+          t.setAttribute('aria-selected', t.getAttribute('data-sector-tab') === name ? 'true' : 'false');
+        });
+        var activeTab = document.querySelector('#chapter-nav .tab[aria-selected="true"]');
+        var target = activeTab ? activeTab.getAttribute('data-target') : 'map';
+        Array.prototype.forEach.call(document.querySelectorAll('[data-sector]'), function (el) {
+          var sec = el.getAttribute('data-sector');
+          if (sec !== name) { el.hidden = true; return; }
+          if (sec === 'semiconductors') { el.hidden = el.getAttribute('data-panel') !== target; }
+          else { el.hidden = false; }
+        });
+        if (chapterNav) chapterNav.hidden = (name !== 'semiconductors');
+        if (sSelect) sSelect.value = name;
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+      sTabs.forEach(function (t) {
+        t.addEventListener('click', function () { activateSector(t.getAttribute('data-sector-tab')); });
+      });
+      if (sSelect) sSelect.addEventListener('change', function () { activateSector(sSelect.value); });
     }());
   </script>
 </body>

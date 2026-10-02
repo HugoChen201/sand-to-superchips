@@ -413,7 +413,7 @@
       <h1>From Sand to Superchips</h1>
       <p class="subtitle">Hugo's semiconductor research notes — the full stack, from sand to silicon to rack-scale AI systems.</p>
       <div class="progress-row" aria-label="Course progress">
-        <span>1 of 8 chapters complete</span>
+        <span>2 of 8 chapters complete</span>
         <div class="progress-track" aria-hidden="true"><i class="progress-fill"></i></div>
       </div>
     </div>
@@ -444,8 +444,8 @@
     <section class="panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map" data-panel="map">
       <div class="panel-head"><div><p class="chapter-label">The learning map</p><h2>Eight layers, one machine</h2><p class="panel-intro">Follow the chain from raw material to the rack-scale computers training frontier AI models.</p></div></div>
       <div class="map-grid">
-        <article class="map-card complete-card"><div class="map-top"><span class="map-num">01</span><span class="map-state complete">Complete</span></div><h3>Sand → silicon</h3><p>Quartz to electronic-grade silicon and atomically flat wafers.</p></article>
-        <article class="map-card"><div class="map-top"><span class="map-num">02</span><span class="map-state">Coming soon</span></div><h3>The fab</h3><p>Lithography, process nodes, yields; TSMC vs Samsung vs Intel.</p></article>
+        <article class="map-card complete-card"><div class="map-top"><span class="map-num">01</span><span class="map-state complete">Complete</span></div><h3>Sand → Silicon</h3><p>Quartz to electronic-grade silicon and atomically flat wafers.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">02</span><span class="map-state complete">Complete</span></div><h3>The Fab</h3><p>Lithography, process nodes, yields; TSMC vs Samsung vs Intel.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">03</span><span class="map-state">Coming soon</span></div><h3>Chip design</h3><p>Fabless vs foundry vs IDM; NVIDIA's CUDA moat.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">04</span><span class="map-state">Coming soon</span></div><h3>Advanced packaging</h3><p>Chiplets, CoWoS — the new bottleneck.</p></article>
         <article class="map-card"><div class="map-top"><span class="map-num">05</span><span class="map-state">Coming soon</span></div><h3>Memory</h3><p>DRAM/NAND → HBM3E/HBM4; SK hynix, Samsung, Micron.</p></article>
@@ -618,7 +618,186 @@
       </div>
     </section>
 
-    <section class="panel" id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" data-panel="fab" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 2</p><h2>The Fab</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Printing atoms into logic</h3><p>This chapter will unpack the hundreds of steps that turn a blank wafer into working transistors.</p><ul class="roadmap-list"><li>Photolithography (ASML EUV), etch, deposition, doping, and CMP</li><li>What a “process node” actually means now</li><li>Yield as the hidden engine of fab economics</li><li>TSMC vs Samsung vs Intel</li></ul></article></section>
+    <section class="panel" id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" data-panel="fab" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 2</p><h2>The Fab</h2><p class="panel-intro">Inside the most expensive factories on Earth — where light prints transistors and a speck of dust is a catastrophe.</p></div><span class="status">Complete</span></div><p>Inside the most expensive factories on Earth — where machines print with light that air itself absorbs, a speck of dust is a catastrophe, and three companies decide what "advanced" means.</p>
+      <div class="stats" aria-label="Key numbers">
+        <div class="stat"><strong>$20B+</strong><span>cost of a leading-edge fab</span></div>
+        <div class="stat"><strong>13.5nm</strong><span>wavelength of EUV light</span></div>
+        <div class="stat"><strong>$200M+</strong><span>price of one EUV machine</span></div>
+        <div class="stat"><strong>50,000</strong><span>tin droplets fired per second</span></div>
+        <div class="stat"><strong>1,000+</strong><span>process steps per wafer</span></div>
+      </div>
+      <div style="height:26px"></div>
+      <details class="step-card">
+        <summary><span class="step-badge">1</span><span class="step-heading"><span class="step-kicker">Scale</span><span class="step-name">The most expensive factories on Earth</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>A leading-edge fab costs $20 billion or more — pricier than an aircraft carrier, and it starts going obsolete in about five years. The heart of it is the cleanroom: ISO Class 1 air, meaning fewer than 10 particles (0.1 micron and up) in every cubic meter. A human sheds millions of particles per minute — hence the bunny suits, the air showers, the rule that nothing unfiltered ever touches anything.</p>
+          <p>A single wafer spends three to four <em>months</em> inside, traveling between hundreds of tools, accumulating roughly a hundred layers of transistors and wiring one atomic layer at a time.</p>
+          <p class="plain-note"><strong>In plain English:</strong> a fab is a $20B building whose entire job is keeping dust away from silicon while robots print on it for months.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">2</span><span class="step-heading"><span class="step-kicker">Process flow</span><span class="step-name">Deposit, pattern, etch, repeat</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Every one of those ~100 layers is built from the same basic loop:</p>
+          <p><strong>1. Deposit</strong> a thin film — oxide, metal, or photoresist — using CVD, PVD, or ALD (chemical / physical vapor deposition, atomic-layer deposition). <strong>2. Coat</strong> with photoresist, a light-sensitive chemical. <strong>3. Lithography:</strong> project this layer's pattern through a mask. <strong>4. Develop:</strong> wash away the exposed (or unexposed) resist. <strong>5. Etch:</strong> plasma carves the pattern into the film. <strong>6.</strong> Strip the resist, fire dopants into the silicon (ion implantation), clean everything — and repeat.</p>
+          <p>Between loops, CMP (chemical-mechanical polishing) grinds each layer flat to atomic smoothness. Without it, the hundred-story stack would topple like a bad cake.</p>
+          <p class="plain-note"><strong>In plain English:</strong> building a chip is like constructing a 100-story skyscraper by repeating the same ten construction steps on every floor.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">Patterning</span><span class="step-name">Lithography: printing with light</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>A stepper/scanner shines light through a mask (reticle) carrying one layer's pattern, shrinking it 4× onto the wafer's photoresist — a photographic enlarger in reverse. Resolution obeys a brutal law: smallest feature ≈ wavelength ÷ numerical aperture. So for sixty years the industry just shrank the wavelength: visible light → 365nm → 248nm → 193nm deep-UV.</p>
+          <p>Then physics said stop — nothing shorter could pass through lenses. The industry answered with tricks: <strong>immersion lithography</strong> (a film of water between the final lens and the wafer bends light tighter) and <strong>multi-patterning</strong> (printing one layer in two or four passes, like coloring inside the lines twice for finer detail). It worked — 193nm light carried chips from 2001 to ~2019 — but every extra pass multiplies cost and defect risk. The industry needed a shorter wavelength, and only one company on Earth could deliver it.</p>
+          <p class="plain-note"><strong>In plain English:</strong> chip printing is photography in reverse — and the "film grain" is set by the color of light you use.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">ASML</span><span class="step-name">EUV: the $200M machine</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Extreme ultraviolet: 13.5nm wavelength — so short that <strong>air itself absorbs it</strong> (the entire optical path runs in vacuum) and <strong>no lens on Earth transmits it</strong> (every optic is a mirror). Exactly one company makes EUV machines: <strong>ASML of the Netherlands</strong>. Each costs $200M+, weighs ~180 tonnes, arrives in 20 freight containers plus 3 cargo planes, and packs ~100,000 parts. The animation below walks through a single pulse — and it happens 50,000 times per second.</p>
+          <figure class="inline-figure" id="euv-anim">
+            <figcaption class="figure-label">EUV IN MOTION — ONE PULSE, REPEATED 50,000× PER SECOND</figcaption>
+            <style>
+              #euv-anim .euv-g{transition:opacity .45s ease}
+              #euv-anim .euv-drop{animation:euv-fall 1.7s ease-in infinite}
+              @keyframes euv-fall{0%{transform:translateY(0);opacity:0}10%{opacity:1}82%{opacity:1}100%{transform:translateY(150px);opacity:0}}
+              #euv-anim .euv-beam{animation:euv-blink .8s steps(2) infinite}
+              @keyframes euv-blink{50%{opacity:.12}}
+              #euv-anim .euv-plasma{transform-box:fill-box;transform-origin:center;animation:euv-pulse 1.25s ease-in-out infinite}
+              @keyframes euv-pulse{50%{transform:scale(1.3);opacity:.8}}
+              #euv-anim .euv-rays{stroke-dasharray:7 7;animation:euv-dash .9s linear infinite}
+              @keyframes euv-dash{to{stroke-dashoffset:-28}}
+              #euv-anim .euv-scan{animation:euv-scan 2.4s ease-in-out infinite}
+              @keyframes euv-scan{50%{transform:translateX(16px)}}
+              #euv-anim .euv-ctrl{display:flex;align-items:center;gap:10px;margin:12px 2px 0;flex-wrap:wrap}
+              #euv-anim .euv-btn{cursor:pointer;border:1px solid #f5a623;background:transparent;color:#f5a623;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;font-family:inherit}
+              #euv-anim .euv-btn:hover{background:#f5a623;color:#10161e}
+              #euv-anim .euv-dots{display:flex;gap:7px;margin-left:4px}
+              #euv-anim .euv-dot{width:9px;height:9px;border-radius:50%;background:#2d3846;border:none;padding:0;cursor:pointer}
+              #euv-anim .euv-dot.on{background:#f5a623}
+              #euv-anim .euv-cap{color:#edf1f5;font-size:14px;line-height:1.55;margin:10px 2px 0;min-height:70px}
+              #euv-anim .euv-stat{color:#ffc35c;font-size:13px;font-weight:800;margin:6px 2px 0}
+            </style>
+            <svg viewBox="0 0 460 300" role="img" aria-label="Animated schematic of an EUV light source and optical path">
+              <defs>
+                <radialGradient id="euvGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ffd97a"/><stop offset="55%" stop-color="#f5a623" stop-opacity=".85"/><stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#aeb7c2">
+                <g id="euv-g-drop" class="euv-g">
+                  <rect x="52" y="6" width="16" height="16" rx="3" fill="#1c2430" stroke="#607083"/>
+                  <text x="76" y="18">droplet generator</text>
+                  <circle class="euv-drop" cx="60" cy="30" r="6" fill="#c7d0da"/>
+                </g>
+                <g id="euv-g-laser" class="euv-g">
+                  <line class="euv-beam" x1="2" y1="118" x2="50" y2="140" stroke="#f5a623" stroke-width="3"/>
+                  <line class="euv-beam" x1="2" y1="182" x2="50" y2="160" stroke="#f5a623" stroke-width="3"/>
+                  <text x="4" y="105">CO₂ laser</text>
+                </g>
+                <g id="euv-g-plasma" class="euv-g">
+                  <circle class="euv-plasma" cx="60" cy="212" r="26" fill="url(#euvGlow)"/>
+                  <circle cx="60" cy="212" r="9" fill="#fff3d6"/>
+                  <text x="28" y="260">plasma</text>
+                </g>
+                <g id="euv-g-beam" class="euv-g">
+                  <path class="euv-rays" d="M74,212 L150,212 L250,170 L320,220 L392,152 L392,244" fill="none" stroke="#ffc35c" stroke-width="2.5"/>
+                  <path d="M150,172 Q188,212 150,252" fill="none" stroke="#607083" stroke-width="7"/>
+                  <text x="146" y="280">collector</text>
+                  <line x1="238" y1="158" x2="262" y2="182" stroke="#8fa1b3" stroke-width="9"/>
+                  <line x1="308" y1="208" x2="332" y2="232" stroke="#8fa1b3" stroke-width="9"/>
+                  <text x="246" y="140">Bragg mirrors</text>
+                </g>
+                <g id="euv-g-mask" class="euv-g">
+                  <rect x="380" y="118" width="24" height="68" rx="3" fill="#1c2430" stroke="#f5a623" stroke-width="2"/>
+                  <line x1="384" y1="134" x2="400" y2="134" stroke="#f5a623" stroke-width="2"/>
+                  <line x1="384" y1="148" x2="400" y2="148" stroke="#f5a623" stroke-width="2"/>
+                  <line x1="384" y1="162" x2="400" y2="162" stroke="#f5a623" stroke-width="2"/>
+                  <text x="378" y="108">mask</text>
+                </g>
+                <g id="euv-g-wafer" class="euv-g">
+                  <ellipse cx="392" cy="256" rx="36" ry="11" fill="#24303d" stroke="#aeb7c2" stroke-width="2"/>
+                  <g class="euv-scan" stroke="#f5a623" stroke-width="2.5">
+                    <line x1="348" y1="284" x2="366" y2="284"/><path d="M360,279 L367,284 L360,289" fill="none"/>
+                  </g>
+                  <text x="378" y="300">wafer</text>
+                </g>
+              </g>
+            </svg>
+            <div class="euv-ctrl">
+              <button class="euv-btn" id="euv-prev" aria-label="Previous stage">◀</button>
+              <button class="euv-btn" id="euv-next" aria-label="Next stage">▶</button>
+              <button class="euv-btn" id="euv-play" aria-label="Play or pause">⏸</button>
+              <div class="euv-dots" id="euv-dots"></div>
+            </div>
+            <p class="euv-cap" id="euv-cap"></p>
+            <p class="euv-stat" id="euv-stat"></p>
+            <script>
+            (function(){
+              var stages=[
+                {g:["euv-g-drop"],t:"Stage 1 · The droplet",c:"A droplet generator fires 50,000 molten tin droplets per second through the vacuum chamber.",s:"50,000 droplets / second"},
+                {g:["euv-g-drop","euv-g-laser"],t:"Stage 2 · Laser strike",c:"A pre-pulse laser flattens each droplet into a disc; then the main CO₂ laser — built by Cymer in San Diego, which ASML bought in 2013 — vaporizes it.",s:"~20 kW CO₂ drive laser"},
+                {g:["euv-g-plasma"],t:"Stage 3 · Plasma flash",c:"The vaporized tin becomes plasma hotter than the surface of the sun — and it radiates 13.5-nanometer EUV light.",s:"13.5 nm wavelength"},
+                {g:["euv-g-beam"],t:"Stage 4 · The mirror maze",c:"A collector mirror gathers the light; Bragg mirrors of alternating molybdenum/silicon layers — each atomically precise — bounce it along. Each mirror reflects only ~70%, so every photon is precious.",s:"~70% reflectivity per mirror"},
+                {g:["euv-g-beam","euv-g-mask"],t:"Stage 5 · The mask",c:"The light bounces off the reflective mask (reticle), which carries the chip pattern for one layer. One mask per layer, ~100 layers per chip.",s:"1 mask per layer"},
+                {g:["euv-g-beam","euv-g-wafer"],t:"Stage 6 · The wafer",c:"Projection optics shrink the pattern 4× onto the photoresist-coated wafer. The stage steps and scans — die after die, over 150 wafers an hour.",s:"150+ wafers / hour"}
+              ];
+              var ids=["euv-g-drop","euv-g-laser","euv-g-plasma","euv-g-beam","euv-g-mask","euv-g-wafer"];
+              var els={};ids.forEach(function(id){els[id]=document.getElementById(id);});
+              var dotsWrap=document.getElementById("euv-dots");
+              var dots=stages.map(function(_,i){var d=document.createElement("button");d.className="euv-dot";d.setAttribute("aria-label","Go to stage "+(i+1));d.addEventListener("click",function(){go(i);restart();});dotsWrap.appendChild(d);return d;});
+              var cap=document.getElementById("euv-cap"),stat=document.getElementById("euv-stat"),idx=0,timer=null,playing=true;
+              function render(){
+                var on=stages[idx].g;
+                ids.forEach(function(id){if(els[id])els[id].style.opacity=on.indexOf(id)>-1?"1":"0.18";});
+                cap.innerHTML="<strong>"+stages[idx].t+":</strong> "+stages[idx].c;
+                stat.textContent="⌀ "+stages[idx].s;
+                dots.forEach(function(d,i){d.classList.toggle("on",i===idx);});
+                document.getElementById("euv-play").textContent=playing?"⏸":"▶";
+              }
+              function go(i){idx=(i+stages.length)%stages.length;render();}
+              function restart(){if(timer)clearInterval(timer);if(playing)timer=setInterval(function(){go(idx+1);},4500);}
+              document.getElementById("euv-prev").addEventListener("click",function(){go(idx-1);restart();});
+              document.getElementById("euv-next").addEventListener("click",function(){go(idx+1);restart();});
+              document.getElementById("euv-play").addEventListener("click",function(){playing=!playing;if(!playing&&timer)clearInterval(timer);restart();render();});
+              render();restart();
+            })();
+            </script>
+          </figure>
+          <aside class="company-panel">
+            <h4>Companies behind this step</h4>
+            <p>The machine holds ~100,000 parts from ~800 suppliers. The absurdly precise mirrors come from <strong>Carl Zeiss SMT</strong> (Germany) — the smoothest mirrors ever made, polished to sub-atomic accuracy. The CO₂ laser source comes from <strong>Cymer</strong> (San Diego), which ASML bought in 2013. And <strong>ASML</strong> itself (Netherlands, the only EUV maker on Earth) integrates it all.</p>
+          </aside>
+          <p class="plain-note"><strong>In plain English:</strong> ASML figured out how to print with light that air itself blocks — and now holds a monopoly on the most important machine in tech.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">5</span><span class="step-heading"><span class="step-kicker">Nodes</span><span class="step-name">What “3nm” actually means</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Nothing — it's a marketing label. "3nm" hasn't described any physical dimension of a transistor since ~2005. What actually keeps shrinking: <strong>transistor density</strong> (hundreds of millions of transistors per square millimeter on leading nodes), contacted gate pitch, and metal pitch. The transistor itself kept reinventing its shape to fight leakage: flat planar transistors → <strong>FinFETs</strong> (fins sticking up out of the silicon, 2011) → <strong>nanosheets / gate-all-around</strong> (ribbons of silicon fully wrapped by the gate, shipping since ~2022–2024).</p>
+          <p>Intel, tired of the nanometer marketing spiral, renamed its nodes in angstroms (20A, 18A — an angstrom is a tenth of a nanometer). The lesson: compare density, power, and performance — never the nanometer number.</p>
+          <p class="plain-note"><strong>In plain English:</strong> "3nm" is a brand name, not a measurement. Judge a node by transistors per square millimeter.</p>
+        </div></div>
+      </details>
+      <details class="step-card">
+        <summary><span class="step-badge">6</span><span class="step-heading"><span class="step-kicker">Economics</span><span class="step-name">Yield: the hidden engine</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p><strong>Yield</strong> = working dies ÷ total dies on the wafer. One killer defect destroys a die — so the bigger the die, the <em>exponentially</em> worse the yield. This is the quiet reason AI GPUs cost what they do: NVIDIA's biggest dies push ~800mm², near the <strong>reticle limit</strong> (the largest field a lithography machine can print in one shot), so each wafer yields only a handful of good ones.</p>
+          <p>New nodes start with terrible yields and climb a learning curve as engineers hunt down defect sources, tool by tool. The foundry that climbs fastest wins the economics — and this operational grind, more than any single invention, is TSMC's superpower.</p>
+          <p class="plain-note"><strong>In plain English:</strong> making chips isn't just about printing small — it's about printing small <em>without mistakes</em>, millions of times over.</p>
+        </div></div>
+      </details>
+      <p class="figure-label" style="margin-top:34px">THE PLAYERS</p>
+      <div class="details-stack">
+        <details><summary>TSMC — Taiwan · the foundry that ate the world</summary><div class="detail-body"><p>Founded 1987 by Morris Chang, who invented the pure-play foundry: manufacture for everyone, compete with no one. That's why Apple, NVIDIA, AMD, and Broadcom trust it with their crown jewels. ~60% of foundry revenue. Its moat isn't one invention but operational excellence — ramping new nodes to high yield faster than anyone else.</p></div></details>
+        <details><summary>Samsung — South Korea · the integrated giant</summary><div class="detail-body"><p>The world's #1 memory maker and foundry #2. First to ship gate-all-around nanosheet transistors (3nm) — but has struggled with yields, a reminder that the transistor shape is only half the battle.</p></div></details>
+        <details><summary>Intel — USA · the fallen king trying to return</summary><div class="detail-body"><p>The classic IDM: designs and manufactures its own chips. Lost the process lead in the 2010s after stumbling on 10nm. Now betting the company on angstrom-era nodes (20A, 18A) and selling foundry capacity (IFS) to others.</p></div></details>
+        <details><summary>SMIC — China · boxed in</summary><div class="detail-body"><p>China's national champion, cut off from EUV by export controls. Pushes 193nm DUV multi-patterning to approximate 7nm-class chips — it works, but years behind TSMC at much higher cost per wafer.</p></div></details>
+        <details><summary>The equipment oligopoly — the picks and shovels</summary><div class="detail-body"><p>Five companies supply the large majority of fab tools (WFE): Applied Materials and Lam Research (USA), Tokyo Electron (Japan), ASML (Netherlands), KLA (USA). Four of the five are already in the Semis basket: AMAT, LRCX, KLAC, ASML. When fabs spend $20B, these are the toll collectors.</p></div></details>
+        <details><summary>The economics in one line</summary><div class="detail-body"><p>Fab economics = wafers × dies per wafer × yield × price, set against $20B of capex depreciating over ~5 years. Only massive scale plus elite yields survive — which is why just three companies remain at the leading edge.</p></div></details>
+      </div>
+</section>
     <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip Design</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Architecture becomes silicon</h3><p>This chapter will trace the stack from business model and EDA software to the engines inside an AI accelerator.</p><ul class="roadmap-list"><li>Fabless (NVIDIA, AMD) vs foundry (TSMC) vs IDM (Intel, Samsung, TI)</li><li>EDA tools from Synopsys and Cadence</li><li>CUDA cores and Tensor cores</li><li>NVIDIA's software moat</li></ul></article></section>
     <section class="panel" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>The package becomes the product</h3><p>This chapter will show why connecting dies is now as strategically important as printing them.</p><ul class="roadmap-list"><li>Chiplets and multi-die design</li><li>TSMC CoWoS and silicon interposers</li><li>How packaging went from afterthought to bottleneck</li><li>Why CoWoS constrained AI GPU supply in 2023–24</li></ul></article><article class="roadmap-card"><span class="coming">Spotted early</span><h3>Two companies Hugo found before the chapter</h3><p>Filed here because they belong to packaging — the full story lands when we cover this chapter.</p><div class="details-stack"><details><summary>Kyocera — Japan · the ceramics giant</summary><div class="detail-body"><p>Founded in 1959 as Kyoto Ceramic by Kazuo Inamori. Makes ceramic packages and ceramic substrates for chips — the rugged housings and interconnect bases that protect dies and wire them to the outside world, especially where reliability matters: automotive, industrial, aerospace.</p></div></details><details><summary>Ajinomoto — Japan · the MSG company inside every GPU</summary><div class="detail-body"><p>Yes, the umami-seasoning company. Ajinomoto's ABF (Ajinomoto Build-up Film) — derived from food-packaging film technology — is the ultra-thin insulating layer laminated into the organic substrates that CPUs, GPUs, and AI accelerators sit on. It carries the microscopic wiring from the die out to the circuit board. Nearly every advanced chip rides on ABF, and its shortage helped constrain chip supply in 2021–22.</p></div></details></div></article></section>
     <section class="panel" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" data-panel="memory" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 5</p><h2>Memory</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Keeping the accelerator fed</h3><p>This chapter will explain why compute without bandwidth is stranded silicon.</p><ul class="roadmap-list"><li>DRAM and NAND basics</li><li>HBM3E → HBM4</li><li>SK hynix, Samsung, and Micron</li><li>Why HBM is the other half of every AI accelerator</li></ul></article></section>
@@ -644,11 +823,33 @@
         <article class="term"><h3>Diamond-wire saw</h3><p>The tool that slices the ingot into wafers — a wire coated with diamond dust, since diamond is about the only thing hard enough to cut silicon cleanly.</p></article>
         <article class="term"><h3>LTA (long-term agreement)</h3><p>Multi-year supply contracts between wafer makers and chipmakers, often with the chipmaker prepaying to fund new capacity. They smooth out the industry's boom-bust cycle.</p></article>
         <article class="term"><h3>Wafer qualification</h3><p>The 12–24 month testing gauntlet a chipmaker puts a new wafer supplier through before trusting their wafers in production. One bad batch can scrap millions of dollars of chips — this is the industry's stickiest moat.</p></article>
+        <article class="term"><h3>Fab</h3><p>The factory where wafers become chips. A leading-edge fab costs $20B+ and takes years to build.</p></article>
+        <article class="term"><h3>Cleanroom (ISO class)</h3><p>Dust-free workspace rated by particles per cubic meter. ISO Class 1 — the fab standard — allows fewer than 10 particles (0.1 µm and up) per m³.</p></article>
+        <article class="term"><h3>Photoresist</h3><p>Light-sensitive chemical coated on the wafer; the “photographic film” of chipmaking. Light changes its solubility so patterns can be developed.</p></article>
+        <article class="term"><h3>Reticle / mask</h3><p>Glass plate carrying one layer’s chip pattern at 4× the printed size. A chip needs ~100 of them.</p></article>
+        <article class="term"><h3>Stepper / scanner</h3><p>The lithography machine that projects the mask pattern onto the wafer, stepping die to die.</p></article>
+        <article class="term"><h3>DUV</h3><p>Deep ultraviolet lithography (193 nm) — the workhorse wavelength from 2001 until EUV took over leading nodes.</p></article>
+        <article class="term"><h3>EUV</h3><p>Extreme ultraviolet lithography (13.5 nm). Vacuum optics, all mirrors, one supplier: ASML.</p></article>
+        <article class="term"><h3>Immersion lithography</h3><p>A film of water between the final lens and the wafer, bending 193 nm light tighter for extra resolution.</p></article>
+        <article class="term"><h3>Multi-patterning</h3><p>Printing one layer in two or four passes to beat the resolution limit — at multiplied cost and defect risk.</p></article>
+        <article class="term"><h3>CVD / PVD / ALD</h3><p>Chemical / physical vapor deposition and atomic-layer deposition — the three ways thin films are laid down, atom by atom.</p></article>
+        <article class="term"><h3>Etch</h3><p>Plasma carving that transfers the resist pattern into the film below.</p></article>
+        <article class="term"><h3>Ion implantation</h3><p>Firing dopant atoms (boron, phosphorus) into silicon at high speed to set its electrical flavor.</p></article>
+        <article class="term"><h3>CMP</h3><p>Chemical-mechanical polishing — grinds each layer atomically flat so the hundred-layer stack stays level.</p></article>
+        <article class="term"><h3>Process node</h3><p>A marketing generation label (“3nm”). Compare transistor density, never the nanometer number.</p></article>
+        <article class="term"><h3>FinFET</h3><p>Transistor with a fin-shaped channel rising from the silicon (2011) — better control, less leakage.</p></article>
+        <article class="term"><h3>GAA / nanosheet</h3><p>Gate-all-around: the gate fully wraps ribbons of silicon. The current frontier (~2022+).</p></article>
+        <article class="term"><h3>Yield</h3><p>Working dies ÷ total dies on a wafer. The economic engine of the fab.</p></article>
+        <article class="term"><h3>Defect density</h3><p>Killer defects per unit area — the number yield math runs on.</p></article>
+        <article class="term"><h3>Reticle limit</h3><p>The largest field a scanner can print in one shot (~800 mm²+). Caps how big a single die can be.</p></article>
+        <article class="term"><h3>Foundry</h3><p>A company that manufactures chips designed by others. TSMC invented the pure-play model.</p></article>
+        <article class="term"><h3>IDM</h3><p>Integrated device manufacturer — designs <em>and</em> builds its own chips (Intel, Samsung, TI).</p></article>
+        <article class="term"><h3>WFE</h3><p>Wafer fab equipment — the tool industry itself: Applied Materials, Lam Research, Tokyo Electron, ASML, KLA.</p></article>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap">Last updated October 2, 2026 · Chapter 1 of 8 complete.</div></footer>
+  <footer><div class="wrap">Last updated October 2, 2026 · Chapters 1–2 of 8 complete.</div></footer>
 
   <script>
     (function () {

@@ -654,7 +654,7 @@
           <p>Every one of those ~100 layers is built from the same basic loop:</p>
           <p><strong>1. Deposit</strong> a thin film — oxide, metal, or photoresist — using CVD, PVD, or ALD (chemical / physical vapor deposition, atomic-layer deposition). <strong>2. Coat</strong> with photoresist, a light-sensitive chemical. <strong>3. Lithography:</strong> project this layer's pattern through a mask. <strong>4. Develop:</strong> wash away the exposed (or unexposed) resist. <strong>5. Etch:</strong> plasma carves the pattern into the film. <strong>6.</strong> Strip the resist, fire dopants into the silicon (ion implantation), clean everything — and repeat.</p>
           <p>Between loops, CMP (chemical-mechanical polishing) grinds each layer flat to atomic smoothness. Without it, the hundred-story stack would topple like a bad cake.</p>
-          <p>But what are the hundred layers actually <em>made of</em>? Two acts. <strong>Act one &mdash; FEOL</strong> (front-end-of-line): the transistors themselves, built <em>into</em> the silicon surface. Grow oxide, pattern where each transistor goes, fire dopants in to form source and drain, raise the gate. The wafer still looks flat &mdash; the brains sit in the top hundred nanometers.</p>
+          <p>But what are the hundred layers actually <em>made of</em>? Two acts. <strong>Act one &mdash; FEOL</strong> (front-end-of-line): the transistors themselves, built <em>into</em> the silicon surface. Grow oxide, pattern where each transistor goes, fire dopants in to form source and drain, raise the gate. The wafer still looks flat &mdash; the brains sit in the top hundred nanometers &mdash; and the next step builds one in front of you.</p>
           <p><strong>Act two &mdash; BEOL</strong> (back-end-of-line): the wiring skyscraper. Every floor repeats four moves: blanket the wafer in insulator (dielectric), carve trenches with lithography plus etch, fill them with copper &mdash; <em>damascene</em>, like inlaying metal into wood &mdash; then CMP polish dead flat. Then punch tiny holes down to the floor below and fill them with metal: <strong>vias</strong>, the elevator shafts. Twelve to fifteen floors of copper highways, each insulated from the next.</p>
           <p>Why stack at all? Billions of transistors each need connections, and wires can&rsquo;t cross in two dimensions without shorting. Go vertical &mdash; insulation between floors &mdash; and they cross like highway overpasses. The skyscraper isn&rsquo;t decoration; it&rsquo;s the only way the wiring fits.</p>
           <figure class="inline-figure" id="stack-anim">
@@ -760,7 +760,101 @@
         </div></div>
       </details>
       <details class="step-card">
-        <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">Patterning</span><span class="step-name">Lithography: printing with light</span></span></summary>
+      <details class="step-card">
+        <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">The device</span><span class="step-name">The transistor: the thing we're actually building</span></span></summary>
+        <div class="detail-body"><div class="step-story">
+          <p>Everything in the fab serves one object: the <strong>transistor</strong>, an electrically operated switch. A voltage on the gate opens or closes a conducting channel between the source and the drain &mdash; current flows or it doesn&rsquo;t, 1 or 0. Wire billions of these switches together and you get logic, memory, everything. A modern chip packs over 100 billion of them, each tens of nanometers wide, and every single one has to work.</p>
+          <p>Building one is a dozen litho-etch-deposit loops in miniature: <strong>1.</strong> Etch shallow trenches between future transistors and fill them with oxide &mdash; STI, shallow trench isolation &mdash; so neighbors don&rsquo;t leak into each other. <strong>2.</strong> Deposit the gate dielectric (once plain SiO<sub>2</sub>, now hafnium-based high-k) and the gate electrode on top. <strong>3.</strong> Pattern the gate with lithography and etch. <strong>4.</strong> Blast dopants into the exposed silicon on either side &mdash; ion implantation &mdash; with the gate itself blocking the middle, so source and drain align to it automatically (<em>self-aligned</em>). <strong>5.</strong> Anneal: a flash of heat heals the crystal and activates the dopants. <strong>6.</strong> Lay silicide and tungsten contacts &mdash; tiny plugs reaching down to source, drain, and gate &mdash; the on-ramps to the wiring skyscraper above.</p>
+          <p>The transistor has been reinvented twice to keep shrinking: planar &rarr; <strong>FinFET</strong> (2011, the channel stands up as a fin the gate wraps on three sides) &rarr; <strong>gate-all-around / nanosheet</strong> (2020s, the gate surrounds the channel completely). Each reinvention buys better electrostatic control &mdash; less leakage when the switch is &ldquo;off.&rdquo;</p>
+          <figure class="inline-figure" id="tr-anim">
+            <figcaption class="figure-label">BUILDING A TRANSISTOR &mdash; ONE MOSFET IN CROSS-SECTION (NOT TO SCALE)</figcaption>
+            <style>
+              #tr-anim .tr-g{transition:opacity .45s ease}
+              #tr-anim .tr-ctrl{display:flex;align-items:center;gap:10px;margin:12px 2px 0;flex-wrap:wrap}
+              #tr-anim .tr-btn{cursor:pointer;border:1px solid #f5a623;background:transparent;color:#f5a623;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;font-family:inherit}
+              #tr-anim .tr-btn:hover{background:#f5a623;color:#10161e}
+              #tr-anim .tr-dots{display:flex;gap:7px;margin-left:4px}
+              #tr-anim .tr-dot{width:9px;height:9px;border-radius:50%;background:#2d3846;border:none;padding:0;cursor:pointer}
+              #tr-anim .tr-dot.on{background:#f5a623}
+              #tr-anim .tr-cap{color:#edf1f5;font-size:14px;line-height:1.55;margin:10px 2px 0;min-height:70px}
+              #tr-anim .tr-stat{color:#ffc35c;font-size:13px;font-weight:800;margin:6px 2px 0}
+            </style>
+            <svg viewBox="0 0 460 300" role="img" aria-label="Animated cross-section of a MOSFET transistor being built">
+              <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#aeb7c2">
+                <g id="tr-g-base" class="tr-g">
+                  <rect x="60" y="150" width="340" height="100" fill="#39424e" stroke="#607083" stroke-width="2"/>
+                  <text x="230" y="270" text-anchor="middle" fill="#7d8ea3">p-type silicon &mdash; the canvas</text>
+                </g>
+                <g id="tr-g-sti" class="tr-g">
+                  <rect x="84" y="150" width="36" height="44" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="340" y="150" width="36" height="44" fill="#e8edf3" opacity="0.92"/>
+                  <text x="64" y="140">STI: oxide walls isolate neighbors</text>
+                </g>
+                <g id="tr-g-blanket" class="tr-g">
+                  <rect x="120" y="144" width="220" height="6" fill="#58a6ff"/>
+                  <rect x="120" y="128" width="220" height="16" fill="#8a94a6"/>
+                  <text x="64" y="118">gate dielectric + electrode deposited</text>
+                </g>
+                <g id="tr-g-pillar" class="tr-g">
+                  <rect x="215" y="144" width="30" height="6" fill="#58a6ff"/>
+                  <rect x="215" y="128" width="30" height="16" fill="#8a94a6"/>
+                  <rect x="140" y="150" width="62" height="34" fill="#f5a623" opacity="0.5"/>
+                  <rect x="258" y="150" width="62" height="34" fill="#f5a623" opacity="0.5"/>
+                  <text x="64" y="118">gate patterned &middot; source/drain implanted</text>
+                </g>
+                <g id="tr-g-contact" class="tr-g">
+                  <rect x="162" y="104" width="16" height="46" fill="#c7d0da"/>
+                  <rect x="282" y="104" width="16" height="46" fill="#c7d0da"/>
+                  <rect x="222" y="96" width="16" height="32" fill="#c7d0da"/>
+                  <text x="170" y="96" text-anchor="middle" fill="#ffc35c" font-weight="700">source</text>
+                  <text x="290" y="96" text-anchor="middle" fill="#ffc35c" font-weight="700">drain</text>
+                  <text x="230" y="88" text-anchor="middle" fill="#ffc35c" font-weight="700">gate</text>
+                </g>
+              </g>
+            </svg>
+            <div class="tr-ctrl">
+              <button class="tr-btn" id="tr-prev" aria-label="Previous stage">&#9664;</button>
+              <button class="tr-btn" id="tr-next" aria-label="Next stage">&#9654;</button>
+              <button class="tr-btn" id="tr-play" aria-label="Play or pause">&#10074;&#10074;</button>
+              <div class="tr-dots" id="tr-dots"></div>
+            </div>
+            <p class="tr-cap" id="tr-cap"></p>
+            <p class="tr-stat" id="tr-stat"></p>
+            <script>
+            (function(){
+              var stages=[
+                {g:["tr-g-base"],t:"Stage 1 · The canvas",c:"P-type silicon — lightly doped, featureless. Every transistor starts here.",s:"p-Si wafer"},
+                {g:["tr-g-base","tr-g-sti"],t:"Stage 2 · Isolation",c:"Shallow trenches etched and filled with oxide (STI) — walls so neighboring transistors can’t leak into each other.",s:"shallow trench isolation"},
+                {g:["tr-g-base","tr-g-sti","tr-g-blanket"],t:"Stage 3 · Gate stack",c:"The gate dielectric (high-k) and gate electrode are deposited as continuous films across the wafer.",s:"high-k + metal gate"},
+                {g:["tr-g-base","tr-g-sti","tr-g-pillar"],t:"Stage 4 · Pattern + dope",c:"Lithography and etch carve the gate pillar; ion implantation dopes source and drain — the gate blocks the middle, so they self-align to it.",s:"self-aligned S/D"},
+                {g:["tr-g-base","tr-g-sti","tr-g-pillar","tr-g-contact"],t:"Stage 5 · Contacts",c:"Tungsten plugs reach down to source, drain, and gate — the on-ramps to the copper skyscraper built next.",s:"→ BEOL wiring"}
+              ];
+              var ids=["tr-g-base","tr-g-sti","tr-g-blanket","tr-g-pillar","tr-g-contact"];
+              var els={};ids.forEach(function(id){els[id]=document.getElementById(id);});
+              var dotsWrap=document.getElementById("tr-dots");
+              var dots=stages.map(function(_,i){var d=document.createElement("button");d.className="tr-dot";d.setAttribute("aria-label","Go to stage "+(i+1));d.addEventListener("click",function(){go(i);restart();});dotsWrap.appendChild(d);return d;});
+              var cap=document.getElementById("tr-cap"),stat=document.getElementById("tr-stat"),idx=0,timer=null,playing=true;
+              function render(){
+                var on=stages[idx].g;
+                ids.forEach(function(id){if(els[id])els[id].style.opacity=on.indexOf(id)>-1?"1":"0.15";});
+                cap.innerHTML="<strong>"+stages[idx].t+":</strong> "+stages[idx].c;
+                stat.textContent="⌀ "+stages[idx].s;
+                dots.forEach(function(d,i){d.classList.toggle("on",i===idx);});
+                document.getElementById("tr-play").textContent=playing?"⏸":"▶";
+              }
+              function go(i){idx=(i+stages.length)%stages.length;render();}
+              function restart(){if(timer)clearInterval(timer);if(playing)timer=setInterval(function(){go(idx+1);},4500);}
+              document.getElementById("tr-prev").addEventListener("click",function(){go(idx-1);restart();});
+              document.getElementById("tr-next").addEventListener("click",function(){go(idx+1);restart();});
+              document.getElementById("tr-play").addEventListener("click",function(){playing=!playing;if(!playing&&timer)clearInterval(timer);restart();render();});
+              render();restart();
+            })();
+            </script>
+          </figure>
+          <p class="plain-note"><strong>In plain English:</strong> a transistor is a light switch for electrons &mdash; and the fab builds 100 billion of them before it builds anything else.</p>
+        </div></div>
+      </details>
+        <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">Patterning</span><span class="step-name">Lithography: printing with light</span></span></summary>
         <div class="detail-body"><div class="step-story">
           <p>A stepper/scanner shines light through a mask (reticle) carrying one layer's pattern, shrinking it 4× onto the wafer's photoresist — a photographic enlarger in reverse. Resolution obeys a brutal law: smallest feature ≈ wavelength ÷ numerical aperture. So for sixty years the industry just shrank the wavelength: visible light → 365nm → 248nm → 193nm deep-UV.</p>
           <p>Then physics said stop — nothing shorter could pass through lenses. The industry answered with tricks: <strong>immersion lithography</strong> (a film of water between the final lens and the wafer bends light tighter) and <strong>multi-patterning</strong> (printing one layer in two or four passes, like coloring inside the lines twice for finer detail). It worked — 193nm light carried chips from 2001 to ~2019 — but every extra pass multiplies cost and defect risk. The industry needed a shorter wavelength, and only one company on Earth could deliver it.</p>
@@ -843,7 +937,7 @@
         </div></div>
       </details>
       <details class="step-card">
-        <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">ASML</span><span class="step-name">EUV: the $200M machine</span></span></summary>
+        <summary><span class="step-badge">5</span><span class="step-heading"><span class="step-kicker">ASML</span><span class="step-name">EUV: the $200M machine</span></span></summary>
         <div class="detail-body"><div class="step-story">
           <p>Extreme ultraviolet: 13.5nm wavelength — so short that <strong>air itself absorbs it</strong> (the entire optical path runs in vacuum) and <strong>no lens on Earth transmits it</strong> (every optic is a mirror). Exactly one company makes EUV machines: <strong>ASML of the Netherlands</strong>. Each costs $200M+, weighs ~180 tonnes, arrives in 20 freight containers plus 3 cargo planes, and packs ~100,000 parts. The animation below walks through a single pulse — and it happens 50,000 times per second.</p>
           <figure class="inline-figure" id="euv-anim">
@@ -980,7 +1074,7 @@
         </div></div>
       </details>
       <details class="step-card">
-        <summary><span class="step-badge">5</span><span class="step-heading"><span class="step-kicker">Nodes</span><span class="step-name">What “3nm” actually means</span></span></summary>
+        <summary><span class="step-badge">6</span><span class="step-heading"><span class="step-kicker">Nodes</span><span class="step-name">What “3nm” actually means</span></span></summary>
         <div class="detail-body"><div class="step-story">
           <p>Nothing — it's a marketing label. "3nm" hasn't described any physical dimension of a transistor since ~2005. What actually keeps shrinking: <strong>transistor density</strong> (hundreds of millions of transistors per square millimeter on leading nodes), contacted gate pitch, and metal pitch. The transistor itself kept reinventing its shape to fight leakage: flat planar transistors → <strong>FinFETs</strong> (fins sticking up out of the silicon, 2011) → <strong>nanosheets / gate-all-around</strong> (ribbons of silicon fully wrapped by the gate, shipping since ~2022–2024).</p>
           <p>Intel, tired of the nanometer marketing spiral, renamed its nodes in angstroms (20A, 18A — an angstrom is a tenth of a nanometer). The lesson: compare density, power, and performance — never the nanometer number.</p>
@@ -988,7 +1082,7 @@
         </div></div>
       </details>
       <details class="step-card">
-        <summary><span class="step-badge">6</span><span class="step-heading"><span class="step-kicker">Economics</span><span class="step-name">Yield: the hidden engine</span></span></summary>
+        <summary><span class="step-badge">7</span><span class="step-heading"><span class="step-kicker">Economics</span><span class="step-name">Yield: the hidden engine</span></span></summary>
         <div class="detail-body"><div class="step-story">
           <p><strong>Yield</strong> = working dies ÷ total dies on the wafer. One killer defect destroys a die — so the bigger the die, the <em>exponentially</em> worse the yield. This is the quiet reason AI GPUs cost what they do: NVIDIA's biggest dies push ~800mm², near the <strong>reticle limit</strong> (the largest field a lithography machine can print in one shot), so each wafer yields only a handful of good ones.</p>
           <p>New nodes start with terrible yields and climb a learning curve as engineers hunt down defect sources, tool by tool. The foundry that climbs fastest wins the economics — and this operational grind, more than any single invention, is TSMC's superpower.</p>
@@ -1061,6 +1155,8 @@
         <article class="term"><h3>FEOL / BEOL</h3><p>Front-end-of-line (transistors, built <em>into</em> the silicon) vs back-end-of-line (the copper wiring skyscraper stacked on top).</p></article>
         <article class="term"><h3>Via</h3><p>A vertical metal plug stitching one wiring floor to the next &mdash; the elevator shaft of the chip.</p></article>
         <article class="term"><h3>Damascene</h3><p>The inlay technique for copper wiring: etch trenches in the insulator, fill with copper, polish flat. Named for Damascus metal inlay.</p></article>
+        <article class="term"><h3>MOSFET</h3><p>The transistor in every chip: a gate voltage opens or closes a conducting channel between source and drain &mdash; an electrically operated switch. Billions per chip.</p></article>
+        <article class="term"><h3>STI</h3><p>Shallow trench isolation &mdash; oxide-filled trenches between transistors so neighbors can&rsquo;t leak into each other.</p></article>
         <article class="term"><h3>CVD / PVD / ALD</h3><p>Chemical / physical vapor deposition and atomic-layer deposition — the three ways thin films are laid down, atom by atom.</p></article>
         <article class="term"><h3>Etch</h3><p>Plasma carving that transfers the resist pattern into the film below.</p></article>
         <article class="term"><h3>Ion implantation</h3><p>Firing dopant atoms (boron, phosphorus) into silicon at high speed to set its electrical flavor.</p></article>

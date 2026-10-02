@@ -654,6 +654,108 @@
           <p>Every one of those ~100 layers is built from the same basic loop:</p>
           <p><strong>1. Deposit</strong> a thin film — oxide, metal, or photoresist — using CVD, PVD, or ALD (chemical / physical vapor deposition, atomic-layer deposition). <strong>2. Coat</strong> with photoresist, a light-sensitive chemical. <strong>3. Lithography:</strong> project this layer's pattern through a mask. <strong>4. Develop:</strong> wash away the exposed (or unexposed) resist. <strong>5. Etch:</strong> plasma carves the pattern into the film. <strong>6.</strong> Strip the resist, fire dopants into the silicon (ion implantation), clean everything — and repeat.</p>
           <p>Between loops, CMP (chemical-mechanical polishing) grinds each layer flat to atomic smoothness. Without it, the hundred-story stack would topple like a bad cake.</p>
+          <p>But what are the hundred layers actually <em>made of</em>? Two acts. <strong>Act one &mdash; FEOL</strong> (front-end-of-line): the transistors themselves, built <em>into</em> the silicon surface. Grow oxide, pattern where each transistor goes, fire dopants in to form source and drain, raise the gate. The wafer still looks flat &mdash; the brains sit in the top hundred nanometers.</p>
+          <p><strong>Act two &mdash; BEOL</strong> (back-end-of-line): the wiring skyscraper. Every floor repeats four moves: blanket the wafer in insulator (dielectric), carve trenches with lithography plus etch, fill them with copper &mdash; <em>damascene</em>, like inlaying metal into wood &mdash; then CMP polish dead flat. Then punch tiny holes down to the floor below and fill them with metal: <strong>vias</strong>, the elevator shafts. Twelve to fifteen floors of copper highways, each insulated from the next.</p>
+          <p>Why stack at all? Billions of transistors each need connections, and wires can&rsquo;t cross in two dimensions without shorting. Go vertical &mdash; insulation between floors &mdash; and they cross like highway overpasses. The skyscraper isn&rsquo;t decoration; it&rsquo;s the only way the wiring fits.</p>
+          <figure class="inline-figure" id="stack-anim">
+            <figcaption class="figure-label">BUILDING THE SKYSCRAPER &mdash; ONE DIE IN CROSS-SECTION (NOT TO SCALE)</figcaption>
+            <style>
+              #stack-anim .st-g{transition:opacity .45s ease}
+              #stack-anim .st-ctrl{display:flex;align-items:center;gap:10px;margin:12px 2px 0;flex-wrap:wrap}
+              #stack-anim .st-btn{cursor:pointer;border:1px solid #f5a623;background:transparent;color:#f5a623;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;font-family:inherit}
+              #stack-anim .st-btn:hover{background:#f5a623;color:#10161e}
+              #stack-anim .st-dots{display:flex;gap:7px;margin-left:4px}
+              #stack-anim .st-dot{width:9px;height:9px;border-radius:50%;background:#2d3846;border:none;padding:0;cursor:pointer}
+              #stack-anim .st-dot.on{background:#f5a623}
+              #stack-anim .st-cap{color:#edf1f5;font-size:14px;line-height:1.55;margin:10px 2px 0;min-height:70px}
+              #stack-anim .st-stat{color:#ffc35c;font-size:13px;font-weight:800;margin:6px 2px 0}
+            </style>
+            <svg viewBox="0 0 460 330" role="img" aria-label="Animated cross-section of a chip being built layer by layer">
+              <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#aeb7c2">
+                <g id="st-g-base" class="st-g">
+                  <rect x="40" y="258" width="380" height="48" fill="#39424e" stroke="#607083" stroke-width="2"/>
+                  <text x="230" y="324" text-anchor="middle" fill="#7d8ea3">silicon wafer &mdash; the foundation</text>
+                </g>
+                <g id="st-g-feol" class="st-g">
+                  <g>
+                    <rect x="98" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="128" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="115" y="232" width="10" height="26" fill="#58a6ff"/>
+                    <rect x="208" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="238" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="225" y="232" width="10" height="26" fill="#58a6ff"/>
+                    <rect x="318" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="348" y="240" width="14" height="18" fill="#7d8ea3"/><rect x="335" y="232" width="10" height="26" fill="#58a6ff"/>
+                  </g>
+                  <text x="44" y="226">transistors (FEOL)</text>
+                </g>
+                <g id="st-g-m1" class="st-g">
+                  <rect x="40" y="210" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="219" width="56" height="10" fill="#f5a623"/><rect x="202" y="219" width="56" height="10" fill="#f5a623"/><rect x="324" y="219" width="56" height="10" fill="#f5a623"/>
+                  <text x="44" y="204">metal floor 1 &mdash; copper inlaid in insulator</text>
+                </g>
+                <g id="st-g-via2" class="st-g">
+                  <rect x="104" y="202" width="10" height="8" fill="#f5a623"/><rect x="226" y="202" width="10" height="8" fill="#f5a623"/><rect x="348" y="202" width="10" height="8" fill="#f5a623"/>
+                  <rect x="40" y="174" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="183" width="56" height="10" fill="#f5a623"/><rect x="202" y="183" width="56" height="10" fill="#f5a623"/><rect x="324" y="183" width="56" height="10" fill="#f5a623"/>
+                  <text x="44" y="168">vias stitch the floors &middot; metal floor 2</text>
+                </g>
+                <g id="st-g-tower" class="st-g">
+                  <rect x="104" y="166" width="10" height="8" fill="#f5a623"/><rect x="226" y="166" width="10" height="8" fill="#f5a623"/><rect x="348" y="166" width="10" height="8" fill="#f5a623"/>
+                  <rect x="40" y="138" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="147" width="56" height="10" fill="#f5a623"/><rect x="202" y="147" width="56" height="10" fill="#f5a623"/><rect x="324" y="147" width="56" height="10" fill="#f5a623"/>
+                  <rect x="104" y="130" width="10" height="8" fill="#f5a623"/><rect x="226" y="130" width="10" height="8" fill="#f5a623"/><rect x="348" y="130" width="10" height="8" fill="#f5a623"/>
+                  <rect x="40" y="102" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="111" width="56" height="10" fill="#f5a623"/><rect x="202" y="111" width="56" height="10" fill="#f5a623"/><rect x="324" y="111" width="56" height="10" fill="#f5a623"/>
+                  <rect x="104" y="94" width="10" height="8" fill="#f5a623"/><rect x="226" y="94" width="10" height="8" fill="#f5a623"/><rect x="348" y="94" width="10" height="8" fill="#f5a623"/>
+                  <rect x="40" y="66" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="75" width="56" height="10" fill="#f5a623"/><rect x="202" y="75" width="56" height="10" fill="#f5a623"/><rect x="324" y="75" width="56" height="10" fill="#f5a623"/>
+                  <rect x="104" y="58" width="10" height="8" fill="#f5a623"/><rect x="226" y="58" width="10" height="8" fill="#f5a623"/><rect x="348" y="58" width="10" height="8" fill="#f5a623"/>
+                  <rect x="40" y="30" width="380" height="28" fill="#e8edf3" opacity="0.92"/>
+                  <rect x="80" y="39" width="56" height="10" fill="#f5a623"/><rect x="202" y="39" width="56" height="10" fill="#f5a623"/><rect x="324" y="39" width="56" height="10" fill="#f5a623"/>
+                  <text x="44" y="22">floors 3&ndash;6 &mdash; the tower grows (real chips: 12&ndash;15)</text>
+                </g>
+                <g id="st-g-done" class="st-g">
+                  <rect x="40" y="30" width="380" height="276" fill="none" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.7"/>
+                  <text x="424" y="170" text-anchor="middle" fill="#ffc35c" font-weight="700" transform="rotate(-90 424 170)">one die, in section</text>
+                </g>
+              </g>
+            </svg>
+            <div class="st-ctrl">
+              <button class="st-btn" id="st-prev" aria-label="Previous stage">&#9664;</button>
+              <button class="st-btn" id="st-next" aria-label="Next stage">&#9654;</button>
+              <button class="st-btn" id="st-play" aria-label="Play or pause">&#10074;&#10074;</button>
+              <div class="st-dots" id="st-dots"></div>
+            </div>
+            <p class="st-cap" id="st-cap"></p>
+            <p class="st-stat" id="st-stat"></p>
+            <script>
+            (function(){
+              var stages=[
+                {g:["st-g-base"],t:"Stage 1 · The foundation",c:"A bare silicon wafer — polished, lightly doped, featureless. Everything builds on this.",s:"300 mm · flat to <1 nm"},
+                {g:["st-g-base","st-g-feol"],t:"Stage 2 · Transistors (FEOL)",c:"Act one: transistors are built INTO the silicon surface — dope the source and drain, raise the gate. The wafer still looks flat; the brains live in the top ~100 nm.",s:"front-end-of-line"},
+                {g:["st-g-base","st-g-feol","st-g-m1"],t:"Stage 3 · Metal floor 1",c:"Act two begins: blanket the wafer in insulator, carve trenches (litho + etch), fill them with copper — damascene inlay — then CMP polish dead flat.",s:"M1 · Cu damascene + CMP"},
+                {g:["st-g-base","st-g-feol","st-g-m1","st-g-via2"],t:"Stage 4 · Vias + floor 2",c:"Etch tiny holes down to floor 1 and fill with metal: vias, the elevator shafts. Then build floor 2 the same four moves.",s:"vias stitch the floors"},
+                {g:["st-g-base","st-g-feol","st-g-m1","st-g-via2","st-g-tower"],t:"Stage 5 · The tower grows",c:"Repeat 10+ times. Each floor insulated from the next, so wires cross like highway overpasses instead of shorting.",s:"12–15 metal floors"},
+                {g:["st-g-base","st-g-feol","st-g-m1","st-g-via2","st-g-tower","st-g-done"],t:"Stage 6 · One die, in section",c:"Transistors below, wiring city above: ≈100 process layers. After this the wafer is tested, diced, and each die is packaged.",s:"≈100 layers · then: test → dice → package"}
+              ];
+              var ids=["st-g-base","st-g-feol","st-g-m1","st-g-via2","st-g-tower","st-g-done"];
+              var els={};ids.forEach(function(id){els[id]=document.getElementById(id);});
+              var dotsWrap=document.getElementById("st-dots");
+              var dots=stages.map(function(_,i){var d=document.createElement("button");d.className="st-dot";d.setAttribute("aria-label","Go to stage "+(i+1));d.addEventListener("click",function(){go(i);restart();});dotsWrap.appendChild(d);return d;});
+              var cap=document.getElementById("st-cap"),stat=document.getElementById("st-stat"),idx=0,timer=null,playing=true;
+              function render(){
+                var on=stages[idx].g;
+                ids.forEach(function(id){if(els[id])els[id].style.opacity=on.indexOf(id)>-1?"1":"0.15";});
+                cap.innerHTML="<strong>"+stages[idx].t+":</strong> "+stages[idx].c;
+                stat.textContent="⌀ "+stages[idx].s;
+                dots.forEach(function(d,i){d.classList.toggle("on",i===idx);});
+                document.getElementById("st-play").textContent=playing?"⏸":"▶";
+              }
+              function go(i){idx=(i+stages.length)%stages.length;render();}
+              function restart(){if(timer)clearInterval(timer);if(playing)timer=setInterval(function(){go(idx+1);},4500);}
+              document.getElementById("st-prev").addEventListener("click",function(){go(idx-1);restart();});
+              document.getElementById("st-next").addEventListener("click",function(){go(idx+1);restart();});
+              document.getElementById("st-play").addEventListener("click",function(){playing=!playing;if(!playing&&timer)clearInterval(timer);restart();render();});
+              render();restart();
+            })();
+            </script>
+          </figure>
           <p class="plain-note"><strong>In plain English:</strong> building a chip is like constructing a 100-story skyscraper by repeating the same ten construction steps on every floor.</p>
         </div></div>
       </details>
@@ -662,6 +764,81 @@
         <div class="detail-body"><div class="step-story">
           <p>A stepper/scanner shines light through a mask (reticle) carrying one layer's pattern, shrinking it 4× onto the wafer's photoresist — a photographic enlarger in reverse. Resolution obeys a brutal law: smallest feature ≈ wavelength ÷ numerical aperture. So for sixty years the industry just shrank the wavelength: visible light → 365nm → 248nm → 193nm deep-UV.</p>
           <p>Then physics said stop — nothing shorter could pass through lenses. The industry answered with tricks: <strong>immersion lithography</strong> (a film of water between the final lens and the wafer bends light tighter) and <strong>multi-patterning</strong> (printing one layer in two or four passes, like coloring inside the lines twice for finer detail). It worked — 193nm light carried chips from 2001 to ~2019 — but every extra pass multiplies cost and defect risk. The industry needed a shorter wavelength, and only one company on Earth could deliver it.</p>
+          <p>Everything above obeys one equation &mdash; the <strong>Rayleigh criterion</strong>: smallest feature = k&#8321; &times; &lambda; &divide; NA. Three levers, and that&rsquo;s the whole game: a shorter wavelength (&lambda;), a bigger light-gathering lens (numerical aperture), or cleverer process tricks (k&#8321;). Play with them &mdash; every era of chip history is just a different combination:</p>
+          <figure class="inline-figure" id="rayleigh-lab">
+            <figcaption class="figure-label">THE RAYLEIGH LAB &mdash; ONE EQUATION, THREE LEVERS</figcaption>
+            <style>
+              #rayleigh-lab .rl-eq{font-size:20px;font-weight:800;color:#edf1f5;text-align:center;margin:8px 0}
+              #rayleigh-lab .rl-live{color:#ffc35c}
+              #rayleigh-lab .rl-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin:10px 2px}
+              #rayleigh-lab .rl-ctl{flex:1 1 140px;min-width:140px}
+              #rayleigh-lab .rl-ctl label{display:block;font-size:12px;color:#aeb7c2;font-weight:700;margin-bottom:6px}
+              #rayleigh-lab .rl-ctl label b{color:#edf1f5}
+              #rayleigh-lab input[type=range]{width:100%;accent-color:#f5a623}
+              #rayleigh-lab .rl-presets{display:flex;gap:8px;flex-wrap:wrap}
+              #rayleigh-lab .rl-pre{cursor:pointer;border:1px solid #3a4552;background:#1c2430;color:#aeb7c2;border-radius:6px;padding:6px 10px;font-size:12px;font-weight:700;font-family:inherit}
+              #rayleigh-lab .rl-pre.on{border-color:#f5a623;color:#f5a623}
+              #rayleigh-lab .rl-cd{font-size:15px;color:#edf1f5;text-align:center;margin:12px 0 4px}
+              #rayleigh-lab .rl-cd b{font-size:34px;color:#ffc35c}
+              #rayleigh-lab .rl-scale{position:relative;height:64px;margin:14px 8px 0;background:#141b24;border:1px solid #2d3846;border-radius:8px}
+              #rayleigh-lab .rl-tick{position:absolute;top:0;bottom:0;width:1px;background:#2d3846}
+              #rayleigh-lab .rl-tick span{position:absolute;top:4px;left:4px;font-size:10px;color:#7d8ea3;white-space:nowrap}
+              #rayleigh-lab .rl-marker{position:absolute;top:-6px;width:3px;height:76px;background:#f5a623;box-shadow:0 0 8px #f5a623;transition:left .25s ease}
+              #rayleigh-lab .rl-note{color:#aeb7c2;font-size:13px;line-height:1.55;margin:10px 2px 0;min-height:44px}
+            </style>
+            <div class="rl-eq">CD = k<sub>1</sub> &times; &lambda; &divide; NA<span class="rl-live" id="rl-nums"></span></div>
+            <div class="rl-row">
+              <div class="rl-ctl"><label>Light source &lambda;</label><div class="rl-presets" id="rl-presets"></div></div>
+              <div class="rl-ctl"><label>Numerical aperture <b id="rl-na-v"></b></label><input type="range" id="rl-na" min="0.30" max="1.35" step="0.01" value="1.35" aria-label="Numerical aperture"></div>
+              <div class="rl-ctl"><label>Process factor k&#8321; <b id="rl-k-v"></b></label><input type="range" id="rl-k" min="0.25" max="0.60" step="0.01" value="0.30" aria-label="Process factor k1"></div>
+            </div>
+            <div class="rl-cd">Smallest printable feature &asymp; <b id="rl-cd">43</b> nm</div>
+            <div class="rl-scale" id="rl-scale" aria-hidden="true"></div>
+            <p class="rl-note" id="rl-note"></p>
+            <script>
+            (function(){
+              var presets=[{n:"i-line · 365 nm",l:365},{n:"KrF · 248 nm",l:248},{n:"ArF · 193 nm",l:193},{n:"EUV · 13.5 nm",l:13.5}];
+              var lam=193;
+              var preWrap=document.getElementById("rl-presets");
+              var preBtns=presets.map(function(p,i){
+                var b=document.createElement("button");b.className="rl-pre"+(p.l===lam?" on":"");b.textContent=p.n;
+                b.addEventListener("click",function(){lam=p.l;preBtns.forEach(function(x,j){x.classList.toggle("on",j===i);});update();});
+                preWrap.appendChild(b);return b;});
+              var naEl=document.getElementById("rl-na"),kEl=document.getElementById("rl-k");
+              var cdEl=document.getElementById("rl-cd"),numsEl=document.getElementById("rl-nums"),
+                  noteEl=document.getElementById("rl-note"),scaleEl=document.getElementById("rl-scale");
+              var SMIN=2,SMAX=600;
+              function pos(v){return (Math.log(SMAX)-Math.log(v))/(Math.log(SMAX)-Math.log(SMIN))*100;}
+              [500,200,100,50,20,10,5].forEach(function(t){
+                var d=document.createElement("div");d.className="rl-tick";d.style.left=pos(t)+"%";
+                d.innerHTML="<span>"+t+" nm</span>";scaleEl.appendChild(d);});
+              var marker=document.createElement("div");marker.className="rl-marker";scaleEl.appendChild(marker);
+              function note(lam,na,k,cd){
+                var s;
+                if(lam===365)s="i-line, 365 nm — the 1980s–90s workhorse. Features the width of a bacterium.";
+                else if(lam===248)s="KrF, 248 nm — carried the late 90s into the 2000s.";
+                else if(lam===193&&na<=1)s="ArF dry, NA ≤ 1 — early 2000s. Air caps NA near 0.93: the wall.";
+                else if(lam===193)s="ArF immersion — water (n = 1.44) pushes NA to 1.35. This one trick carried 2007 → 2019.";
+                else if(na<0.5)s="EUV, 13.5 nm — the wavelength lever pulled all the way. In production since 2019.";
+                else s="High-NA EUV, 0.55 — the last lever: bigger mirrors, half-field. Shipping now.";
+                if(k<0.31)s+=" k茡 under ~0.3 means multi-patterning heroics — that’s the cost explosion.";
+                return s;}
+              function update(){
+                var na=parseFloat(naEl.value),k=parseFloat(kEl.value);
+                var cd=k*lam/na;
+                document.getElementById("rl-na-v").textContent=na.toFixed(2);
+                document.getElementById("rl-k-v").textContent=k.toFixed(2);
+                cdEl.textContent=cd<10?cd.toFixed(1):Math.round(cd);
+                numsEl.textContent="  = "+k.toFixed(2)+" × "+lam+" ÷ "+na.toFixed(2);
+                marker.style.left="calc("+pos(Math.min(SMAX,Math.max(SMIN,cd))).toFixed(1)+"% - 1px)";
+                noteEl.textContent=note(lam,na,k,cd);}
+              naEl.addEventListener("input",update);kEl.addEventListener("input",update);
+              update();})();
+            </script>
+          </figure>
+          <p>How the machine actually moves: it doesn&rsquo;t flash the whole wafer at once. The reticle stage and the wafer stage glide in lockstep &mdash; the reticle moving 4&times; faster, because the optics shrink its image 4&times; onto the wafer &mdash; exposing one die field, stepping to the next, scanning again. Laser interferometers track both stages to sub-nanometer precision, and alignment marks etched into the wafer tell the machine exactly where the previous layer landed. Layer 87 must sit precisely on layer 86: that registration is called <strong>overlay</strong>, and it&rsquo;s every bit as hard as resolution.</p>
+          <p>When 193nm hit the wall, the industry pulled the other two levers. <strong>Immersion lithography</strong> flooded the gap between the last lens and the wafer with ultrapure water &mdash; water bends light tighter than air (NA 1.35 instead of ~0.93). Then the k&#8321; lever: <strong>multi-patterning</strong> &mdash; LELE, SADP, SAQP &mdash; printing a single layer in two or four passes. It worked, but every pass multiplies cost and defect risk. Intel&rsquo;s 10nm saga is the cautionary tale: Intel tried to squeeze 10nm from 193nm multi-patterning rather than wait for EUV, and shipped years late while TSMC walked past with simpler EUV flows. Complexity always sends a bill.</p>
+          <p>Two quieter moats hide here. <strong>Photomasks:</strong> every layer needs its own, a leading-edge set costs tens of millions, and EUV&rsquo;s reflective masks &mdash; with pellicles, dust-proof membranes that were their own moonshot &mdash; are a specialty of a handful of shops. <strong>Photoresists:</strong> the light-sensitive chemistry is dominated by Japan &mdash; JSR, Shin-Etsu, TOK &mdash; and EUV forced entirely new metal-oxide resists into existence.</p>
           <p class="plain-note"><strong>In plain English:</strong> chip printing is photography in reverse — and the "film grain" is set by the color of light you use.</p>
         </div></div>
       </details>
@@ -782,6 +959,7 @@
             <h4>Companies behind this step</h4>
             <p>The machine holds ~100,000 parts from ~800 suppliers. The absurdly precise mirrors come from <strong>Carl Zeiss SMT</strong> (Germany) — the smoothest mirrors ever made, polished to sub-atomic accuracy. The CO₂ laser source comes from <strong>Cymer</strong> (San Diego), which ASML bought in 2013. And <strong>ASML</strong> itself (Netherlands, the only EUV maker on Earth) integrates it all.</p>
           </aside>
+          <p>The next act is already shipping: <strong>high-NA EUV</strong>. Numerical aperture 0.55 (up from 0.33), anamorphic optics that shrink 4&times; in one direction and 8&times; in the other, exposing half a field at a time &mdash; at roughly double the price, around $380M a tool. Intel took the first ones; TSMC plans it for A14-class nodes. Same 13.5nm light &mdash; the bigger-mirror lever, pulled toward its limit.</p>
           <p class="plain-note"><strong>In plain English:</strong> ASML figured out how to print with light that air itself blocks — and now holds a monopoly on the most important machine in tech.</p>
         </div></div>
       </details>
@@ -791,6 +969,11 @@
           <p>Instead of projecting light like a camera, Canon&rsquo;s machines work like a <strong>rubber stamp</strong>: a quartz mold (template) carrying the pattern is pressed directly into liquid resist on the wafer, UV light hardens it, the mold lifts off — pattern transferred, 1:1, with no projection optics at all. Canon has ground at this for 15+ years (buying Texas-based Molecular Imprints in 2014) and now ships commercial systems.</p>
           <p><strong>The pitch:</strong> a nanoimprint tool costs a fraction of an EUV machine, sips power by comparison, and needs no tin-plasma light source or Zeiss mirrors. Resolution isn&rsquo;t the problem — sub-10nm features have been demonstrated.</p>
           <p><strong>The catch:</strong> the mold <em>touches</em> the wafer on every impression. Touch means particles become defects, templates wear, and overlay precision across 100 layers is brutally hard. So it&rsquo;s not coming for leading-edge logic — it&rsquo;s aimed at 3D NAND flash and mature nodes, where cost-per-bit rules. Kioxia has been evaluating it for NAND production.</p>
+          <p><strong>How the stamp actually works:</strong> Canon calls it Jet and Flash Imprint Lithography (J-FIL). Thousands of picoliter resist droplets are jetted onto the wafer in a pattern matching the design&rsquo;s density; the quartz template presses down; capillary action wicks resist into every nanoscale cavity; a UV flash through the template cures it; the template peels away. Note what&rsquo;s missing: no reduction. The template is 1&times; &mdash; every feature carved at final size by electron beam, which is slow, and makes template inspection brutally hard (a 4&times; mask&rsquo;s defects are four times bigger and easier to catch).</p>
+          <p><strong>Where it stands in 2026:</strong> Canon has shipped its first commercial system &mdash; to the Texas Institute for Electronics, a UT Austin research consortium &mdash; for R&amp;D and prototyping, and is targeting 10&ndash;20 tools a year. Kioxia has publicly adopted NIL for select memory work after years of testing; Micron has run wafers too. Canon claims up to 40% lower manufacturing cost and one-tenth the power draw of EUV, and it&rsquo;s building a $345M factory in Tochigi &mdash; its first new plant in 21 years &mdash; to build NIL tools.</p>
+          <p><strong>The skeptic&rsquo;s file &mdash; and it&rsquo;s specific.</strong> ASML&rsquo;s Twinscan uses two wafer stages, so one does alignment metrology while the other exposes; Canon&rsquo;s NIL has a single stage, so metrology steals exposure time. Through-template alignment can only read marks at the field&rsquo;s corners, where ASML reads ten times more marks across the whole wafer &mdash; far weaker distortion correction. Canon&rsquo;s alignment marks are oversized, wasting expensive wafer area. And the patterning stack (the chemistry sandwich transferring the pattern) is immature: line roughness can short neighboring wires. The foundries&rsquo; verdict so far: Kioxia and Micron have every incentive for NIL to work &mdash; and the demo results have not been good.</p>
+          <p><strong>The roadmap:</strong> Canon&rsquo;s published targets aim high &mdash; by 2028, 3D NAND at 20nm lines with 5nm overlay, DRAM at 10nm lines with 2nm overlay, logic at 8nm lines with 1.6nm overlay. If defectivity falls on schedule, NIL graduates from curiosity to production tool.</p>
+          <p><strong>One genuine superpower:</strong> a single stamp can form complex three-dimensional shapes &mdash; stacked heights, curves &mdash; that projection lithography fundamentally can&rsquo;t do in one exposure. That&rsquo;s why nanoimprint already wins in optics and photonics (lenses, waveguides), and it&rsquo;s a quiet link to the Beyond track.</p>
           <p><strong>The ceiling vs. the stamp:</strong> 13.5nm isn&rsquo;t arbitrary &mdash; it&rsquo;s the brightest emission line of tin plasma <em>and</em> the reflectivity peak of molybdenum/silicon mirrors. There is no shorter wavelength waiting in the wings; &ldquo;beyond EUV&rdquo; (~6nm) would demand entirely new mirrors, sources, and resists &mdash; a second moonshot. Wavelength scaling, the engine of sixty years of progress, is effectively over; EUV&rsquo;s remaining gains come from bigger lenses (high-NA 0.55), not shorter light. A mold has no such ceiling: its resolution is set by how finely electron beams can carve the template, and e-beam writing keeps improving. In principle, the stamp can keep shrinking long after the light cannot.</p>
           <p><strong>The bet:</strong> ASML owns the present &mdash; but if Canon keeps grinding defectivity down, nanoimprint&rsquo;s cost advantage compounds: first NAND and mature nodes, then higher. The honest counter: contact defectivity and overlay are physics problems, not just engineering ones, and ASML isn&rsquo;t standing still. The likely world is coexistence &mdash; EUV keeps the leading edge while NIL eats memory and mature logic. But the history of this industry is the incumbent&rsquo;s &ldquo;impossible&rdquo; becoming the challenger&rsquo;s product.</p>
           <p class="plain-note"><strong>In plain English:</strong> EUV is a $200M camera; nanoimprint is a rubber stamp. The stamp is cheaper — but every touch risks a smudge. Classic innovator&rsquo;s-dilemma shape: a side door into memory while ASML holds the leading edge.</p>
@@ -868,6 +1051,16 @@
         <article class="term"><h3>Immersion lithography</h3><p>A film of water between the final lens and the wafer, bending 193 nm light tighter for extra resolution.</p></article>
         <article class="term"><h3>Multi-patterning</h3><p>Printing one layer in two or four passes to beat the resolution limit — at multiplied cost and defect risk.</p></article>
         <article class="term"><h3>Nanoimprint lithography (NIL)</h3><p>Canon’s challenger: a quartz mold pressed directly into resist like a stamp, hardened with UV. Cheap and simple; fights defectivity because the mold touches the wafer. Aimed at NAND and mature nodes, not leading-edge logic.</p></article>
+        <article class="term"><h3>Rayleigh criterion</h3><p>The law of lithography: smallest feature = k&#8321; &times; &lambda; &divide; NA. Three levers &mdash; wavelength, lens, process cleverness &mdash; and the whole history of shrinking chips.</p></article>
+        <article class="term"><h3>k&#8321; (process factor)</h3><p>How hard process engineers push past the optics&rsquo; natural limit. Below ~0.3 means multi-patterning heroics &mdash; and exploding cost.</p></article>
+        <article class="term"><h3>Numerical aperture (NA)</h3><p>How much light the lens gathers. Bigger NA = finer detail. Immersion (water) pushed DUV to 1.35; EUV sits at 0.33, high-NA at 0.55.</p></article>
+        <article class="term"><h3>High-NA EUV</h3><p>ASML&rsquo;s next act &mdash; 0.55 NA, anamorphic 4&times;/8&times; optics, half-field exposures, ~$380M a tool. Same 13.5nm light, bigger mirrors.</p></article>
+        <article class="term"><h3>Overlay</h3><p>How precisely each new layer lands on the last. Misaligned layers = dead chips; the leading edge demands sub-2nm registration.</p></article>
+        <article class="term"><h3>Pellicle</h3><p>A dust-proof membrane stretched over the mask. One speck prints on every chip &mdash; EUV pellicles were their own moonshot.</p></article>
+        <article class="term"><h3>J-FIL</h3><p>Jet and Flash Imprint Lithography &mdash; Canon&rsquo;s NIL flavor: jet resist droplets, press the quartz template, flash UV, peel.</p></article>
+        <article class="term"><h3>FEOL / BEOL</h3><p>Front-end-of-line (transistors, built <em>into</em> the silicon) vs back-end-of-line (the copper wiring skyscraper stacked on top).</p></article>
+        <article class="term"><h3>Via</h3><p>A vertical metal plug stitching one wiring floor to the next &mdash; the elevator shaft of the chip.</p></article>
+        <article class="term"><h3>Damascene</h3><p>The inlay technique for copper wiring: etch trenches in the insulator, fill with copper, polish flat. Named for Damascus metal inlay.</p></article>
         <article class="term"><h3>CVD / PVD / ALD</h3><p>Chemical / physical vapor deposition and atomic-layer deposition — the three ways thin films are laid down, atom by atom.</p></article>
         <article class="term"><h3>Etch</h3><p>Plasma carving that transfers the resist pattern into the film below.</p></article>
         <article class="term"><h3>Ion implantation</h3><p>Firing dopant atoms (boron, phosphorus) into silicon at high speed to set its electrical flavor.</p></article>

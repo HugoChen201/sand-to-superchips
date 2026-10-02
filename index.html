@@ -651,6 +651,120 @@
       <details class="step-card">
         <summary><span class="step-badge">2</span><span class="step-heading"><span class="step-kicker">Process flow</span><span class="step-name">Deposit, pattern, etch, repeat</span></span></summary>
         <div class="detail-body"><div class="step-story">
+          <p>The simple version first: a blank wafer rolls in, and about three months and &asymp;1,400 process steps later, a wafer covered in finished chips rolls out. In between, the fab repeats one loop &mdash; coat, print, carve, dope, build up, polish &mdash; once per layer, &asymp;100 layers. Click through the wafer&rsquo;s life:</p>
+          <figure class="inline-figure" id="wj-anim">
+            <figcaption class="figure-label">THE LIFE OF A WAFER &mdash; BLANK DISC TO FINISHED CHIPS (TOP VIEW)</figcaption>
+            <style>
+              #wj-anim .wj-g{transition:opacity .45s ease}
+              #wj-anim .wj-ctrl{display:flex;align-items:center;gap:10px;margin:12px 2px 0;flex-wrap:wrap}
+              #wj-anim .wj-btn{cursor:pointer;border:1px solid #f5a623;background:transparent;color:#f5a623;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;font-family:inherit}
+              #wj-anim .wj-btn:hover{background:#f5a623;color:#10161e}
+              #wj-anim .wj-dots{display:flex;gap:7px;margin-left:4px}
+              #wj-anim .wj-dot{width:9px;height:9px;border-radius:50%;background:#2d3846;border:none;padding:0;cursor:pointer}
+              #wj-anim .wj-dot.on{background:#f5a623}
+              #wj-anim .wj-cap{color:#edf1f5;font-size:14px;line-height:1.55;margin:10px 2px 0;min-height:70px}
+              #wj-anim .wj-stat{color:#ffc35c;font-size:13px;font-weight:800;margin:6px 2px 0}
+            </style>
+            <svg viewBox="0 0 460 300" role="img" aria-label="Animated top view of a wafer going through fab process stages">
+              <defs>
+                <clipPath id="wj-clip"><circle cx="230" cy="138" r="94"/></clipPath>
+              </defs>
+              <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#aeb7c2">
+                <g id="wj-g-wafer" class="wj-g">
+                  <circle cx="230" cy="138" r="94" fill="#2b333e" stroke="#8a94a6" stroke-width="2"/>
+                  <ellipse cx="200" cy="102" rx="52" ry="26" fill="#ffffff" opacity="0.06"/>
+                  <text x="230" y="262" text-anchor="middle" fill="#7d8ea3">300mm wafer &mdash; top view</text>
+                </g>
+                <g id="wj-g-coat" class="wj-g">
+                  <circle cx="230" cy="138" r="94" fill="#f5a623" opacity="0.22"/>
+                  <text x="230" y="280" text-anchor="middle" fill="#f5a623">photoresist coated</text>
+                </g>
+                <g id="wj-g-printfaint" class="wj-g">
+                  <g clip-path="url(#wj-clip)" stroke="#e8edf3" stroke-width="1" opacity="0.25">
+                    <line x1="152" y1="44" x2="152" y2="232"/><line x1="191" y1="44" x2="191" y2="232"/><line x1="230" y1="44" x2="230" y2="232"/><line x1="269" y1="44" x2="269" y2="232"/><line x1="308" y1="44" x2="308" y2="232"/>
+                    <line x1="136" y1="62" x2="324" y2="62"/><line x1="136" y1="100" x2="324" y2="100"/><line x1="136" y1="138" x2="324" y2="138"/><line x1="136" y1="176" x2="324" y2="176"/><line x1="136" y1="214" x2="324" y2="214"/>
+                  </g>
+                </g>
+                <g id="wj-g-carve" class="wj-g">
+                  <g clip-path="url(#wj-clip)" stroke="#e8edf3" stroke-width="1.6" opacity="0.85">
+                    <line x1="152" y1="44" x2="152" y2="232"/><line x1="191" y1="44" x2="191" y2="232"/><line x1="230" y1="44" x2="230" y2="232"/><line x1="269" y1="44" x2="269" y2="232"/><line x1="308" y1="44" x2="308" y2="232"/>
+                    <line x1="136" y1="62" x2="324" y2="62"/><line x1="136" y1="100" x2="324" y2="100"/><line x1="136" y1="138" x2="324" y2="138"/><line x1="136" y1="176" x2="324" y2="176"/><line x1="136" y1="214" x2="324" y2="214"/>
+                  </g>
+                  <text x="230" y="280" text-anchor="middle" fill="#e8edf3">pattern carved in</text>
+                </g>
+                <g id="wj-g-dope" class="wj-g">
+                  <g clip-path="url(#wj-clip)">
+                    <circle cx="182" cy="108" r="17" fill="#58a6ff" opacity="0.55"/><circle cx="278" cy="108" r="17" fill="#f5a623" opacity="0.55"/>
+                    <circle cx="182" cy="178" r="17" fill="#f5a623" opacity="0.55"/><circle cx="278" cy="178" r="17" fill="#58a6ff" opacity="0.55"/>
+                  </g>
+                  <text x="230" y="280" text-anchor="middle" fill="#ffc35c">doped regions implanted</text>
+                </g>
+                <g id="wj-g-metal" class="wj-g">
+                  <g clip-path="url(#wj-clip)" stroke="#f5a623" stroke-width="4" opacity="0.8">
+                    <line x1="136" y1="80" x2="324" y2="80"/><line x1="136" y1="119" x2="324" y2="119"/><line x1="136" y1="158" x2="324" y2="158"/><line x1="136" y1="197" x2="324" y2="197"/>
+                  </g>
+                  <text x="230" y="280" text-anchor="middle" fill="#f5a623">copper wiring floors going up</text>
+                </g>
+                <g id="wj-g-repeat" class="wj-g">
+                  <text x="230" y="280" text-anchor="middle" fill="#ffc35c" font-weight="800" font-size="13">&asymp;100 layers &middot; &asymp;1,400 steps &middot; &asymp;3 months</text>
+                </g>
+                <g id="wj-g-test" class="wj-g">
+                  <g clip-path="url(#wj-clip)" stroke="#8a94a6" stroke-width="1" opacity="0.9" fill="none">
+                    <rect x="152" y="62" width="36" height="36"/><rect x="191" y="62" width="36" height="36"/><rect x="230" y="62" width="36" height="36"/><rect x="269" y="62" width="36" height="36"/>
+                    <rect x="152" y="101" width="36" height="36"/><rect x="191" y="101" width="36" height="36"/><rect x="230" y="101" width="36" height="36"/><rect x="269" y="101" width="36" height="36"/>
+                    <rect x="152" y="140" width="36" height="36"/><rect x="191" y="140" width="36" height="36"/><rect x="230" y="140" width="36" height="36"/><rect x="269" y="140" width="36" height="36"/>
+                    <rect x="152" y="179" width="36" height="36"/><rect x="191" y="179" width="36" height="36"/><rect x="230" y="179" width="36" height="36"/><rect x="269" y="179" width="36" height="36"/>
+                  </g>
+                  <g stroke="#ff6b6b" stroke-width="2.5">
+                    <line x1="196" y1="106" x2="222" y2="132"/><line x1="222" y1="106" x2="196" y2="132"/>
+                    <line x1="274" y1="184" x2="300" y2="210"/><line x1="300" y1="184" x2="274" y2="210"/>
+                  </g>
+                  <text x="230" y="280" text-anchor="middle" fill="#ff6b6b">probed &mdash; bad dies mapped out</text>
+                </g>
+              </g>
+            </svg>
+            <div class="wj-ctrl">
+              <button class="wj-btn" id="wj-prev" aria-label="Previous stage">&#9664;</button>
+              <button class="wj-btn" id="wj-next" aria-label="Next stage">&#9654;</button>
+              <button class="wj-btn" id="wj-play" aria-label="Play or pause">&#10074;&#10074;</button>
+              <div class="wj-dots" id="wj-dots"></div>
+            </div>
+            <p class="wj-cap" id="wj-cap"></p>
+            <p class="wj-stat" id="wj-stat"></p>
+            <script>
+            (function(){
+              var stages=[
+                {g:["wj-g-wafer"],t:"Stage 1 · The blank canvas",c:"A polished, blank 300mm wafer arrives from the wafer maker — nothing on it but perfect crystal and a whisper of boron.",s:"Shin-Etsu / SUMCO · Japan"},
+                {g:["wj-g-wafer","wj-g-coat"],t:"Stage 2 · Coat",c:"The wafer is spin-coated with photoresist — light-sensitive paint, microns thin.",s:"Tokyo Electron track · Japan"},
+                {g:["wj-g-wafer","wj-g-coat","wj-g-printfaint"],t:"Stage 3 · Print",c:"The scanner flashes this layer’s pattern into the resist, die by die across the wafer.",s:"ASML · Netherlands"},
+                {g:["wj-g-wafer","wj-g-carve"],t:"Stage 4 · Carve",c:"Plasma etchers carve the pattern into the film below; the leftover resist is stripped away.",s:"Lam Research · USA"},
+                {g:["wj-g-wafer","wj-g-carve","wj-g-dope"],t:"Stage 5 · Dope",c:"Where transistors need it, dopant atoms are fired into the silicon — the stencil-and-blast you already know.",s:"Axcelis · USA"},
+                {g:["wj-g-wafer","wj-g-carve","wj-g-dope","wj-g-metal"],t:"Stage 6 · Build up",c:"New films are deposited and copper wiring is inlaid, then polished dead flat for the next floor.",s:"Applied Materials · USA"},
+                {g:["wj-g-wafer","wj-g-carve","wj-g-dope","wj-g-metal","wj-g-repeat"],t:"Stage 7 · Repeat ≈100×",c:"The loop runs once per layer — around 1,400 steps over ~3 months — with inspection between passes.",s:"KLA inspects · USA"},
+                {g:["wj-g-wafer","wj-g-test"],t:"Stage 8 · Test",c:"The finished wafer is probed: good dies pass, bad ones are mapped out. Then it’s diced and each die is packaged.",s:"then: dice → package (ch. 4)"}
+              ];
+              var ids=["wj-g-wafer","wj-g-coat","wj-g-printfaint","wj-g-carve","wj-g-dope","wj-g-metal","wj-g-repeat","wj-g-test"];
+              var els={};ids.forEach(function(id){els[id]=document.getElementById(id);});
+              var dotsWrap=document.getElementById("wj-dots");
+              var dots=stages.map(function(_,i){var d=document.createElement("button");d.className="wj-dot";d.setAttribute("aria-label","Go to stage "+(i+1));d.addEventListener("click",function(){go(i);restart();});dotsWrap.appendChild(d);return d;});
+              var cap=document.getElementById("wj-cap"),stat=document.getElementById("wj-stat"),idx=0,timer=null,playing=true;
+              function render(){
+                var on=stages[idx].g;
+                ids.forEach(function(id){if(els[id])els[id].style.opacity=on.indexOf(id)>-1?"1":"0.12";});
+                cap.innerHTML="<strong>"+stages[idx].t+":</strong> "+stages[idx].c;
+                stat.textContent="⌀ "+stages[idx].s;
+                dots.forEach(function(d,i){d.classList.toggle("on",i===idx);});
+                document.getElementById("wj-play").textContent=playing?"⏸":"▶";
+              }
+              function go(i){idx=(i+stages.length)%stages.length;render();}
+              function restart(){if(timer)clearInterval(timer);if(playing)timer=setInterval(function(){go(idx+1);},4500);}
+              document.getElementById("wj-prev").addEventListener("click",function(){go(idx-1);restart();});
+              document.getElementById("wj-next").addEventListener("click",function(){go(idx+1);restart();});
+              document.getElementById("wj-play").addEventListener("click",function(){playing=!playing;if(!playing&&timer)clearInterval(timer);restart();render();});
+              render();restart();
+            })();
+            </script>
+          </figure>
           <p>Every one of those ~100 layers is built from the same basic loop:</p>
           <p><strong>1. Deposit</strong> a thin film — oxide, metal, or photoresist — using CVD, PVD, or ALD (chemical / physical vapor deposition, atomic-layer deposition). <strong>2. Coat</strong> with photoresist, a light-sensitive chemical. <strong>3. Lithography:</strong> project this layer's pattern through a mask. <strong>4. Develop:</strong> wash away the exposed (or unexposed) resist. <strong>5. Etch:</strong> plasma carves the pattern into the film. <strong>6.</strong> Strip the resist, fire dopants into the silicon (ion implantation), clean everything — and repeat.</p>
           <p>Between loops, CMP (chemical-mechanical polishing) grinds each layer flat to atomic smoothness. Without it, the hundred-story stack would topple like a bad cake.</p>

@@ -654,6 +654,28 @@
           <p>Every one of those ~100 layers is built from the same basic loop:</p>
           <p><strong>1. Deposit</strong> a thin film — oxide, metal, or photoresist — using CVD, PVD, or ALD (chemical / physical vapor deposition, atomic-layer deposition). <strong>2. Coat</strong> with photoresist, a light-sensitive chemical. <strong>3. Lithography:</strong> project this layer's pattern through a mask. <strong>4. Develop:</strong> wash away the exposed (or unexposed) resist. <strong>5. Etch:</strong> plasma carves the pattern into the film. <strong>6.</strong> Strip the resist, fire dopants into the silicon (ion implantation), clean everything — and repeat.</p>
           <p>Between loops, CMP (chemical-mechanical polishing) grinds each layer flat to atomic smoothness. Without it, the hundred-story stack would topple like a bad cake.</p>
+          <aside class="company-panel">
+            <h4>The machine behind every step</h4>
+            <p>ASML does <em>one</em> of these &mdash; the exposure. Every other step is its own monopoly or duopoly: five companies (Applied Materials, ASML, Lam Research, Tokyo Electron, KLA) take roughly 70% of all wafer-fab equipment spending on Earth.</p>
+            <style>
+              #machine-map { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
+              #machine-map li { display: grid; grid-template-columns: 148px 1fr; gap: 12px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+              #machine-map li > strong { color: var(--ink); }
+              @media (max-width: 640px) { #machine-map li { grid-template-columns: 1fr; gap: 2px; } }
+            </style>
+            <ul id="machine-map">
+              <li><strong>Deposit films</strong><span>CVD / PVD / ALD reactors &mdash; <strong>Applied Materials</strong> (USA), <strong>Lam Research</strong> (USA), <strong>Tokyo Electron</strong> (Japan), <strong>ASM International</strong> (Netherlands, the ALD pioneer)</span></li>
+              <li><strong>Coat + develop resist</strong><span>Spin-coaters and developers bolted to the scanner &mdash; <strong>Tokyo Electron</strong> (Japan, dominant), <strong>SCREEN</strong> (Japan)</span></li>
+              <li><strong>Expose the pattern</strong><span>The scanner itself &mdash; <strong>ASML</strong> (Netherlands; EUV + leading DUV), <strong>Nikon</strong> (Japan), <strong>Canon</strong> (Japan &mdash; DUV / i-line)</span></li>
+              <li><strong>Etch</strong><span>Plasma etchers that carve the pattern &mdash; <strong>Lam Research</strong> (USA, the etch king), <strong>Tokyo Electron</strong> (Japan), <strong>Applied Materials</strong> (USA)</span></li>
+              <li><strong>Strip + clean</strong><span>Ashers and wet-clean stations &mdash; <strong>Lam</strong>, <strong>TEL</strong>; wet cleans led by <strong>SCREEN</strong> (Japan)</span></li>
+              <li><strong>Dope</strong><span>Ion implanters that fire dopants in &mdash; <strong>Axcelis</strong> (USA), <strong>Applied Materials</strong> (USA)</span></li>
+              <li><strong>Anneal</strong><span>Rapid-thermal heaters that activate dopants &mdash; <strong>Applied Materials</strong> (USA), <strong>Tokyo Electron</strong> (Japan)</span></li>
+              <li><strong>Polish (CMP)</strong><span>Chemical-mechanical polishers &mdash; <strong>Applied Materials</strong> (USA, Reflexion &mdash; dominant), <strong>Ebara</strong> (Japan)</span></li>
+              <li><strong>Inspect + measure</strong><span>Defect inspection and metrology between steps &mdash; <strong>KLA</strong> (USA, the process-control monopoly), <strong>Hitachi High-Tech</strong> (Japan, CD-SEM), <strong>Onto Innovation</strong> (USA)</span></li>
+            </ul>
+            <p style="margin-top:14px">The pattern: each step is so hard that one or two vendors own it outright &mdash; the equipment moat is a <em>collection</em> of monopolies.</p>
+          </aside>
           <p>But what are the hundred layers actually <em>made of</em>? Two acts. <strong>Act one &mdash; FEOL</strong> (front-end-of-line): the transistors themselves, built <em>into</em> the silicon surface. Grow oxide, pattern where each transistor goes, fire dopants in to form source and drain, raise the gate. The wafer still looks flat &mdash; the brains sit in the top hundred nanometers &mdash; and the next step builds one in front of you.</p>
           <p><strong>Act two &mdash; BEOL</strong> (back-end-of-line): the wiring skyscraper. Every floor repeats four moves: blanket the wafer in insulator (dielectric), carve trenches with lithography plus etch, fill them with copper &mdash; <em>damascene</em>, like inlaying metal into wood &mdash; then CMP polish dead flat. Then punch tiny holes down to the floor below and fill them with metal: <strong>vias</strong>, the elevator shafts. Twelve to fifteen floors of copper highways, each insulated from the next.</p>
           <p>Why stack at all? Billions of transistors each need connections, and wires can&rsquo;t cross in two dimensions without shorting. Go vertical &mdash; insulation between floors &mdash; and they cross like highway overpasses. The skyscraper isn&rsquo;t decoration; it&rsquo;s the only way the wiring fits.</p>

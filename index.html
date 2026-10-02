@@ -150,7 +150,7 @@
     details { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 42%, transparent); }
     summary {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 28px;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 16px;
       align-items: center;
       list-style: none;
@@ -177,8 +177,8 @@
     .detail-body { padding: 0 50px 22px 4px; max-width: 910px; color: var(--muted); }
     .detail-body p { margin: 0; }
     .plain-note {
-      margin-top: 12px !important;
-      padding: 10px 12px;
+      margin-top: 18px !important;
+      padding: 13px 15px;
       border-left: 2px solid color-mix(in srgb, var(--accent) 72%, var(--line));
       color: color-mix(in srgb, var(--ink) 78%, var(--muted));
       background: color-mix(in srgb, var(--accent-soft) 28%, transparent);
@@ -186,6 +186,126 @@
       font-style: italic;
     }
     .plain-note strong { color: var(--accent-bright); font-style: normal; }
+    .step-stack {
+      display: grid;
+      gap: 14px;
+      border: 0;
+    }
+    .step-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      box-shadow: 0 9px 26px rgba(0, 0, 0, .16);
+    }
+    .step-card > summary {
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      gap: 17px;
+      padding: 20px 22px;
+      color: var(--ink);
+      transition: background-color .18s ease;
+    }
+    .step-card > summary:hover { background: color-mix(in srgb, var(--surface-2) 62%, transparent); }
+    .step-card > summary::after {
+      content: "Open  ↓";
+      width: auto;
+      height: auto;
+      padding: 7px 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+      border-radius: 7px;
+      color: var(--accent-bright);
+      background: color-mix(in srgb, var(--accent-soft) 42%, transparent);
+      font: 750 11px/1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: .02em;
+    }
+    .step-card[open] > summary {
+      color: var(--ink);
+      background: color-mix(in srgb, var(--accent-soft) 34%, var(--surface));
+      border-bottom: 1px solid var(--line);
+    }
+    .step-card[open] > summary::after { content: "Close  ↑"; }
+    .step-badge {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--line));
+      background: var(--accent-soft);
+      color: var(--accent-bright);
+      font: 800 17px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .step-heading { min-width: 0; display: grid; gap: 3px; }
+    .step-kicker {
+      color: var(--muted);
+      font: 800 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .step-name { font-size: 18px; letter-spacing: -.012em; }
+    .step-card > .detail-body {
+      max-width: none;
+      padding: 26px 30px 30px 95px;
+      color: var(--muted);
+    }
+    .step-story { max-width: 850px; }
+    .step-story p + p { margin-top: 14px; }
+    .company-panel {
+      max-width: 920px;
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+      background: color-mix(in srgb, var(--accent-soft) 34%, var(--surface-3));
+    }
+    .company-panel h4 {
+      margin: 0 0 10px;
+      color: var(--accent-bright);
+      font-size: 15px;
+      letter-spacing: -.005em;
+    }
+    .company-panel p + p { margin-top: 13px; }
+    .oxide-deep-dive {
+      max-width: 920px;
+      margin-top: 22px;
+      border: 1px solid color-mix(in srgb, var(--good) 26%, var(--line));
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--good-soft) 35%, var(--surface-3));
+    }
+    .oxide-deep-dive > summary {
+      padding: 16px 18px;
+      color: color-mix(in srgb, var(--good) 88%, var(--ink));
+      font-size: 15px;
+    }
+    .step-card .oxide-deep-dive > summary {
+      color: color-mix(in srgb, var(--good) 88%, var(--ink));
+    }
+    .step-card .oxide-deep-dive:not([open]) > summary::after {
+      content: "Read deeper  ↓";
+      width: auto;
+      height: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: var(--good);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .oxide-deep-dive[open] > summary {
+      color: color-mix(in srgb, var(--good) 88%, var(--ink));
+      border-bottom: 1px solid color-mix(in srgb, var(--good) 18%, var(--line));
+    }
+    .step-card .oxide-deep-dive[open] > summary::after { content: "Close  ↑"; }
+    .oxide-body { padding: 18px; color: var(--muted); }
+    .oxide-body p + p { margin-top: 14px; }
+    .oxide-body strong { color: var(--ink); }
+    .step-card .inline-figure,
+    .step-card .market-chart,
+    .step-card .value-ladder { margin-top: 22px; }
+    .step-card .inline-figure { max-width: 560px; }
+    .step-card .market-chart { max-width: 520px; }
+    .punchline-card .step-badge { font-size: 20px; }
+    .punchline-card > .detail-body { padding-left: 30px; }
     .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 28px 0 0; }
     .stat { min-width: 0; padding: 14px; border: 1px solid var(--line); background: var(--surface); }
     .stat strong { display: block; color: var(--accent); font-size: 18px; line-height: 1.15; letter-spacing: -.02em; }
@@ -267,6 +387,19 @@
       .flow-mobile { display: block !important; }
       .detail-layout, .company-grid { grid-template-columns: 1fr; gap: 18px; }
       .inline-figure, .market-chart, .value-ladder { padding: 10px; }
+      .step-stack { gap: 11px; }
+      .step-card > summary { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 12px; padding: 15px; }
+      .step-badge { width: 42px; height: 42px; border-radius: 8px; font-size: 15px; }
+      .step-name { font-size: 16px; }
+      .step-card > summary::after { content: "↓"; padding: 7px 9px; font-size: 14px; }
+      .step-card[open] > summary::after { content: "↑"; }
+      .step-card > .detail-body,
+      .punchline-card > .detail-body { padding: 21px 17px 22px; font-size: 15px; }
+      .company-panel { padding: 17px; }
+      .oxide-deep-dive > summary { padding: 15px; }
+      .oxide-deep-dive > summary::after { content: "↓"; font-size: 14px; }
+      .oxide-deep-dive[open] > summary::after { content: "↑"; }
+      .oxide-body { padding: 16px; }
       .company-detail summary { grid-template-columns: minmax(0, 1fr) 28px; padding-left: 2px; }
       .company-detail summary::before { content: none; }
       .company-detail .detail-body { padding-left: 2px; }
@@ -355,17 +488,102 @@
           </g>
         </svg>
       </figure>
-      <div class="details-stack">
-        <details open><summary>Step 0 — why silicon at all</summary><div class="detail-body"><p>Sand is mostly quartz, which is silicon dioxide, and silicon is the second most abundant element in Earth's crust. It's a natural semiconductor, meaning its electrons can be coaxed into conducting on command. But the real killer feature: heat silicon in oxygen and it grows a near-perfect insulating skin of its own oxide. Germanium actually made the first transistors back in 1947, but its oxide is garbage, so silicon won and never looked back.</p></div></details>
-        <details><summary>Step 1 — metallurgical-grade silicon</summary><div class="detail-body"><p>Quartz plus carbon (coal, coke) go into a giant arc furnace at around 2,000°C. Out comes silicon at 98–99% pure. Sounds pure; for chips it's filthy. This grade mostly goes to aluminum alloys and silicone rubber.</p></div></details>
-        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>Metallurgical-grade silicon is made in huge arc furnaces by specialists including <strong>Elkem</strong> of Norway and <strong>Ferroglobe</strong>, whose plants span the United States, Spain, and France. <strong>Wacker Chemie</strong> also produces its own MG-silicon in Norway, feeding the company's downstream polysilicon plants and tightening its control over a critical raw input.</p></div></details>
-        <details><summary>Step 2 — polysilicon, via the Siemens process</summary><div class="detail-body"><p>This is where “nine nines” happens. The crude silicon is reacted with hydrochloric acid to make trichlorosilane gas, which gets distilled — distillation is a fantastic purifier — then the gas is baked onto white-hot silicon seed rods, where it decomposes into ultra-pure silicon: 99.9999999% pure, fewer than one stray atom per billion. The process devours electricity, which is one reason China now makes the large majority of the world's polysilicon.</p><p class="plain-note"><strong>In plain English:</strong> trichlorosilane is basically silicon in gas form, so it can be distilled clean.</p></div></details>
-        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><div class="company-grid"><div><p>The Western, Japanese, and Korean semiconductor-grade producers include <strong>Wacker Chemie</strong> (Burghausen, Germany and Charleston, Tennessee), <strong>Hemlock Semiconductor</strong> (Hemlock, Michigan — a Corning + Shin-Etsu joint venture), <strong>Tokuyama</strong> in Japan, and <strong>OCI</strong> in Korea and Malaysia.</p><p><strong>REC Silicon</strong> in Moses Lake, Washington takes a different route: fluidized-bed-reactor technology creates granular polysilicon instead of the rods produced by the Siemens process.</p><p>Semiconductor-grade poly is only a small, ultra-demanding slice of output. The vast majority of polysilicon goes to solar panels, and more than 80% of all polysilicon is made in China by firms such as <strong>Tongwei</strong>, <strong>GCL</strong>, <strong>Daqo</strong>, and <strong>Xinte</strong>.</p></div><figure class="market-chart" aria-labelledby="poly-caption"><figcaption class="figure-label" id="poly-caption">GLOBAL POLYSILICON OUTPUT</figcaption><svg viewBox="0 0 430 196" role="img" aria-labelledby="poly-title poly-desc"><title id="poly-title">China produces more than 80 percent of global polysilicon</title><desc id="poly-desc">A horizontal bar compares China's more than 80 percent share with less than 20 percent for the rest of the world.</desc><g font-family="ui-sans-serif,system-ui,sans-serif"><text x="0" y="28" fill="#edf1f5" font-size="14" font-weight="700">China</text><rect x="0" y="41" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="41" width="336" height="30" rx="5" fill="#f5a623"/><text x="350" y="62" fill="#ffc35c" font-size="16" font-weight="800">80%+</text><text x="0" y="116" fill="#edf1f5" font-size="14" font-weight="700">Rest of world</text><rect x="0" y="129" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="129" width="76" height="30" rx="5" fill="#607083"/><text x="88" y="150" fill="#aeb7c2" font-size="16" font-weight="800">&lt;20%</text><text x="0" y="188" fill="#aeb7c2" font-size="12">Most output feeds solar, not semiconductors.</text></g></svg></figure></div></div></details>
-        <details><summary>Step 3 — the Czochralski pull</summary><div class="detail-body"><div class="detail-layout"><div><p>Chunks of that poly are melted in a quartz crucible at 1,414°C. A small seed crystal is touched to the surface and slowly winched upward while rotating, and the melt freezes onto it as one continuous crystal lattice — a single crystal two meters long, hundreds of kilos, with zero grain boundaries. That matters because grain boundaries would make every transistor behave slightly differently. Fun fact: Jan Czochralski discovered the method in 1916 when he accidentally dipped his pen into molten tin instead of his inkwell.</p><p class="plain-note"><strong>In plain English:</strong> Czochralski is pronounced “choh-KRAHL-skee” — pulling one perfect crystal from a melt.</p></div><figure class="inline-figure" aria-labelledby="cz-caption"><figcaption class="figure-label" id="cz-caption">CZOCHRALSKI CRYSTAL PULLER</figcaption><svg viewBox="0 0 460 420" role="img" aria-labelledby="cz-title cz-desc"><title id="cz-title">Cross-section of a Czochralski crystal puller</title><desc id="cz-desc">A seed crystal and growing ingot rotate and rise from molten silicon held in a quartz crucible surrounded by a heater, while argon flows through the chamber.</desc><defs><marker id="arrow-cz" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><rect x="92" y="20" width="276" height="372" rx="122" fill="#10161e" stroke="#2d3846" stroke-width="2"/><path d="M190 280 Q230 302 270 280 L288 350 Q230 378 172 350z" fill="#24303d" stroke="#aeb7c2" stroke-width="2"/><path d="M180 321 Q230 344 280 321 L288 350 Q230 378 172 350z" fill="#f5a623" opacity=".65"/><path d="M164 275 Q230 307 296 275" fill="none" stroke="#f5a623" stroke-width="10"/><path d="M150 260 Q128 315 154 365 M310 260 Q332 315 306 365" fill="none" stroke="#c4770e" stroke-width="12"/><rect x="211" y="58" width="38" height="48" rx="8" fill="#607083"/><path d="M197 106 L263 106 L253 246 Q230 268 207 246z" fill="#344253" stroke="#f5a623" stroke-width="2"/><path d="M230 50 V20" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-cz)"/><path d="M270 78 Q305 94 278 120" fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-cz)"/><path d="M370 82 H320 V185" fill="none" stroke="#67d7a2" stroke-width="2" marker-end="url(#arrow-cz)"/><g fill="#edf1f5" font-size="13"><text x="18" y="67">Seed crystal</text><path d="M104 64 H206" stroke="#607083"/><text x="292" y="138">Growing ingot</text><path d="M288 142 L257 152" stroke="#607083"/><text x="20" y="262">Quartz crucible</text><path d="M120 258 L176 296" stroke="#607083"/><text x="23" y="337">Heater</text><path d="M91 334 L144 330" stroke="#607083"/><text x="326" y="206">Argon</text><text x="326" y="223">atmosphere</text><text x="280" y="63" fill="#f5a623">rotate</text><text x="244" y="25" fill="#f5a623">pull</text><text x="185" y="338" fill="#10161e" font-weight="800">molten silicon</text></g></g></svg></figure></div></div></details>
-        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>The vessel holding molten silicon is a technical marvel too: an ultra-pure fused-quartz crucible. Much of the world's purest quartz comes from <strong>Spruce Pine, North Carolina</strong>, where it is mined by <strong>Sibelco</strong> and <strong>The Quartz Corp</strong>. When Hurricane Helene shut those mines in September 2024, the disruption rattled the chip supply chain because this grade of quartz has so few substitutes. The crystal-pulling furnaces are specialized systems built by equipment firms such as Germany's <strong>PVA TePla</strong>.</p></div></details>
-        <details><summary>Step 4 — wafers</summary><div class="detail-body"><p>The ingot (called a boule) is sliced by diamond wire into discs about 0.7mm thick, then ground and polished to a mirror finish that's flat at the atomic scale. 300mm (twelve inch) is the standard; the industry tried to move to 450mm and gave up as too expensive. Two Japanese companies, Shin-Etsu and SUMCO, make well over half the world's wafers.</p><p class="plain-note"><strong>In plain English:</strong> a boule is a giant silicon carrot, ready to be sliced into wafers.</p></div></details>
-        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>The boule is sliced on a diamond-wire saw, a production method pioneered by Switzerland's <strong>Meyer Burger</strong>. After grinding, polishing, and cleaning, the finished wafer is inspected for particles, defects, and microscopic surface variations using metrology tools from <strong>KLA</strong> (NASDAQ: KLAC). The tool supplier sits one step removed from the wafer itself, but it is essential: no fab wants to discover a substrate defect after adding expensive process layers.</p></div></details>
-        <details><summary>The punchline</summary><div class="detail-body"><p>After all that purification, the fab will deliberately contaminate the silicon — doping it with boron or phosphorus at parts-per-billion precision to set its electrical personality. Purity was never the goal; control is. And the economics are absurd: the whole sand-to-wafer journey costs maybe a couple hundred dollars per wafer, and a single wafer's worth of AI GPUs can sell for millions. Essentially all the value is in what gets printed on top.</p><p class="plain-note"><strong>In plain English:</strong> doping is deliberate, controlled contamination — the whole game.</p><figure class="value-ladder" aria-labelledby="value-caption"><figcaption class="figure-label" id="value-caption">THE VALUE LADDER</figcaption><svg viewBox="0 0 430 214" role="img" aria-labelledby="value-title value-desc"><title id="value-title">Value rises from a blank wafer to finished AI GPUs</title><desc id="value-desc">A roughly 200 dollar blank wafer becomes finished AI GPUs collectively worth millions of dollars after fabrication, packaging, memory, and systems integration.</desc><defs><marker id="arrow-value" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><circle cx="62" cy="80" r="38" fill="#1c2430" stroke="#687788" stroke-width="2"/><ellipse cx="62" cy="76" rx="28" ry="11" fill="#151b23" stroke="#f5a623"/><text x="62" y="143" text-anchor="middle" fill="#edf1f5" font-size="14" font-weight="700">~$200</text><text x="62" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">blank wafer</text><path d="M110 80 H299" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-value)"/><g fill="#aeb7c2" font-size="11" text-anchor="middle"><text x="160" y="62">fab</text><text x="210" y="62">package</text><text x="262" y="62">system</text></g><g transform="translate(320 44)"><rect width="82" height="70" rx="7" fill="#36280f" stroke="#f5a623"/><rect x="15" y="15" width="52" height="40" rx="3" fill="#f5a623" opacity=".8"/><path d="M0 18 h-10 M0 35 h-10 M0 52 h-10 M82 18 h10 M82 35 h10 M82 52 h10" stroke="#f5a623" stroke-width="3"/></g><text x="361" y="143" text-anchor="middle" fill="#ffc35c" font-size="14" font-weight="800">Millions</text><text x="361" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">in finished AI GPUs</text><path d="M105 191 H325" stroke="#2d3846" stroke-width="1"/><text x="215" y="207" text-anchor="middle" fill="#aeb7c2" font-size="11">Value accumulates in the layers printed and assembled on top.</text></g></svg></figure></div></details>
+      <div class="details-stack step-stack">
+        <details class="step-card" open>
+          <summary><span class="step-badge">0</span><span class="step-heading"><span class="step-kicker">Foundation</span><span class="step-name">Why silicon at all</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>Sand is mostly quartz, which is silicon dioxide, and silicon is the second most abundant element in Earth's crust. It's a natural semiconductor, meaning its electrons can be coaxed into conducting on command. Silicon's band gap is 1.12 eV, compared with germanium's 0.66 eV; that wider gap means far less electrical leakage at high temperatures, so silicon devices stay predictable when the heat rises.</p>
+              <p>But the real killer feature is the skin it grows. Heat silicon in oxygen and it forms silicon dioxide (SiO₂), a near-perfect insulator that can be grown with atomic precision. That clean silicon–oxide interface made the modern MOSFET transistor possible. Germanium powered the first transistors in 1947, but its oxide is unstable and water-soluble, so silicon won and never looked back.</p>
+              <p class="plain-note"><strong>In plain English:</strong> silicon can be the road for electrons and grow its own perfectly fitted guardrail.</p>
+            </div>
+            <details class="oxide-deep-dive">
+              <summary>Why the oxide is the real moat</summary>
+              <div class="oxide-body">
+                <p>Heat silicon past ~900°C in oxygen or steam and oxygen molecules react with the surface: Si + O₂ → SiO₂ — glass. The elegant part: the oxide doesn't just pile on top, it consumes the silicon as it grows — about 44% of the final glass layer sits below where the original surface was. The boundary between crystal and glass ends up atomically clean, with almost no defects, which is why a MOSFET gate works: the gate electrode is insulated from the channel, but its electric field still reaches through the glass to switch the transistor.</p>
+                <p>One material does three jobs: it's a superb insulator (band gap ~9 eV), it can be grown rather than deposited (nothing else gives that pristine interface), and it's a perfect mask — dopants barely diffuse through it, and etchants attack silicon and oxide selectively, so oxide patterns literally define where transistors get built. Germanium's oxide (GeO₂) is water-soluble and falls apart at chip-processing temperatures — it would wash off in the fab. That's the deeper reason silicon won.</p>
+                <p><strong>Two flavors:</strong> dry oxidation (pure O₂) is slow but pristine — gate oxides; wet oxidation (steam) is fast and thick — field oxides and masks. Growth follows the Deal-Grove model: fast at first, then slowing as oxygen must diffuse through the glass already grown.</p>
+                <p><strong>The kicker:</strong> this perfect glass hit a wall — by the mid-2000s gate oxides were ~1.2 nanometers (five atomic layers) and electrons quantum-tunneled straight through, forcing the switch to hafnium-based high-k dielectrics at the 45nm node.</p>
+              </div>
+            </details>
+          </div>
+        </details>
+
+        <details class="step-card">
+          <summary><span class="step-badge">1</span><span class="step-heading"><span class="step-kicker">Reduction</span><span class="step-name">Metallurgical-grade silicon</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>Quartz and carbon go into a giant submerged-arc furnace at around 2,000°C. The core reaction is SiO₂ + 2C → Si + 2CO: oxygen leaves the quartz as carbon monoxide gas, while elemental silicon pools below. The carbon charge is a deliberate mix of coal, coke, and wood chips, chosen to keep the furnace porous enough for gases to escape.</p>
+              <p>Out comes silicon at 98–99% purity. Sounds pure; for chips it's filthy. This grade mostly goes to aluminum alloys and silicone rubber. The furnaces are enormously electricity-hungry, which is why plants cluster around reliable cheap power — Norway's hydropower is a classic example.</p>
+              <p class="plain-note"><strong>In plain English:</strong> at extreme heat, carbon grabs the oxygen from quartz and leaves crude silicon behind.</p>
+            </div>
+            <aside class="company-panel">
+              <h4>Companies behind this step</h4>
+              <p>Metallurgical-grade silicon is made in huge arc furnaces by specialists including <strong>Elkem</strong> of Norway and <strong>Ferroglobe</strong>, whose plants span the United States, Spain, and France. <strong>Wacker Chemie</strong> also produces its own MG-silicon in Norway, feeding the company's downstream polysilicon plants and tightening its control over a critical raw input.</p>
+            </aside>
+          </div>
+        </details>
+
+        <details class="step-card">
+          <summary><span class="step-badge">2</span><span class="step-heading"><span class="step-kicker">Purification</span><span class="step-name">Polysilicon via the Siemens process</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>This is where “nine nines” happens. Crude silicon reacts with hydrochloric acid to make trichlorosilane gas, which is distilled — a fantastic purifier — before entering a bell-jar Siemens reactor. Inside, purified gas flows over U-shaped silicon filament rods heated to roughly 1,100°C. The gas decomposes and deposits elemental silicon layer by layer until the hair-thin starter rods grow into thick, gleaming polysilicon rods.</p>
+              <p>The result is 99.9999999% pure silicon: fewer than one stray atom per billion. The process uses roughly 50–100 kWh of electricity per kilogram of silicon, while hydrochloric acid and other process gases circulate in a largely closed recycling loop. That appetite for power is one reason China now makes the large majority of the world's polysilicon.</p>
+              <p class="plain-note"><strong>In plain English:</strong> trichlorosilane is silicon in gas form, so it can be distilled clean, then plated back onto hot silicon rods one layer at a time.</p>
+            </div>
+            <figure class="market-chart" aria-labelledby="poly-caption"><figcaption class="figure-label" id="poly-caption">GLOBAL POLYSILICON OUTPUT</figcaption><svg viewBox="0 0 430 196" role="img" aria-labelledby="poly-title poly-desc"><title id="poly-title">China produces more than 80 percent of global polysilicon</title><desc id="poly-desc">A horizontal bar compares China's more than 80 percent share with less than 20 percent for the rest of the world.</desc><g font-family="ui-sans-serif,system-ui,sans-serif"><text x="0" y="28" fill="#edf1f5" font-size="14" font-weight="700">China</text><rect x="0" y="41" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="41" width="336" height="30" rx="5" fill="#f5a623"/><text x="350" y="62" fill="#ffc35c" font-size="16" font-weight="800">80%+</text><text x="0" y="116" fill="#edf1f5" font-size="14" font-weight="700">Rest of world</text><rect x="0" y="129" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="129" width="76" height="30" rx="5" fill="#607083"/><text x="88" y="150" fill="#aeb7c2" font-size="16" font-weight="800">&lt;20%</text><text x="0" y="188" fill="#aeb7c2" font-size="12">Most output feeds solar, not semiconductors.</text></g></svg></figure>
+            <aside class="company-panel">
+              <h4>Companies behind this step</h4>
+              <p>The Western, Japanese, and Korean semiconductor-grade producers include <strong>Wacker Chemie</strong> (Burghausen, Germany and Charleston, Tennessee), <strong>Hemlock Semiconductor</strong> (Hemlock, Michigan — a Corning + Shin-Etsu joint venture), <strong>Tokuyama</strong> in Japan, and <strong>OCI</strong> in Korea and Malaysia.</p>
+              <p><strong>REC Silicon</strong> in Moses Lake, Washington takes a different route: fluidized-bed-reactor technology creates granular polysilicon instead of the rods produced by the Siemens process.</p>
+              <p>Semiconductor-grade poly is only a small, ultra-demanding slice of output. The vast majority of polysilicon goes to solar panels, and more than 80% of all polysilicon is made in China by firms such as <strong>Tongwei</strong>, <strong>GCL</strong>, <strong>Daqo</strong>, and <strong>Xinte</strong>.</p>
+            </aside>
+          </div>
+        </details>
+
+        <details class="step-card">
+          <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">Crystal growth</span><span class="step-name">The Czochralski pull</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>Chunks of polysilicon are melted in a quartz crucible at 1,414°C. A small seed crystal touches the surface and is winched upward at just millimeters per minute while rotating; the crucible turns the opposite way to even out the heat. Argon flows through the chamber to sweep away contaminants. The melt freezes onto the seed as one continuous crystal lattice — a single crystal two meters long, hundreds of kilos, with zero grain boundaries.</p>
+              <p>The grower first pulls a pencil-thin “neck,” which filters crystal dislocations out of the seed, then widens the crystal into the full-diameter body. Boron or phosphorus is added directly to the melt to set the wafer's base electrical type before the crystal even exists. No grain boundaries means every transistor starts from the same orderly atomic grid. Fun fact: Jan Czochralski discovered the method in 1916 after accidentally dipping his pen into molten tin instead of his inkwell.</p>
+              <p class="plain-note"><strong>In plain English:</strong> Czochralski is pronounced “choh-KRAHL-skee” — slowly pulling one perfect crystal from a spinning melt.</p>
+            </div>
+            <figure class="inline-figure" aria-labelledby="cz-caption"><figcaption class="figure-label" id="cz-caption">CZOCHRALSKI CRYSTAL PULLER</figcaption><svg viewBox="0 0 460 420" role="img" aria-labelledby="cz-title cz-desc"><title id="cz-title">Cross-section of a Czochralski crystal puller</title><desc id="cz-desc">A seed crystal and growing ingot rotate and rise from molten silicon held in a quartz crucible surrounded by a heater, while argon flows through the chamber.</desc><defs><marker id="arrow-cz" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><rect x="92" y="20" width="276" height="372" rx="122" fill="#10161e" stroke="#2d3846" stroke-width="2"/><path d="M190 280 Q230 302 270 280 L288 350 Q230 378 172 350z" fill="#24303d" stroke="#aeb7c2" stroke-width="2"/><path d="M180 321 Q230 344 280 321 L288 350 Q230 378 172 350z" fill="#f5a623" opacity=".65"/><path d="M164 275 Q230 307 296 275" fill="none" stroke="#f5a623" stroke-width="10"/><path d="M150 260 Q128 315 154 365 M310 260 Q332 315 306 365" fill="none" stroke="#c4770e" stroke-width="12"/><rect x="211" y="58" width="38" height="48" rx="8" fill="#607083"/><path d="M197 106 L263 106 L253 246 Q230 268 207 246z" fill="#344253" stroke="#f5a623" stroke-width="2"/><path d="M230 50 V20" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-cz)"/><path d="M270 78 Q305 94 278 120" fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-cz)"/><path d="M370 82 H320 V185" fill="none" stroke="#67d7a2" stroke-width="2" marker-end="url(#arrow-cz)"/><g fill="#edf1f5" font-size="13"><text x="18" y="67">Seed crystal</text><path d="M104 64 H206" stroke="#607083"/><text x="292" y="138">Growing ingot</text><path d="M288 142 L257 152" stroke="#607083"/><text x="20" y="262">Quartz crucible</text><path d="M120 258 L176 296" stroke="#607083"/><text x="23" y="337">Heater</text><path d="M91 334 L144 330" stroke="#607083"/><text x="326" y="206">Argon</text><text x="326" y="223">atmosphere</text><text x="280" y="63" fill="#f5a623">rotate</text><text x="244" y="25" fill="#f5a623">pull</text><text x="185" y="338" fill="#10161e" font-weight="800">molten silicon</text></g></g></svg></figure>
+            <aside class="company-panel">
+              <h4>Companies behind this step</h4>
+              <p>The vessel holding molten silicon is a technical marvel too: an ultra-pure fused-quartz crucible. Much of the world's purest quartz comes from <strong>Spruce Pine, North Carolina</strong>, where it is mined by <strong>Sibelco</strong> and <strong>The Quartz Corp</strong>. When Hurricane Helene shut those mines in September 2024, the disruption rattled the chip supply chain because this grade of quartz has so few substitutes. The crystal-pulling furnaces are specialized systems built by equipment firms such as Germany's <strong>PVA TePla</strong>.</p>
+            </aside>
+          </div>
+        </details>
+
+        <details class="step-card">
+          <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">Finishing</span><span class="step-name">From ingot to wafer</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>The ingot (called a boule) is sliced by diamond wire only about 100 microns thick. Even so, the kerf — silicon ground into sawdust by each cut — adds up across hundreds of slices. A finished 300mm wafer is roughly 775 microns thick, about the thickness of a sturdy credit card, yet its working surface must be flat and clean at the atomic scale.</p>
+              <p>Slicing is only the start. Edge grinding rounds the rim so it will not chip; lapping flattens both faces; chemical etching strips away saw damage; and chemical-mechanical polishing produces the final mirror. A small notch marks the crystal orientation so every fab tool aligns the lattice the same way. Not every wafer becomes chips: fabs sacrifice “test wafers” to calibrate deposition, etch, and cleaning tools before valuable production wafers enter.</p>
+              <p class="plain-note"><strong>In plain English:</strong> a boule is a giant silicon carrot, but turning its slices into fab-ready mirrors takes several precision finishing stages.</p>
+            </div>
+            <aside class="company-panel">
+              <h4>Companies behind this step</h4>
+              <p>The boule is sliced on a diamond-wire saw, a production method pioneered by Switzerland's <strong>Meyer Burger</strong>. After grinding, polishing, and cleaning, the finished wafer is inspected for particles, defects, and microscopic surface variations using metrology tools from <strong>KLA</strong> (NASDAQ: KLAC). The tool supplier sits one step removed from the wafer itself, but it is essential: no fab wants to discover a substrate defect after adding expensive process layers.</p>
+            </aside>
+          </div>
+        </details>
+
+        <details class="step-card punchline-card">
+          <summary><span class="step-badge">→</span><span class="step-heading"><span class="step-kicker">The payoff</span><span class="step-name">Purity was never the goal. Control is.</span></span></summary>
+          <div class="detail-body">
+            <div class="step-story">
+              <p>After all that purification, the fab deliberately contaminates the silicon. Boron makes p-type silicon — electron-hungry — while phosphorus makes n-type silicon — electron-rich. The junction between the two is the foundation a transistor is built from. So the fab's first act is choosing the wafer's dopant type: purity was never the goal, control is.</p>
+              <p>The economics are just as striking: the whole sand-to-wafer journey costs maybe a couple hundred dollars per wafer, while a single wafer's worth of AI GPUs can sell for millions. Essentially all the value is in what gets printed and assembled on top.</p>
+              <p class="plain-note"><strong>In plain English:</strong> doping is deliberate, controlled contamination — it creates the electrical push and pull that lets a transistor switch.</p>
+            </div>
+            <figure class="value-ladder" aria-labelledby="value-caption"><figcaption class="figure-label" id="value-caption">THE VALUE LADDER</figcaption><svg viewBox="0 0 430 214" role="img" aria-labelledby="value-title value-desc"><title id="value-title">Value rises from a blank wafer to finished AI GPUs</title><desc id="value-desc">A roughly 200 dollar blank wafer becomes finished AI GPUs collectively worth millions of dollars after fabrication, packaging, memory, and systems integration.</desc><defs><marker id="arrow-value" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><circle cx="62" cy="80" r="38" fill="#1c2430" stroke="#687788" stroke-width="2"/><ellipse cx="62" cy="76" rx="28" ry="11" fill="#151b23" stroke="#f5a623"/><text x="62" y="143" text-anchor="middle" fill="#edf1f5" font-size="14" font-weight="700">~$200</text><text x="62" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">blank wafer</text><path d="M110 80 H299" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-value)"/><g fill="#aeb7c2" font-size="11" text-anchor="middle"><text x="160" y="62">fab</text><text x="210" y="62">package</text><text x="262" y="62">system</text></g><g transform="translate(320 44)"><rect width="82" height="70" rx="7" fill="#36280f" stroke="#f5a623"/><rect x="15" y="15" width="52" height="40" rx="3" fill="#f5a623" opacity=".8"/><path d="M0 18 h-10 M0 35 h-10 M0 52 h-10 M82 18 h10 M82 35 h10 M82 52 h10" stroke="#f5a623" stroke-width="3"/></g><text x="361" y="143" text-anchor="middle" fill="#ffc35c" font-size="14" font-weight="800">Millions</text><text x="361" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">in finished AI GPUs</text><path d="M105 191 H325" stroke="#2d3846" stroke-width="1"/><text x="215" y="207" text-anchor="middle" fill="#aeb7c2" font-size="11">Value accumulates in the layers printed and assembled on top.</text></g></svg></figure>
+          </div>
+        </details>
       </div>
       <div class="stats" aria-label="Key numbers">
         <div class="stat"><strong>9N</strong><span>99.9999999% pure</span></div>

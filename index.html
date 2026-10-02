@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="data:," />
+  <title>From Sand to Superchips</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --surface: #151b23;
+      --surface-2: #1c2430;
+      --surface-3: #10161e;
+      --ink: #edf1f5;
+      --muted: #aeb7c2;
+      --line: #2d3846;
+      --accent: #f5a623;
+      --accent-bright: #ffc35c;
+      --accent-soft: #36280f;
+      --good: #67d7a2;
+      --good-soft: #163426;
+      --shadow: 0 16px 38px rgba(0, 0, 0, .28);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      background:
+        radial-gradient(circle at 87% 2%, color-mix(in srgb, var(--accent) 8%, transparent) 0 1px, transparent 2px) 0 0 / 23px 23px,
+        var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, select { font: inherit; }
+    a { color: inherit; }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .hero {
+      position: relative;
+      padding: 72px 0 34px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "Si";
+      position: absolute;
+      right: max(24px, calc((100vw - 1180px) / 2));
+      top: 34px;
+      width: 122px;
+      height: 122px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font: 700 52px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      opacity: .62;
+      box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--surface) 65%, transparent);
+    }
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: clamp(46px, 7vw, 82px);
+      line-height: .98;
+      letter-spacing: -.045em;
+      font-weight: 700;
+    }
+    .subtitle { max-width: 720px; margin: 20px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 21px); }
+    .progress-row { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
+    .progress-row span { color: var(--muted); font-size: 14px; font-weight: 650; white-space: nowrap; }
+    .progress-track { width: min(320px, 48vw); height: 3px; background: var(--line); }
+    .progress-fill { display: block; width: 12.5%; height: 100%; background: var(--accent); }
+    .tab-shell {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-block: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(14px);
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      gap: 0;
+      padding: 0;
+    }
+    .tab {
+      appearance: none;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      padding: 16px 8px 13px;
+      min-width: 0;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+    .mobile-tabs { display: none; padding: 10px 0; }
+    .mobile-tabs label { font-size: 12px; font-weight: 700; color: var(--muted); margin-right: 9px; }
+    .mobile-tabs select {
+      width: calc(100% - 67px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    main { padding: 46px 0 80px; }
+    .panel[hidden] { display: none; }
+    .panel-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; margin-bottom: 28px; }
+    .chapter-label { margin: 0 0 7px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    h2 { margin: 0; font-family: ui-serif, Georgia, serif; font-size: clamp(32px, 4.8vw, 54px); line-height: 1.05; letter-spacing: -.025em; }
+    .panel-intro { max-width: 760px; margin: 12px 0 0; color: var(--muted); font-size: 18px; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      align-self: start;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--good-soft);
+      color: var(--good);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .map-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--line); gap: 1px; }
+    .map-card { min-width: 0; background: var(--surface); padding: 26px; }
+    .map-top { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+    .map-num { color: var(--accent); font: 800 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .map-state { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+    .map-state.complete { color: var(--good); }
+    .map-card h3 { margin: 28px 0 8px; font-size: 22px; line-height: 1.15; letter-spacing: -.02em; }
+    .map-card p { margin: 0; color: var(--muted); }
+    .map-card.complete-card { background: color-mix(in srgb, var(--accent-soft) 32%, var(--surface)); }
+    .section-title { margin: 46px 0 8px; font-family: ui-serif, Georgia, serif; font-size: 30px; line-height: 1.15; }
+    .section-intro { margin: 0 0 22px; max-width: 820px; color: var(--muted); }
+    .details-stack { border-top: 1px solid var(--line); }
+    details { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 42%, transparent); }
+    summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 28px;
+      gap: 16px;
+      align-items: center;
+      list-style: none;
+      cursor: pointer;
+      padding: 19px 4px;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 400;
+    }
+    details[open] summary::after { content: "−"; }
+    details[open] summary { color: var(--accent); }
+    .detail-body { padding: 0 50px 22px 4px; max-width: 910px; color: var(--muted); }
+    .detail-body p { margin: 0; }
+    .plain-note {
+      margin-top: 12px !important;
+      padding: 10px 12px;
+      border-left: 2px solid color-mix(in srgb, var(--accent) 72%, var(--line));
+      color: color-mix(in srgb, var(--ink) 78%, var(--muted));
+      background: color-mix(in srgb, var(--accent-soft) 28%, transparent);
+      font-size: 14px;
+      font-style: italic;
+    }
+    .plain-note strong { color: var(--accent-bright); font-style: normal; }
+    .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 28px 0 0; }
+    .stat { min-width: 0; padding: 14px; border: 1px solid var(--line); background: var(--surface); }
+    .stat strong { display: block; color: var(--accent); font-size: 18px; line-height: 1.15; letter-spacing: -.02em; }
+    .stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.3; }
+    .process-flow {
+      margin: 0 0 34px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: var(--surface-3);
+      box-shadow: var(--shadow);
+    }
+    .process-flow svg, .inline-figure svg, .market-chart svg, .value-ladder svg { display: block; width: 100%; height: auto; }
+    .flow-mobile { display: none !important; }
+    .figure-label { margin: 0 0 12px; color: var(--muted); font-size: 12px; font-weight: 750; letter-spacing: .04em; }
+    .detail-layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: 26px; align-items: center; }
+    .inline-figure { min-width: 0; padding: 16px; border: 1px solid var(--line); background: var(--surface-3); }
+    .company-detail { background: color-mix(in srgb, var(--accent-soft) 18%, var(--surface)); }
+    .company-detail summary { padding-left: 18px; }
+    .company-detail summary::before {
+      content: "Company lens";
+      color: var(--accent);
+      font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .company-detail summary { grid-template-columns: auto minmax(0, 1fr) 28px; }
+    .company-detail .detail-body { padding-left: 18px; max-width: none; }
+    .company-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); gap: 28px; align-items: start; }
+    .company-grid p + p { margin-top: 14px; }
+    .market-chart, .value-ladder { min-width: 0; padding: 18px; border: 1px solid var(--line); background: var(--surface-3); }
+    .value-ladder { margin-top: 16px; }
+    .source-note { margin-top: 10px !important; font-size: 12px; color: var(--muted); }
+    .roadmap-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: clamp(24px, 5vw, 48px);
+      box-shadow: var(--shadow);
+    }
+    .coming { color: var(--accent); font: 800 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .09em; }
+    .roadmap-card h3 { margin: 14px 0 12px; font: 700 clamp(26px, 4vw, 40px)/1.08 ui-serif, Georgia, serif; letter-spacing: -.025em; }
+    .roadmap-card > p { margin: 0; max-width: 760px; color: var(--muted); }
+    .roadmap-list { margin: 28px 0 0; padding: 0; list-style: none; display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .roadmap-list li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .roadmap-list li::before { content: "→"; color: var(--accent); font-weight: 800; }
+    .glossary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .term { min-width: 0; padding: 21px; border-top: 3px solid var(--accent); background: var(--surface); box-shadow: var(--shadow); }
+    .term h3 { margin: 0 0 9px; font-size: 17px; line-height: 1.25; }
+    .term p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 calc(24px + env(safe-area-inset-bottom)); color: var(--muted); font-size: 13px; }
+    :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 50%, transparent); outline-offset: 3px; }
+    @media (max-width: 900px) {
+      .tabs { display: none; }
+      .mobile-tabs { display: block; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .glossary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 28px, 1180px); }
+      .hero { padding: 46px 0 26px; }
+      .hero::after { width: 70px; height: 70px; right: 14px; top: 24px; font-size: 29px; opacity: .45; }
+      h1 { max-width: 88%; font-size: clamp(42px, 14vw, 60px); }
+      .subtitle { font-size: 16px; }
+      .progress-row { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .progress-track { width: 100%; }
+      main { padding: 32px 0 58px; }
+      .panel-head { grid-template-columns: 1fr; gap: 14px; align-items: start; }
+      .panel-intro { font-size: 16px; }
+      .map-grid { grid-template-columns: 1fr; }
+      .map-card { padding: 21px; }
+      .map-card h3 { margin-top: 20px; }
+      summary { padding: 17px 2px; font-size: 15px; }
+      .detail-body { padding: 0 40px 19px 2px; font-size: 15px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat:last-child { grid-column: 1 / -1; }
+      .glossary { grid-template-columns: 1fr; }
+      .section-title { font-size: 27px; }
+      .process-flow { padding: 12px; margin-bottom: 26px; overflow: hidden; }
+      .flow-desktop { display: none !important; }
+      .flow-mobile { display: block !important; }
+      .detail-layout, .company-grid { grid-template-columns: 1fr; gap: 18px; }
+      .inline-figure, .market-chart, .value-ladder { padding: 10px; }
+      .company-detail summary { grid-template-columns: minmax(0, 1fr) 28px; padding-left: 2px; }
+      .company-detail summary::before { content: none; }
+      .company-detail .detail-body { padding-left: 2px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>From Sand to Superchips</h1>
+      <p class="subtitle">Hugo's semiconductor research notes — the full stack, from sand to silicon to rack-scale AI systems.</p>
+      <div class="progress-row" aria-label="Course progress">
+        <span>1 of 8 chapters complete</span>
+        <div class="progress-track" aria-hidden="true"><i class="progress-fill"></i></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tab-shell" aria-label="Research chapters">
+    <div class="wrap tabs" role="tablist">
+      <button class="tab" id="tab-map" role="tab" aria-selected="true" aria-controls="panel-map" data-target="map">Map</button>
+      <button class="tab" id="tab-silicon" role="tab" aria-selected="false" aria-controls="panel-silicon" data-target="silicon">1 · Silicon</button>
+      <button class="tab" id="tab-fab" role="tab" aria-selected="false" aria-controls="panel-fab" data-target="fab">2 · The Fab</button>
+      <button class="tab" id="tab-design" role="tab" aria-selected="false" aria-controls="panel-design" data-target="design">3 · Chip Design</button>
+      <button class="tab" id="tab-packaging" role="tab" aria-selected="false" aria-controls="panel-packaging" data-target="packaging">4 · Packaging</button>
+      <button class="tab" id="tab-memory" role="tab" aria-selected="false" aria-controls="panel-memory" data-target="memory">5 · Memory</button>
+      <button class="tab" id="tab-interconnect" role="tab" aria-selected="false" aria-controls="panel-interconnect" data-target="interconnect">6 · Interconnect</button>
+      <button class="tab" id="tab-systems" role="tab" aria-selected="false" aria-controls="panel-systems" data-target="systems">7 · Systems</button>
+      <button class="tab" id="tab-money" role="tab" aria-selected="false" aria-controls="panel-money" data-target="money">8 · Money &amp; Map</button>
+      <button class="tab" id="tab-glossary" role="tab" aria-selected="false" aria-controls="panel-glossary" data-target="glossary">Glossary</button>
+    </div>
+    <div class="wrap mobile-tabs">
+      <label for="chapter-select">Chapter</label>
+      <select id="chapter-select" aria-label="Choose a chapter">
+        <option value="map">Map</option><option value="silicon">1 · Silicon</option><option value="fab">2 · The Fab</option><option value="design">3 · Chip Design</option><option value="packaging">4 · Packaging</option><option value="memory">5 · Memory</option><option value="interconnect">6 · Interconnect</option><option value="systems">7 · Systems</option><option value="money">8 · Money &amp; Map</option><option value="glossary">Glossary</option>
+      </select>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map" data-panel="map">
+      <div class="panel-head"><div><p class="chapter-label">The learning map</p><h2>Eight layers, one machine</h2><p class="panel-intro">Follow the chain from raw material to the rack-scale computers training frontier AI models.</p></div></div>
+      <div class="map-grid">
+        <article class="map-card complete-card"><div class="map-top"><span class="map-num">01</span><span class="map-state complete">Complete</span></div><h3>Sand → silicon</h3><p>Quartz to electronic-grade silicon and atomically flat wafers.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">02</span><span class="map-state">Coming soon</span></div><h3>The fab</h3><p>Lithography, process nodes, yields; TSMC vs Samsung vs Intel.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">03</span><span class="map-state">Coming soon</span></div><h3>Chip design</h3><p>Fabless vs foundry vs IDM; NVIDIA's CUDA moat.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">04</span><span class="map-state">Coming soon</span></div><h3>Advanced packaging</h3><p>Chiplets, CoWoS — the new bottleneck.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">05</span><span class="map-state">Coming soon</span></div><h3>Memory</h3><p>DRAM/NAND → HBM3E/HBM4; SK hynix, Samsung, Micron.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">06</span><span class="map-state">Coming soon</span></div><h3>Interconnect</h3><p>NVLink vs InfiniBand and Ethernet.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">07</span><span class="map-state">Coming soon</span></div><h3>The system</h3><p>Grace Blackwell → Vera Rubin, NVL72 racks.</p></article>
+        <article class="map-card"><div class="map-top"><span class="map-num">08</span><span class="map-state">Coming soon</span></div><h3>The money &amp; the map</h3><p>Margins, capex cycles, geopolitics.</p></article>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-silicon" role="tabpanel" aria-labelledby="tab-silicon" data-panel="silicon" hidden>
+      <div class="panel-head"><div><p class="chapter-label">Chapter 1</p><h2>Sand → silicon</h2><p class="panel-intro">From beach to blank canvas — how sand becomes the most perfect manufactured object on Earth.</p></div><span class="status">Complete</span></div>
+      <figure class="process-flow" aria-labelledby="flow-caption">
+        <figcaption class="figure-label" id="flow-caption">THE MATERIAL JOURNEY</figcaption>
+        <svg class="flow-desktop" viewBox="0 0 1080 196" role="img" aria-labelledby="flow-title flow-desc">
+          <title id="flow-title">Five-stage silicon process flow</title>
+          <desc id="flow-desc">Quartz sand becomes metallurgical-grade silicon, polysilicon, a single-crystal ingot, then a 300 millimeter wafer.</desc>
+          <defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f5a623"/></marker></defs>
+          <g fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-flow)">
+            <path d="M188 84 H232"/><path d="M398 84 H442"/><path d="M608 84 H652"/><path d="M818 84 H862"/>
+          </g>
+          <g font-family="ui-sans-serif,system-ui,sans-serif" text-anchor="middle">
+            <g><rect x="18" y="26" width="170" height="116" rx="10" fill="#151b23" stroke="#2d3846"/><path d="M66 95 l15-28 15 28 13-20 16 27z" fill="#f5a623" opacity=".72"/><text x="103" y="120" fill="#edf1f5" font-size="16" font-weight="700">Quartz sand</text><text x="103" y="164" fill="#aeb7c2" font-size="13">SiO₂</text></g>
+            <g><rect x="228" y="26" width="170" height="116" rx="10" fill="#151b23" stroke="#2d3846"/><path d="M275 62 h76 l-10 42 h-56z" fill="#36280f" stroke="#f5a623"/><path d="M295 94 q18-32 36 0" stroke="#ffc35c" stroke-width="5" fill="none"/><text x="313" y="126" fill="#edf1f5" font-size="16" font-weight="700">MG-silicon</text><text x="313" y="164" fill="#f5a623" font-size="13" font-weight="700">2,000°C furnace</text></g>
+            <g><rect x="438" y="26" width="170" height="116" rx="10" fill="#151b23" stroke="#2d3846"/><circle cx="502" cy="78" r="15" fill="#f5a623" opacity=".8"/><circle cx="535" cy="69" r="12" fill="#ffc35c" opacity=".65"/><circle cx="546" cy="95" r="18" fill="#f5a623" opacity=".5"/><text x="523" y="126" fill="#edf1f5" font-size="16" font-weight="700">Polysilicon</text><text x="523" y="164" fill="#f5a623" font-size="13" font-weight="700">9N purity</text></g>
+            <g><rect x="648" y="26" width="170" height="116" rx="10" fill="#151b23" stroke="#2d3846"/><rect x="708" y="47" width="50" height="68" rx="25" fill="#283442" stroke="#f5a623"/><text x="733" y="126" fill="#edf1f5" font-size="16" font-weight="700">Ingot</text><text x="733" y="164" fill="#f5a623" font-size="13" font-weight="700">1,414°C melt</text></g>
+            <g><rect x="858" y="26" width="204" height="116" rx="10" fill="#151b23" stroke="#2d3846"/><ellipse cx="960" cy="78" rx="51" ry="22" fill="#283442" stroke="#f5a623" stroke-width="2"/><ellipse cx="960" cy="73" rx="39" ry="14" fill="#151b23" stroke="#687788"/><text x="960" y="126" fill="#edf1f5" font-size="16" font-weight="700">Wafer</text><text x="960" y="164" fill="#f5a623" font-size="13" font-weight="700">300mm standard</text></g>
+          </g>
+        </svg>
+        <svg class="flow-mobile" viewBox="0 0 360 620" role="img" aria-labelledby="flow-mobile-title flow-mobile-desc">
+          <title id="flow-mobile-title">Five-stage silicon process flow</title>
+          <desc id="flow-mobile-desc">Quartz sand becomes metallurgical-grade silicon, polysilicon, a single-crystal ingot, then a 300 millimeter wafer.</desc>
+          <defs><marker id="arrow-flow-mobile" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs>
+          <g font-family="ui-sans-serif,system-ui,sans-serif">
+            <g fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-flow-mobile)"><path d="M180 106 V126"/><path d="M180 226 V246"/><path d="M180 346 V366"/><path d="M180 466 V486"/></g>
+            <g><rect x="18" y="12" width="324" height="94" rx="10" fill="#151b23" stroke="#2d3846"/><path d="M48 76 l12-22 12 22 11-16 14 20z" fill="#f5a623" opacity=".72"/><text x="120" y="55" fill="#edf1f5" font-size="18" font-weight="700">Quartz sand</text><text x="120" y="79" fill="#aeb7c2" font-size="14">SiO₂</text></g>
+            <g><rect x="18" y="132" width="324" height="94" rx="10" fill="#151b23" stroke="#2d3846"/><path d="M47 156 h54 l-8 37 h-38z" fill="#36280f" stroke="#f5a623"/><path d="M61 185 q13-24 26 0" stroke="#ffc35c" stroke-width="4" fill="none"/><text x="120" y="174" fill="#edf1f5" font-size="18" font-weight="700">MG-silicon</text><text x="120" y="198" fill="#f5a623" font-size="14" font-weight="700">2,000°C furnace</text></g>
+            <g><rect x="18" y="252" width="324" height="94" rx="10" fill="#151b23" stroke="#2d3846"/><circle cx="62" cy="293" r="13" fill="#f5a623" opacity=".8"/><circle cx="88" cy="282" r="10" fill="#ffc35c" opacity=".65"/><circle cx="91" cy="309" r="15" fill="#f5a623" opacity=".5"/><text x="120" y="294" fill="#edf1f5" font-size="18" font-weight="700">Polysilicon</text><text x="120" y="318" fill="#f5a623" font-size="14" font-weight="700">9N purity</text></g>
+            <g><rect x="18" y="372" width="324" height="94" rx="10" fill="#151b23" stroke="#2d3846"/><rect x="55" y="389" width="42" height="60" rx="21" fill="#283442" stroke="#f5a623"/><text x="120" y="414" fill="#edf1f5" font-size="18" font-weight="700">Single-crystal ingot</text><text x="120" y="438" fill="#f5a623" font-size="14" font-weight="700">1,414°C melt</text></g>
+            <g><rect x="18" y="492" width="324" height="112" rx="10" fill="#151b23" stroke="#2d3846"/><ellipse cx="78" cy="540" rx="40" ry="18" fill="#283442" stroke="#f5a623" stroke-width="2"/><ellipse cx="78" cy="536" rx="30" ry="11" fill="#151b23" stroke="#687788"/><text x="140" y="535" fill="#edf1f5" font-size="18" font-weight="700">Wafer</text><text x="140" y="559" fill="#f5a623" font-size="14" font-weight="700">300mm standard</text></g>
+          </g>
+        </svg>
+      </figure>
+      <div class="details-stack">
+        <details open><summary>Step 0 — why silicon at all</summary><div class="detail-body"><p>Sand is mostly quartz, which is silicon dioxide, and silicon is the second most abundant element in Earth's crust. It's a natural semiconductor, meaning its electrons can be coaxed into conducting on command. But the real killer feature: heat silicon in oxygen and it grows a near-perfect insulating skin of its own oxide. Germanium actually made the first transistors back in 1947, but its oxide is garbage, so silicon won and never looked back.</p></div></details>
+        <details><summary>Step 1 — metallurgical-grade silicon</summary><div class="detail-body"><p>Quartz plus carbon (coal, coke) go into a giant arc furnace at around 2,000°C. Out comes silicon at 98–99% pure. Sounds pure; for chips it's filthy. This grade mostly goes to aluminum alloys and silicone rubber.</p></div></details>
+        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>Metallurgical-grade silicon is made in huge arc furnaces by specialists including <strong>Elkem</strong> of Norway and <strong>Ferroglobe</strong>, whose plants span the United States, Spain, and France. <strong>Wacker Chemie</strong> also produces its own MG-silicon in Norway, feeding the company's downstream polysilicon plants and tightening its control over a critical raw input.</p></div></details>
+        <details><summary>Step 2 — polysilicon, via the Siemens process</summary><div class="detail-body"><p>This is where “nine nines” happens. The crude silicon is reacted with hydrochloric acid to make trichlorosilane gas, which gets distilled — distillation is a fantastic purifier — then the gas is baked onto white-hot silicon seed rods, where it decomposes into ultra-pure silicon: 99.9999999% pure, fewer than one stray atom per billion. The process devours electricity, which is one reason China now makes the large majority of the world's polysilicon.</p><p class="plain-note"><strong>In plain English:</strong> trichlorosilane is basically silicon in gas form, so it can be distilled clean.</p></div></details>
+        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><div class="company-grid"><div><p>The Western, Japanese, and Korean semiconductor-grade producers include <strong>Wacker Chemie</strong> (Burghausen, Germany and Charleston, Tennessee), <strong>Hemlock Semiconductor</strong> (Hemlock, Michigan — a Corning + Shin-Etsu joint venture), <strong>Tokuyama</strong> in Japan, and <strong>OCI</strong> in Korea and Malaysia.</p><p><strong>REC Silicon</strong> in Moses Lake, Washington takes a different route: fluidized-bed-reactor technology creates granular polysilicon instead of the rods produced by the Siemens process.</p><p>Semiconductor-grade poly is only a small, ultra-demanding slice of output. The vast majority of polysilicon goes to solar panels, and more than 80% of all polysilicon is made in China by firms such as <strong>Tongwei</strong>, <strong>GCL</strong>, <strong>Daqo</strong>, and <strong>Xinte</strong>.</p></div><figure class="market-chart" aria-labelledby="poly-caption"><figcaption class="figure-label" id="poly-caption">GLOBAL POLYSILICON OUTPUT</figcaption><svg viewBox="0 0 430 196" role="img" aria-labelledby="poly-title poly-desc"><title id="poly-title">China produces more than 80 percent of global polysilicon</title><desc id="poly-desc">A horizontal bar compares China's more than 80 percent share with less than 20 percent for the rest of the world.</desc><g font-family="ui-sans-serif,system-ui,sans-serif"><text x="0" y="28" fill="#edf1f5" font-size="14" font-weight="700">China</text><rect x="0" y="41" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="41" width="336" height="30" rx="5" fill="#f5a623"/><text x="350" y="62" fill="#ffc35c" font-size="16" font-weight="800">80%+</text><text x="0" y="116" fill="#edf1f5" font-size="14" font-weight="700">Rest of world</text><rect x="0" y="129" width="400" height="30" rx="5" fill="#24303d"/><rect x="0" y="129" width="76" height="30" rx="5" fill="#607083"/><text x="88" y="150" fill="#aeb7c2" font-size="16" font-weight="800">&lt;20%</text><text x="0" y="188" fill="#aeb7c2" font-size="12">Most output feeds solar, not semiconductors.</text></g></svg></figure></div></div></details>
+        <details><summary>Step 3 — the Czochralski pull</summary><div class="detail-body"><div class="detail-layout"><div><p>Chunks of that poly are melted in a quartz crucible at 1,414°C. A small seed crystal is touched to the surface and slowly winched upward while rotating, and the melt freezes onto it as one continuous crystal lattice — a single crystal two meters long, hundreds of kilos, with zero grain boundaries. That matters because grain boundaries would make every transistor behave slightly differently. Fun fact: Jan Czochralski discovered the method in 1916 when he accidentally dipped his pen into molten tin instead of his inkwell.</p><p class="plain-note"><strong>In plain English:</strong> Czochralski is pronounced “choh-KRAHL-skee” — pulling one perfect crystal from a melt.</p></div><figure class="inline-figure" aria-labelledby="cz-caption"><figcaption class="figure-label" id="cz-caption">CZOCHRALSKI CRYSTAL PULLER</figcaption><svg viewBox="0 0 460 420" role="img" aria-labelledby="cz-title cz-desc"><title id="cz-title">Cross-section of a Czochralski crystal puller</title><desc id="cz-desc">A seed crystal and growing ingot rotate and rise from molten silicon held in a quartz crucible surrounded by a heater, while argon flows through the chamber.</desc><defs><marker id="arrow-cz" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><rect x="92" y="20" width="276" height="372" rx="122" fill="#10161e" stroke="#2d3846" stroke-width="2"/><path d="M190 280 Q230 302 270 280 L288 350 Q230 378 172 350z" fill="#24303d" stroke="#aeb7c2" stroke-width="2"/><path d="M180 321 Q230 344 280 321 L288 350 Q230 378 172 350z" fill="#f5a623" opacity=".65"/><path d="M164 275 Q230 307 296 275" fill="none" stroke="#f5a623" stroke-width="10"/><path d="M150 260 Q128 315 154 365 M310 260 Q332 315 306 365" fill="none" stroke="#c4770e" stroke-width="12"/><rect x="211" y="58" width="38" height="48" rx="8" fill="#607083"/><path d="M197 106 L263 106 L253 246 Q230 268 207 246z" fill="#344253" stroke="#f5a623" stroke-width="2"/><path d="M230 50 V20" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-cz)"/><path d="M270 78 Q305 94 278 120" fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-cz)"/><path d="M370 82 H320 V185" fill="none" stroke="#67d7a2" stroke-width="2" marker-end="url(#arrow-cz)"/><g fill="#edf1f5" font-size="13"><text x="18" y="67">Seed crystal</text><path d="M104 64 H206" stroke="#607083"/><text x="292" y="138">Growing ingot</text><path d="M288 142 L257 152" stroke="#607083"/><text x="20" y="262">Quartz crucible</text><path d="M120 258 L176 296" stroke="#607083"/><text x="23" y="337">Heater</text><path d="M91 334 L144 330" stroke="#607083"/><text x="326" y="206">Argon</text><text x="326" y="223">atmosphere</text><text x="280" y="63" fill="#f5a623">rotate</text><text x="244" y="25" fill="#f5a623">pull</text><text x="185" y="338" fill="#10161e" font-weight="800">molten silicon</text></g></g></svg></figure></div></div></details>
+        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>The vessel holding molten silicon is a technical marvel too: an ultra-pure fused-quartz crucible. Much of the world's purest quartz comes from <strong>Spruce Pine, North Carolina</strong>, where it is mined by <strong>Sibelco</strong> and <strong>The Quartz Corp</strong>. When Hurricane Helene shut those mines in September 2024, the disruption rattled the chip supply chain because this grade of quartz has so few substitutes. The crystal-pulling furnaces are specialized systems built by equipment firms such as Germany's <strong>PVA TePla</strong>.</p></div></details>
+        <details><summary>Step 4 — wafers</summary><div class="detail-body"><p>The ingot (called a boule) is sliced by diamond wire into discs about 0.7mm thick, then ground and polished to a mirror finish that's flat at the atomic scale. 300mm (twelve inch) is the standard; the industry tried to move to 450mm and gave up as too expensive. Two Japanese companies, Shin-Etsu and SUMCO, make well over half the world's wafers.</p><p class="plain-note"><strong>In plain English:</strong> a boule is a giant silicon carrot, ready to be sliced into wafers.</p></div></details>
+        <details class="company-detail"><summary>The companies behind this step</summary><div class="detail-body"><p>The boule is sliced on a diamond-wire saw, a production method pioneered by Switzerland's <strong>Meyer Burger</strong>. After grinding, polishing, and cleaning, the finished wafer is inspected for particles, defects, and microscopic surface variations using metrology tools from <strong>KLA</strong> (NASDAQ: KLAC). The tool supplier sits one step removed from the wafer itself, but it is essential: no fab wants to discover a substrate defect after adding expensive process layers.</p></div></details>
+        <details><summary>The punchline</summary><div class="detail-body"><p>After all that purification, the fab will deliberately contaminate the silicon — doping it with boron or phosphorus at parts-per-billion precision to set its electrical personality. Purity was never the goal; control is. And the economics are absurd: the whole sand-to-wafer journey costs maybe a couple hundred dollars per wafer, and a single wafer's worth of AI GPUs can sell for millions. Essentially all the value is in what gets printed on top.</p><p class="plain-note"><strong>In plain English:</strong> doping is deliberate, controlled contamination — the whole game.</p><figure class="value-ladder" aria-labelledby="value-caption"><figcaption class="figure-label" id="value-caption">THE VALUE LADDER</figcaption><svg viewBox="0 0 430 214" role="img" aria-labelledby="value-title value-desc"><title id="value-title">Value rises from a blank wafer to finished AI GPUs</title><desc id="value-desc">A roughly 200 dollar blank wafer becomes finished AI GPUs collectively worth millions of dollars after fabrication, packaging, memory, and systems integration.</desc><defs><marker id="arrow-value" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><circle cx="62" cy="80" r="38" fill="#1c2430" stroke="#687788" stroke-width="2"/><ellipse cx="62" cy="76" rx="28" ry="11" fill="#151b23" stroke="#f5a623"/><text x="62" y="143" text-anchor="middle" fill="#edf1f5" font-size="14" font-weight="700">~$200</text><text x="62" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">blank wafer</text><path d="M110 80 H299" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-value)"/><g fill="#aeb7c2" font-size="11" text-anchor="middle"><text x="160" y="62">fab</text><text x="210" y="62">package</text><text x="262" y="62">system</text></g><g transform="translate(320 44)"><rect width="82" height="70" rx="7" fill="#36280f" stroke="#f5a623"/><rect x="15" y="15" width="52" height="40" rx="3" fill="#f5a623" opacity=".8"/><path d="M0 18 h-10 M0 35 h-10 M0 52 h-10 M82 18 h10 M82 35 h10 M82 52 h10" stroke="#f5a623" stroke-width="3"/></g><text x="361" y="143" text-anchor="middle" fill="#ffc35c" font-size="14" font-weight="800">Millions</text><text x="361" y="161" text-anchor="middle" fill="#aeb7c2" font-size="12">in finished AI GPUs</text><path d="M105 191 H325" stroke="#2d3846" stroke-width="1"/><text x="215" y="207" text-anchor="middle" fill="#aeb7c2" font-size="11">Value accumulates in the layers printed and assembled on top.</text></g></svg></figure></div></details>
+      </div>
+      <div class="stats" aria-label="Key numbers">
+        <div class="stat"><strong>9N</strong><span>99.9999999% pure</span></div>
+        <div class="stat"><strong>1,414°C</strong><span>silicon melting point</span></div>
+        <div class="stat"><strong>300mm</strong><span>standard wafer</span></div>
+        <div class="stat"><strong>~$12–13B</strong><span>annual wafer market</span></div>
+        <div class="stat"><strong>5 firms</strong><span>~90% of supply</span></div>
+      </div>
+
+      <h3 class="section-title">Deep dive: the wafer makers</h3>
+      <p class="section-intro">The silicon wafer business is roughly a $12–13B-a-year market — small next to the ~$600B chip industry, but literally nothing gets made without it. And it's one of the purest oligopolies in tech: five companies control about 90% of supply.</p>
+      <figure class="market-chart" aria-labelledby="wafer-share-caption">
+        <figcaption class="figure-label" id="wafer-share-caption">ESTIMATED SILICON WAFER MARKET SHARE</figcaption>
+        <svg viewBox="0 0 460 358" role="img" aria-labelledby="wafer-share-title wafer-share-desc"><title id="wafer-share-title">Market share of the five largest silicon wafer makers</title><desc id="wafer-share-desc">Shin-Etsu 30 percent, SUMCO 24 percent, GlobalWafers 15 percent, Siltronic 11 percent, and SK Siltron 9 percent.</desc><g font-family="ui-sans-serif,system-ui,sans-serif"><g fill="#edf1f5" font-size="14" font-weight="700"><text x="0" y="24">Shin-Etsu</text><text x="0" y="86">SUMCO</text><text x="0" y="148">GlobalWafers</text><text x="0" y="210">Siltronic</text><text x="0" y="272">SK Siltron</text></g><g fill="#24303d"><rect x="0" y="34" width="420" height="24" rx="4"/><rect x="0" y="96" width="420" height="24" rx="4"/><rect x="0" y="158" width="420" height="24" rx="4"/><rect x="0" y="220" width="420" height="24" rx="4"/><rect x="0" y="282" width="420" height="24" rx="4"/></g><g fill="#f5a623"><rect x="0" y="34" width="126" height="24" rx="4"/><rect x="0" y="96" width="101" height="24" rx="4"/><rect x="0" y="158" width="63" height="24" rx="4"/><rect x="0" y="220" width="46" height="24" rx="4"/><rect x="0" y="282" width="38" height="24" rx="4"/></g><g fill="#ffc35c" font-size="14" font-weight="800"><text x="134" y="52">~30%</text><text x="109" y="114">~24%</text><text x="71" y="176">~15%</text><text x="54" y="238">~11%</text><text x="46" y="300">~9%</text></g><path d="M0 327 H420" stroke="#2d3846"/><text x="0" y="350" fill="#aeb7c2" font-size="12">Together: roughly 90% of global supply.</text></g></svg>
+      </figure>
+      <div class="details-stack">
+        <details><summary>Shin-Etsu Chemical (TSE: 4063), ~30% — the undisputed #1</summary><div class="detail-body"><p>A wonderfully weird company: simultaneously the world's largest wafer maker and the world's largest PVC (plastic pipe) producer. Founded in 1926 as a fertilizer company, now a chemistry-at-scale machine. Its semiconductor arm posts operating margins that can top 35%, among the best in the industry. Famously disciplined: mountain of net cash, basically no debt, invests counter-cyclically while rivals freeze in downturns. Also makes photoresists and photomask blanks, so it's embedded in the fab at multiple layers. The quality compounder of the group.</p></div></details>
+        <details><summary>SUMCO (TSE: 3436), ~24% — the pure play</summary><div class="detail-body"><p>Born in 1999 from the merger of Sumitomo's and Mitsubishi's silicon divisions. Unlike Shin-Etsu, wafers are basically all it does — the cleanest read on wafer demand, but more cyclical: thinner margins, bigger swings.</p></div></details>
+        <details><summary>GlobalWafers (TWO: 6488), ~15% — Taiwan's champion</summary><div class="detail-body"><p>Grew by acquisition (notably SunEdison Semiconductor in 2016). Its claim to fame: the failed €4.4B takeover of Siltronic in 2021–22, which collapsed when Germany's foreign-investment review never cleared it in time. Textbook proof governments now treat wafer supply as strategic infrastructure.</p></div></details>
+        <details><summary>Siltronic (Xetra: WAF), ~11% — Germany's specialist</summary><div class="detail-body"><p>IPO'd in 2015 with Wacker Chemie as anchor shareholder — and Wacker is itself a top polysilicon producer, so Siltronic has unusual vertical integration from poly to polished wafer.</p></div></details>
+        <details><summary>SK Siltron, ~9% — Korea's entry, private</summary><div class="detail-body"><p>SK Group bought it from LG in 2017, then grabbed DuPont's wafer business in 2020 (~$450M), gaining US capacity plus silicon carbide wafers — a different material for EV power electronics, not logic chips. No ticker.</p></div></details>
+        <details><summary>Why only five survive — the moat</summary><div class="detail-body"><p>(1) Qualification: fabs take 12–24 months to approve a supplier, since one bad lot can scrap millions in processed chips — nobody switches to save a few percent. (2) Defect black art: decades of know-how in controlling crystal defects. (3) Scale: a new 300mm plant costs billions; incumbents expand in lockstep with customers via long-term agreements, often prepaid. Dozens of players in the 1990s consolidated into these five.</p></div></details>
+        <details><summary>China's push</summary><div class="detail-body"><p>TCL Zhonghuan and a handful of domestic players are scaling 300mm capacity, but they're still mostly qualified for trailing-edge nodes — leading-edge wafers remain a Japan/Taiwan/Korea/Germany game.</p></div></details>
+        <details><summary>The economics in one line</summary><div class="detail-body"><p>Oligopoly plus that qualification moat means real pricing power — leaders earn gross margins in the high 30s to 40s. Demand tracks fab utilization (logic + memory), smoothed by long-term agreements. Cyclical, but far less violent than memory chips.</p></div></details>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" data-panel="fab" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 2</p><h2>The fab</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Printing atoms into logic</h3><p>This chapter will unpack the hundreds of steps that turn a blank wafer into working transistors.</p><ul class="roadmap-list"><li>Photolithography (ASML EUV), etch, deposition, doping, and CMP</li><li>What a “process node” actually means now</li><li>Yield as the hidden engine of fab economics</li><li>TSMC vs Samsung vs Intel</li></ul></article></section>
+    <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-panel="design" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 3</p><h2>Chip design</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Architecture becomes silicon</h3><p>This chapter will trace the stack from business model and EDA software to the engines inside an AI accelerator.</p><ul class="roadmap-list"><li>Fabless (NVIDIA, AMD) vs foundry (TSMC) vs IDM (Intel, Samsung, TI)</li><li>EDA tools from Synopsys and Cadence</li><li>CUDA cores and Tensor cores</li><li>NVIDIA's software moat</li></ul></article></section>
+    <section class="panel" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>The package becomes the product</h3><p>This chapter will show why connecting dies is now as strategically important as printing them.</p><ul class="roadmap-list"><li>Chiplets and multi-die design</li><li>TSMC CoWoS and silicon interposers</li><li>How packaging went from afterthought to bottleneck</li><li>Why CoWoS constrained AI GPU supply in 2023–24</li></ul></article></section>
+    <section class="panel" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" data-panel="memory" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 5</p><h2>Memory</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Keeping the accelerator fed</h3><p>This chapter will explain why compute without bandwidth is stranded silicon.</p><ul class="roadmap-list"><li>DRAM and NAND basics</li><li>HBM3E → HBM4</li><li>SK hynix, Samsung, and Micron</li><li>Why HBM is the other half of every AI accelerator</li></ul></article></section>
+    <section class="panel" id="panel-interconnect" role="tabpanel" aria-labelledby="tab-interconnect" data-panel="interconnect" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 6</p><h2>Interconnect</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Turning chips into one computer</h3><p>This chapter will separate the two networking problems inside an AI cluster.</p><ul class="roadmap-list"><li>NVLink for scale-up inside the rack</li><li>InfiniBand for scale-out between racks</li><li>Ethernet's competing path</li><li>Bandwidth, latency, topology, and congestion</li></ul></article></section>
+    <section class="panel" id="panel-systems" role="tabpanel" aria-labelledby="tab-systems" data-panel="systems" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 7</p><h2>The system</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Rack-scale AI factories</h3><p>This chapter will assemble the silicon, memory, networking, power, and cooling into a complete machine.</p><ul class="roadmap-list"><li>DGX and HGX boards → NVL72 racks</li><li>72 GPUs + 36 Grace CPUs, liquid-cooled</li><li>Grace CPU + Blackwell GPU anatomy</li><li>Vera Rubin next: Rubin GPU + Vera CPU + HBM4</li></ul></article></section>
+    <section class="panel" id="panel-money" role="tabpanel" aria-labelledby="tab-money" data-panel="money" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 8</p><h2>The money &amp; the map</h2></div></div><article class="roadmap-card"><span class="coming">Coming soon</span><h3>Where power and profits pool</h3><p>This chapter will connect the technical stack to the industry's financial cycles and geopolitical fault lines.</p><ul class="roadmap-list"><li>Where margins pool in the value chain</li><li>Capex cycles — and why memory is brutally cyclical</li><li>Taiwan concentration</li><li>CHIPS Act and export controls on China</li></ul></article></section>
+
+    <section class="panel" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" data-panel="glossary" hidden>
+      <div class="panel-head"><div><p class="chapter-label">Reference</p><h2>Glossary</h2><p class="panel-intro">The terms that make the semiconductor chain legible.</p></div></div>
+      <div class="glossary">
+        <article class="term"><h3>Metallurgical-grade silicon (MG-Si)</h3><p>Silicon that's 98–99% pure, made by melting quartz with carbon in a giant electric arc furnace. “Metallurgical” just means it's good enough for metal-making — it's mostly mixed into aluminum alloys. But for chips it's still far too dirty. Think of it as crude oil before refining.</p></article>
+        <article class="term"><h3>Siemens process</h3><p>The refining method that turns crude silicon into ultra-pure polysilicon. The silicon is converted into a gas (trichlorosilane), the gas is distilled to remove impurities — like distilling vodka, but for atoms — then baked onto white-hot rods where it turns back into solid silicon, now 99.9999999% pure. Developed by Siemens in the 1950s.</p></article>
+        <article class="term"><h3>Trichlorosilane</h3><p>A gas made of silicon, hydrogen, and chlorine. It's just a convenient vehicle: silicon is far easier to purify as a gas (distillation separates impurities beautifully) than as a solid. After purification it's converted back into solid silicon.</p></article>
+        <article class="term"><h3>Polysilicon</h3><p>Ultra-pure silicon in “many-crystal” form — millions of tiny crystals jumbled together (poly = many). It's the raw material that gets melted down for the crystal-pulling step.</p></article>
+        <article class="term"><h3>Czochralski process</h3><p><strong>Pronounced “choh-KRAHL-skee.”</strong> The method for growing one giant single crystal from molten silicon. A small seed crystal is dipped into the melt and slowly pulled upward while rotating; the liquid freezes onto the seed in perfect alignment, growing into a crystal cylinder meters long.</p></article>
+        <article class="term"><h3>Boule / ingot</h3><p>The finished single-crystal cylinder — basically a giant silicon carrot, up to 2 meters long and 30 cm thick, weighing hundreds of kilos. “Boule” is French for a rounded lump; “ingot” is the generic word for a cast block of material.</p></article>
+        <article class="term"><h3>Grain boundaries</h3><p>The borders between individual crystals in a multi-crystal material. Each grain has its atoms aligned differently, and the mismatch at the boundary disrupts electrical behavior — which is exactly why chips demand a single crystal with zero grain boundaries.</p></article>
+        <article class="term"><h3>Wafer</h3><p>A thin slice of the ingot, about 0.7 mm thick, polished until its surface is flat at the atomic scale. This mirror-smooth disc is the blank canvas that goes into the fab.</p></article>
+        <article class="term"><h3>Doping</h3><p>Deliberately adding tiny amounts of other elements (usually boron or phosphorus — just a few atoms per billion) to change how the silicon conducts electricity. It creates the two “flavors” of silicon (p-type and n-type) that make transistors possible. Counterintuitive but essential: after all that purification, controlled contamination is the whole game.</p></article>
+        <article class="term"><h3>9N purity</h3><p>Shorthand for 99.9999999% pure — count the nines, there are nine of them. Fewer than one impurity atom per billion silicon atoms. (11N = eleven nines, even purer.)</p></article>
+        <article class="term"><h3>Crucible</h3><p>The container holding the molten silicon — itself made of ultra-pure quartz, because anything less pure would contaminate the melt.</p></article>
+        <article class="term"><h3>Seed crystal</h3><p>A small piece of perfect single-crystal silicon dipped into the melt to start growth. The melt's atoms lock onto the seed's pattern, so the entire ingot inherits its perfection.</p></article>
+        <article class="term"><h3>Diamond-wire saw</h3><p>The tool that slices the ingot into wafers — a wire coated with diamond dust, since diamond is about the only thing hard enough to cut silicon cleanly.</p></article>
+        <article class="term"><h3>LTA (long-term agreement)</h3><p>Multi-year supply contracts between wafer makers and chipmakers, often with the chipmaker prepaying to fund new capacity. They smooth out the industry's boom-bust cycle.</p></article>
+        <article class="term"><h3>Wafer qualification</h3><p>The 12–24 month testing gauntlet a chipmaker puts a new wafer supplier through before trusting their wafers in production. One bad batch can scrap millions of dollars of chips — this is the industry's stickiest moat.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Last updated October 2, 2026 · Chapter 1 of 8 complete.</div></footer>
+
+  <script>
+    (function () {
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+      var select = document.getElementById('chapter-select');
+
+      function activate(name, moveFocus) {
+        tabs.forEach(function (tab) {
+          var active = tab.getAttribute('data-target') === name;
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+          tab.setAttribute('tabindex', active ? '0' : '-1');
+          if (active && moveFocus) tab.focus();
+        });
+        panels.forEach(function (panel) { panel.hidden = panel.getAttribute('data-panel') !== name; });
+        select.value = name;
+        window.scrollTo({ top: document.querySelector('.tab-shell').offsetTop, behavior: 'auto' });
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () { activate(tab.getAttribute('data-target'), false); });
+        tab.addEventListener('keydown', function (event) {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') return;
+          event.preventDefault();
+          var next = index;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = tabs.length - 1;
+          activate(tabs[next].getAttribute('data-target'), true);
+        });
+      });
+      select.addEventListener('change', function () { activate(select.value, false); });
+    }());
+  </script>
+</body>
+</html>

@@ -158,6 +158,11 @@
     .video-toggle[open] .vt-caret { transform: rotate(90deg); }
     .video-toggle .inline-figure { margin: 0 16px 16px; }
     .video-toggle .figure-label { margin-top: 4px; }
+    .model-box { margin: 26px 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface)); }
+    .model-box .model-kicker { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--accent); margin: 0 0 8px; }
+    .model-box h4 { margin: 0 0 12px; font-size: 20px; letter-spacing: -.01em; }
+    .model-box p { margin: 0 0 12px; color: color-mix(in srgb, var(--ink) 88%, var(--muted)); font-size: 15px; line-height: 1.65; }
+    .model-box p:last-child { margin-bottom: 0; }
     .section-title { margin: 46px 0 8px; font-family: ui-serif, Georgia, serif; font-size: 30px; line-height: 1.15; }
     .section-intro { margin: 0 0 22px; max-width: 820px; color: var(--muted); }
     .details-stack { border-top: 1px solid var(--line); }
@@ -1142,6 +1147,14 @@
           <p class="plain-note"><strong>In plain English:</strong> chip printing is photography in reverse — and the "film grain" is set by the color of light you use.</p>
         </div></div>
       </details>
+<div class="model-box">
+          <p class="model-kicker">THE MENTAL MODEL</p>
+          <h4>Lithography is the only step that carries information</h4>
+          <p>Every layer goes through the same loop: <strong>coat</strong> the wafer in photoresist &rarr; <strong>expose</strong> the design with ASML&rsquo;s scanner &rarr; <strong>develop</strong> (wash away the exposed resist) &rarr; <strong>etch or implant</strong> through the openings &rarr; <strong>strip</strong> the leftover resist. Then the wafer goes back under the scanner for the next layer &mdash; about a hundred times per chip.</p>
+          <p><strong>Etch, deposition, and implantation are &ldquo;dumb&rdquo; blanket processes.</strong> They do the same thing everywhere on the wafer &mdash; an etcher cannot choose <em>where</em> to etch. The pattern in the photoresist is the only thing telling every other machine where to work and where to leave alone. No blueprint, no chip.</p>
+          <p><strong>ASML never touches a transistor.</strong> It only draws blueprints in light &mdash; ~100 different ones, one per layer, each from its own mask, each aligned to the previous layers within nanometers. That is why one machine costs $200M: <strong>resolution</strong> (how small you can print) sets how small transistors can be, and <strong>overlay</strong> (layer-to-layer alignment) decides whether the finished chip works at all. Moore&rsquo;s law lives or dies in the scanner.</p>
+          <p><strong>Two flavors of resist: stencil vs. stamp.</strong> In <strong>positive-tone</strong> resist (the standard), light-exposed areas wash away &mdash; like a stencil. In <strong>negative-tone</strong>, exposed areas harden and stay &mdash; like a stamp. Engineers pick per layer: is this layer mostly tiny holes or mostly tiny islands? The winning tone is the one with the cheaper mask and the sharper print.</p>
+        </div>
       <details class="step-card">
         <summary><span class="step-badge">5</span><span class="step-heading"><span class="step-kicker">ASML</span><span class="step-name">EUV: the $200M machine</span></span></summary>
         <div class="detail-body"><div class="step-story">

@@ -150,6 +150,14 @@
     .clickable-card { cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
     .clickable-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.35); outline: 2px solid var(--accent); }
     .clickable-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .video-toggle { margin: 22px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .video-toggle summary { cursor: pointer; padding: 13px 16px; font-weight: 700; font-size: 14px; list-style: none; display: flex; gap: 10px; align-items: center; color: var(--ink); }
+    .video-toggle summary::-webkit-details-marker { display: none; }
+    .video-toggle summary::marker { content: none; }
+    .video-toggle .vt-caret { color: var(--accent); font-size: 11px; transition: transform .15s ease; flex: none; }
+    .video-toggle[open] .vt-caret { transform: rotate(90deg); }
+    .video-toggle .inline-figure { margin: 0 16px 16px; }
+    .video-toggle .figure-label { margin-top: 4px; }
     .section-title { margin: 46px 0 8px; font-family: ui-serif, Georgia, serif; font-size: 30px; line-height: 1.15; }
     .section-intro { margin: 0 0 22px; max-width: 820px; color: var(--muted); }
     .details-stack { border-top: 1px solid var(--line); }
@@ -601,13 +609,15 @@
               <p class="plain-note"><strong>In plain English:</strong> Czochralski is pronounced “choh-KRAHL-skee” — slowly pulling one perfect crystal from a spinning melt.</p>
             </div>
             <figure class="inline-figure" aria-labelledby="cz-caption"><figcaption class="figure-label" id="cz-caption">CZOCHRALSKI CRYSTAL PULLER</figcaption><svg viewBox="0 0 460 420" role="img" aria-labelledby="cz-title cz-desc"><title id="cz-title">Cross-section of a Czochralski crystal puller</title><desc id="cz-desc">A seed crystal and growing ingot rotate and rise from molten silicon held in a quartz crucible surrounded by a heater, while argon flows through the chamber.</desc><defs><marker id="arrow-cz" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#f5a623"/></marker></defs><g font-family="ui-sans-serif,system-ui,sans-serif"><rect x="92" y="20" width="276" height="372" rx="122" fill="#10161e" stroke="#2d3846" stroke-width="2"/><path d="M190 280 Q230 302 270 280 L288 350 Q230 378 172 350z" fill="#24303d" stroke="#aeb7c2" stroke-width="2"/><path d="M180 321 Q230 344 280 321 L288 350 Q230 378 172 350z" fill="#f5a623" opacity=".65"/><path d="M164 275 Q230 307 296 275" fill="none" stroke="#f5a623" stroke-width="10"/><path d="M150 260 Q128 315 154 365 M310 260 Q332 315 306 365" fill="none" stroke="#c4770e" stroke-width="12"/><rect x="211" y="58" width="38" height="48" rx="8" fill="#607083"/><path d="M197 106 L263 106 L253 246 Q230 268 207 246z" fill="#344253" stroke="#f5a623" stroke-width="2"/><path d="M230 50 V20" stroke="#f5a623" stroke-width="3" marker-end="url(#arrow-cz)"/><path d="M270 78 Q305 94 278 120" fill="none" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow-cz)"/><path d="M370 82 H320 V185" fill="none" stroke="#67d7a2" stroke-width="2" marker-end="url(#arrow-cz)"/><g fill="#edf1f5" font-size="13"><text x="18" y="67">Seed crystal</text><path d="M104 64 H206" stroke="#607083"/><text x="292" y="138">Growing ingot</text><path d="M288 142 L257 152" stroke="#607083"/><text x="20" y="262">Quartz crucible</text><path d="M120 258 L176 296" stroke="#607083"/><text x="23" y="337">Heater</text><path d="M91 334 L144 330" stroke="#607083"/><text x="326" y="206">Argon</text><text x="326" y="223">atmosphere</text><text x="280" y="63" fill="#f5a623">rotate</text><text x="244" y="25" fill="#f5a623">pull</text><text x="185" y="338" fill="#10161e" font-weight="800">molten silicon</text></g></g></svg></figure>
-            <figure class="inline-figure">
+            <details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; Czochralski Method Explained with Animation</span></summary>
+<figure class="inline-figure">
               <figcaption class="figure-label">WATCH IT HAPPEN</figcaption>
               <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
                 <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/v0I3LbKnP3M" title="Czochralski Method Explained with Animation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
               </div>
               <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Animated walkthrough of the pull — the seed dip, rotation, and the ingot growing millimeter by millimeter. <a style="color:#f5a623" href="https://www.youtube.com/shorts/v8yKhkKuMmI" target="_blank" rel="noopener">Bonus: real footage of a 400&nbsp;kg crystal being pulled.</a></p>
             </figure>
+</details>
             <aside class="company-panel">
               <h4>Companies behind this step</h4>
               <p>The vessel holding molten silicon is a technical marvel too: an ultra-pure fused-quartz crucible. Much of the world's purest quartz comes from <strong>Spruce Pine, North Carolina</strong>, where it is mined by <strong>Sibelco</strong> and <strong>The Quartz Corp</strong>. When Hurricane Helene shut those mines in September 2024, the disruption rattled the chip supply chain because this grade of quartz has so few substitutes. The crystal-pulling furnaces are specialized systems built by equipment firms such as Germany's <strong>PVA TePla</strong>.</p>
@@ -897,13 +907,15 @@
             </script>
           </figure>
           
-          <figure class="inline-figure">
+          <details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; How are microchips made? - George Zaidan and Sajan Saini (TED-Ed)</span></summary>
+<figure class="inline-figure">
             <figcaption class="figure-label">WATCH IT HAPPEN &mdash; THE FAB IN 5 MINUTES</figcaption>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
               <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/IkRXpFIRUl4" title="How are microchips made? - George Zaidan and Sajan Saini (TED-Ed)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
             </div>
             <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">TED-Ed&rsquo;s 5-minute animated walkthrough of the fab: photolithography, etch, ion implantation, CMP, and the copper wiring stack &mdash; the same loop you just watched. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=IkRXpFIRUl4" target="_blank" rel="noopener">Watch on YouTube.</a></p>
           </figure>
+</details>
           <p>One thing this walkthrough takes for granted: the patterns. The fab doesn&rsquo;t invent the chip &mdash; it prints someone else&rsquo;s design. NVIDIA&rsquo;s or Apple&rsquo;s engineers design the chip (chapter 3), and the finished design is converted into mask data in a handoff called <strong>tapeout</strong>. Chronologically, design happens <em>before</em> any wafer moves; we learned the fab first because the machines are the fun part.</p>
           <p>Do CPUs, GPUs, and memory chips go through a different process here? Mostly no &mdash; the loop is the same loop. Two differences worth knowing: memory cells are simple structures stamped millions of times over, while logic is complex and irregular; and they scale in different directions &mdash; logic shrinks features <em>sideways</em>, while 3D NAND stacks them <em>upward</em> (200+ layers, which is why etching absurdly deep holes is memory&rsquo;s hardest step). The full memory story is chapter 5.</p>
           <p>Every one of those ~100 layers is built from the same basic loop:</p>
@@ -1427,6 +1439,7 @@
           <p class="plain-note"><strong>In plain English:</strong> tapeout is emailing the blueprints to the factory — after which fixing a typo costs eight figures.</p>
         </div></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; I Design Chips at AMD | My Story + ASIC Design Flow in One Video</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; THE ASIC FLOW, END TO END</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -1434,6 +1447,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">A senior AMD silicon design engineer walks the full flow &mdash; spec &rarr; RTL &rarr; synthesis &rarr; place-and-route &rarr; signoff &rarr; tapeout &mdash; with the actual EDA tools named at each stage. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=080mlrvkfkE" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">9</span><span class="step-heading"><span class="step-kicker">Standing on shoulders</span><span class="step-name">IP cores and Arm: nobody starts from zero</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -1480,13 +1494,15 @@
           <p><strong>NVIDIA</strong> (USA) — the standard. <strong>AMD</strong> (USA) — Instinct accelerators, chiplets-first. <strong>Broadcom</strong> (USA) and <strong>Marvell</strong> (USA) — custom AI silicon for the hyperscalers (Google's TPUs are Broadcom-designed). <strong>MediaTek</strong> (Taiwan) — mobile and increasingly AI-adjacent. Every one of them is fabless: designed in California or Hsinchu, printed in Taiwan.</p>
         </aside></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; How do Graphics Cards Work? Exploring GPU Architecture</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; CUDA AND TENSOR CORES, ANIMATED</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
     <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/h9Z4oGN89MU" title="How do Graphics Cards Work? Exploring GPU Architecture" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Branch Education tears down an RTX 3090 and animates what the CUDA cores, tensor cores, and streaming multiprocessors actually do &mdash; the physical reason NVIDIA&rsquo;s software moat is built on hardware. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=h9Z4oGN89MU" target="_blank" rel="noopener">Watch on YouTube.</a></p>
-</figure></section>
+</figure>
+</details></section>
     <section class="panel" data-sector="semiconductors" id="panel-packaging" role="tabpanel" aria-labelledby="tab-packaging" data-panel="packaging" hidden><div class="panel-head"><div><p class="chapter-label">Chapter 4</p><h2>Advanced packaging</h2><p class="panel-intro">The package becomes the product — Follow a bare die as it gains power, connections, and protection, and learn why the box around the chip now decides what the chip can do.</p></div><span class="status">Complete</span></div><p>A finished die is useless: a sliver of silicon with no power, no way to talk to the outside world, and nothing stopping it from cracking. <strong>Packaging</strong> gives it all three — and somewhere around 2023, packaging stopped being the boring epilogue of chipmaking and became the bottleneck the whole AI boom queues behind.</p>
       <div class="stats" aria-label="Key numbers">
         <div class="stat"><strong>2023–24</strong><span>CoWoS shortage capped AI GPU shipments</span></div>
@@ -1594,6 +1610,7 @@
           <p><strong>TSMC</strong> (Taiwan) — invented and dominates CoWoS; its interposer capacity is the industry's binding constraint. <strong>Amkor</strong> (USA) and <strong>ASE</strong> (Taiwan) offer competing 2.5D assembly. The interposer itself is manufactured like a chip — etched and wired by the foundry, not the packager.</p>
         </aside></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; How Separate Chips Become One Package</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; DIE, PACKAGE, AND COWOS-S</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -1601,6 +1618,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Original layered diagrams trace how separate dies become one connected package &mdash; die, interposer, substrate &mdash; with a bounded TSMC CoWoS-S example drawn from primary sources. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=hHjPyQbi3kA" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">The memory tower</span><span class="step-name">HBM: stacking DRAM with TSVs</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -1717,6 +1735,7 @@
           </figure>
         </div></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; How does Computer Memory Work?</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; DRAM, CELL BY CELL</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -1724,6 +1743,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Branch Education animates the DRAM cell &mdash; one transistor, one capacitor &mdash; then reading, writing, and the refresh cycle that never stops, all the way up to DIMMs and memory channels. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=7J7X7aZvMXQ" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">NAND</span><span class="step-name">Flash goes vertical: 200+ layers</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -1760,6 +1780,7 @@
           </figure>
         </div></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; How does NAND Flash Work? Reading from TLC : Triple Level Cells || Exploring Solid State Drives</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; HOW 3D NAND STORES A BIT</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -1767,6 +1788,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Branch Education shows how charge trapped in an insulating layer becomes a bit &mdash; and how three bits share one 3D NAND cell via eight threshold-voltage levels. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=YtBysgPOKx4" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">HBM</span><span class="step-name">Stacking memory next to logic</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -1897,6 +1919,7 @@
           <p><strong>NVIDIA/Mellanox</strong> (USA/Israel) — InfiniBand's owner and the scale-out standard for AI clusters. Mellanox (Israel, acquired 2020 for $7B) gave NVIDIA the entire networking stack. Switch silicon also comes from <strong>Broadcom</strong> (USA), whose Tomahawk/Jericho chips power much of the world's Ethernet.</p>
         </aside></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; RDMA & RoCEv2 EXPLAINED: The Secret High-Speed Network Behind AI & HPC</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; RDMA AND THE AI NETWORK</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -1904,6 +1927,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">Why TCP/IP is too slow for AI clusters: how RDMA lets one server write straight into another&rsquo;s memory, and how InfiniBand, iWARP, and RoCEv2 differ &mdash; down to the lossless-network plumbing (PFC, DCQCN). <a style="color:#f5a623" href="https://www.youtube.com/watch?v=nKz92Yr09q8" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">4</span><span class="step-heading"><span class="step-kicker">The challenger</span><span class="step-name">Ethernet strikes back: Ultra Ethernet</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -2006,6 +2030,7 @@
           </figure>
         </div></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; Inside NVIDIA GB300 NVL72: The 72-GPU AI Beast</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; INSIDE THE NVL72 RACK</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -2013,6 +2038,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">A 3D-animated tour from rack to compute tray: how NVLink turns 72 GPUs into one compute domain, how HBM, power shelves, and liquid-cooling loops fit together, and how one rack scales to a SuperPOD. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=9jFOYZRgua4" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">3</span><span class="step-heading"><span class="step-kicker">Grace Blackwell</span><span class="step-name">Anatomy of the current generation</span></span></summary>
         <div class="detail-body"><div class="step-story">
@@ -2229,6 +2255,7 @@
           <p><strong>TSMC</strong> (Taiwan) — $165B committed to Arizona across multiple fabs; the largest foreign direct investment in US history. <strong>Intel</strong> (USA) — the domestic champion, rebuilding foundry in Arizona and Ohio. <strong>Samsung</strong> (South Korea) — Taylor, Texas. <strong>Micron</strong> (USA) — Clay, New York megafab. <strong>SK hynix</strong> (South Korea) — Indiana HBM packaging hub, the first advanced-packaging beachhead in the US.</p>
         </aside></div>
       </details>
+<details class="video-toggle"><summary><span class="vt-caret">▶</span><span class="vt-text">Show video &mdash; The Silicon Shield: Why the World Can't Quit Taiwan (TSMC)</span></summary>
 <figure class="inline-figure">
   <figcaption class="figure-label">WATCH IT HAPPEN &mdash; THE SILICON SHIELD, EXPLAINED</figcaption>
   <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000">
@@ -2236,6 +2263,7 @@
   </div>
   <p style="color:#aeb7c2;font-size:13px;margin:8px 2px 0">An even-handed, sourced walkthrough of the silicon shield &mdash; why Taiwan&rsquo;s fabs deter aggression and why the CHIPS Act de-risking in Arizona may quietly erode that very deterrent. <a style="color:#f5a623" href="https://www.youtube.com/watch?v=Vy34ebdfPi4" target="_blank" rel="noopener">Watch on YouTube.</a></p>
 </figure>
+</details>
       <details class="step-card">
         <summary><span class="step-badge">6</span><span class="step-heading"><span class="step-kicker">Controls</span><span class="step-name">Export controls: the chokepoint strategy</span></span></summary>
         <div class="detail-body"><div class="step-story">

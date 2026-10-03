@@ -443,11 +443,15 @@
       <button class="sector-tab" data-sector-tab="energy" aria-selected="false">Energy <span class="soon-badge">soon</span></button>
       <button class="sector-tab" data-sector-tab="healthcare" aria-selected="false">Healthcare <span class="soon-badge">soon</span></button>
       <button class="sector-tab" data-sector-tab="ai" aria-selected="false">AI <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="defensetech" aria-selected="false">Defense Tech <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="minerals" aria-selected="false">Critical Minerals <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="robotics" aria-selected="false">Robotics <span class="soon-badge">soon</span></button>
+      <button class="sector-tab" data-sector-tab="quantum" aria-selected="false">Quantum <span class="soon-badge">soon</span></button>
     </div>
     <div class="wrap mobile-sectors">
       <label for="sector-select">Sector</label>
       <select id="sector-select" aria-label="Choose a sector">
-        <option value="semiconductors">Semiconductors</option><option value="energy">Energy</option><option value="healthcare">Healthcare</option><option value="ai">AI</option>
+        <option value="semiconductors">Semiconductors</option><option value="energy">Energy</option><option value="healthcare">Healthcare</option><option value="ai">AI</option><option value="defensetech">Defense Tech</option><option value="minerals">Critical Minerals</option><option value="robotics">Robotics &amp; Automation</option><option value="quantum">Quantum</option>
       </select>
     </div>
   </nav>
@@ -2367,7 +2371,31 @@
     <div data-sector="ai" hidden>
       <section class="panel">
         <div class="panel-head"><div><p class="chapter-label">Sector 04</p><h2>AI</h2><p class="panel-intro">The full due-diligence treatment — the technology, the compute, and the money.</p></div><span class="status">Priority</span></div>
-        <article class="roadmap-card"><span class="coming">Up next</span><h3>From GPUs to agents</h3><p>Semiconductors were the warm-up: this sector traces what all that compute is actually for, and where the value accrues.</p><ul class="roadmap-list"><li>Model labs: OpenAI, Anthropic, Google DeepMind, xAI, Meta</li><li>The compute stack: chips &rarr; data centers &rarr; power — built on Sector 01</li><li>Enterprise adoption: who pays, and why</li><li>The economics: training costs, inference margins, and where profits pool</li></ul></article>
+        <article class="roadmap-card"><span class="coming">Up next</span><h3>From GPUs to agents</h3><p>Semiconductors were the warm-up: this sector traces what all that compute is actually for, and where the value accrues.</p><ul class="roadmap-list"><li>Model labs: OpenAI, Anthropic, Google DeepMind, xAI, Meta</li><li>The compute stack: chips &rarr; data centers &rarr; power — built on Sector 01</li><li>Enterprise adoption: who pays, and why</li><li>The economics: training costs, inference margins, and where profits pool</li><li>Cybersecurity: the AI arms race — attackers and defenders with the same tools</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="defensetech" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 05</p><h2>Defense Tech</h2><p class="panel-intro">Where AI and chips meet government budgets — drones, autonomy, and the new primes.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From contract to battlefield</h3><p>Why defense money flows differently than enterprise software — and where your semiconductor and AI knowledge maps straight onto spending.</p><ul class="roadmap-list"><li>The new primes: Anduril, Palantir, SpaceX-adjacent primes vs. the old guard</li><li>Autonomous systems: drones, counter-drone, and the software-defined weapon</li><li>Space &amp; missile defense: constellations, hypersonics, Golden Dome-scale programs</li><li>The procurement machine: contracts, clearances, and why incumbency was the moat</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="minerals" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 06</p><h2>Critical Minerals</h2><p class="panel-intro">The geopolitical underbelly of everything — the rocks beneath chips, batteries, and magnets.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From mine to magnet</h3><p>The raw materials the energy transition and the AI boom both depend on — and the countries that control them.</p><ul class="roadmap-list"><li>Rare earths: refining concentration and the magnet chokepoint</li><li>Lithium, nickel, cobalt: the battery metals and their boom-bust cycles</li><li>Copper: the electrification metal — grids, data centers, EVs all want more</li><li>Uranium &amp; polysilicon: fuel for the nuclear renaissance and the solar stack</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="robotics" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 07</p><h2>Robotics &amp; Automation</h2><p class="panel-intro">AI with a body — the physical side of the intelligence boom.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From lab demo to factory floor</h3><p>Humanoids are where EVs were in 2018 — hype plus real capex. The stack runs on the same chips and models you've already studied.</p><ul class="roadmap-list"><li>Humanoids &amp; mobile robots: Tesla Optimus, Figure, and the China wave</li><li>Industrial automation: the robot arms already running factories</li><li>The autonomy stack: perception, planning, and the sim-to-real gap</li><li>The economics: labor arbitrage and who captures the value</li></ul></article>
+      </section>
+    </div>
+    <div data-sector="quantum" hidden>
+      <section class="panel">
+        <div class="panel-head"><div><p class="chapter-label">Sector 08</p><h2>Quantum</h2><p class="panel-intro">Long-dated and speculative — the primer you want before it matters, not after.</p></div><span class="status">Planned</span></div>
+        <article class="roadmap-card"><span class="coming">Coming soon</span><h3>From qubit to application</h3><p>What quantum computers can actually do, why they're so hard to build, and which approaches are real versus narrative.</p><ul class="roadmap-list"><li>The qubit: superposition, entanglement, and why error correction is the whole game</li><li>The hardware race: superconducting, trapped ion, neutral atom, photonic</li><li>The timeline problem: what "quantum advantage" claims are really worth</li><li>The companies and the money: who's funded and who's shipping</li></ul></article>
       </section>
     </div>
   </main>
